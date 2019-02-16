@@ -1,15 +1,20 @@
 package entity;
 
-public class ExerciseAppointment {
+public class Exercise {
 
+    private String name;
     private int setCount;
     private int repCount;
     private int weight;
 
-    public ExerciseAppointment(int setCount, int repCount, int weight) {
-        this.setCount = setCount;
-        this.repCount = repCount;
-        this.weight = weight;
+    public Exercise(){}
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getSetCount() {

@@ -1,14 +1,9 @@
 package entity;
 
-public class ProductAppointment {
+public class Product {
 
     private String name;
     private int gramInDay;
-
-    public ProductAppointment(String name, int gramInDay) {
-        this.name = name;
-        this.gramInDay = gramInDay;
-    }
 
     public String getName() {
         return name;

@@ -1,11 +1,16 @@
 package command;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-public class SetAppointmentCommand implements Command {
+public class SetAppointmentCommand extends Command {
+
+    public SetAppointmentCommand(HttpServletRequest request, HttpServletResponse response) {
+        super(request, response);
+    }
 
     @Override
-    public Status execute(HttpServletRequest request) {
+    public Response execute() {
         return null;
     }
 }

@@ -16,7 +16,7 @@ public class Encoder {
     private static final int ITERATION_COUNT = 30000;
     private static final int KEY_LENGTH = 128;
 
-    public static String[] encode(String data) throws EncoderException {
+    public static String[] encode(char[] data) throws EncoderException {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
@@ -24,13 +24,13 @@ public class Encoder {
         return new String[]{new String(hash), new String(salt)};
     }
 
-    public static boolean check(String data, byte[] hash, byte[] salt) throws EncoderException{
+    public static boolean check(char[] data, byte[] hash, byte[] salt) throws EncoderException{
         byte[] newHash = getHash(data, salt);
         return Arrays.equals(hash, newHash);
     }
 
-    private static byte[] getHash(String data, byte[] salt) throws EncoderException {
-        KeySpec spec = new PBEKeySpec(data.toCharArray(), salt, ITERATION_COUNT, KEY_LENGTH);
+    private static byte[] getHash(char[] data, byte[] salt) throws EncoderException {
+        KeySpec spec = new PBEKeySpec(data, salt, ITERATION_COUNT, KEY_LENGTH);
         SecretKeyFactory factory;
         try {
             factory = SecretKeyFactory.getInstance(ALGORITHM);

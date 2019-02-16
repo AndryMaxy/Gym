@@ -9,6 +9,9 @@ public class User implements Entity{
     private String name;
     private String surname;
     private UserRole userRole;
+    private int discount;
+    private int balance = 1000;
+    private boolean isAppointmentReady;
 
     public int getId() {
         return id;
@@ -64,5 +67,29 @@ public class User implements Entity{
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
+    public boolean isAppointmentReady() {
+        return isAppointmentReady;
+    }
+
+    public void setAppointmentReady(boolean appointmentReady) {
+        isAppointmentReady = appointmentReady;
     }
 }

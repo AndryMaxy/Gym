@@ -1,11 +1,16 @@
 package command;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-public class DeleteUserCommand implements Command {
+public class DeleteUserCommand extends Command {
+
+    public DeleteUserCommand(HttpServletRequest request, HttpServletResponse response) {
+        super(request, response);
+    }
 
     @Override
-    public Status execute(HttpServletRequest request) {
+    public Response execute() {
         return null;
     }
 }

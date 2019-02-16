@@ -1,7 +1,7 @@
 package connection.exception;
 
-public class ConnectionException extends Exception {
-
+public class ConnectionException extends DBException {
+    //TODO Serial Version UID everywhere
     public ConnectionException() {
     }
 

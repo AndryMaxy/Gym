@@ -3,14 +3,16 @@ package listener;
 import connection.DBResourceManager;
 import connection.ConnectionPool;
 import connection.DBKey;
-import connection.exception.ConnectionException;
-import connection.exception.DBInitException;
+import connection.exception.DBException;
+import entity.Membership;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebListener
 public class ServletListener implements ServletContextListener {
@@ -27,8 +29,15 @@ public class ServletListener implements ServletContextListener {
             ConnectionPool.getInstance().init(poolSize);
         } catch (ClassNotFoundException e) {
             LOGGER.fatal("Can't set db driver.", e);
-            throw new DBInitException();
+            throw new DBException();
         }
+        List<Membership> memberships = new ArrayList<>();
+        memberships.add(Membership.ULTRA);
+        memberships.add(Membership.SUPER);
+        memberships.add(Membership.STANDARD);
+        memberships.add(Membership.EASY);
+        memberships.add(Membership.ONE);
+        sce.getServletContext().setAttribute("memberships", memberships);
     }
 
     @Override

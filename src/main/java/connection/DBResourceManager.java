@@ -1,12 +1,11 @@
 package connection;
 
-import connection.exception.DBInitException;
+import connection.exception.DBException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -32,7 +31,7 @@ public class DBResourceManager {
             properties.load(stream);
         } catch (IOException e) {
             LOGGER.fatal("ResourceManager IO trouble.", e);
-            throw new DBInitException();
+            throw new DBException(e);
         }
     }
 

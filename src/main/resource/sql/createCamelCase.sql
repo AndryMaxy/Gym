@@ -23,19 +23,11 @@ CREATE TABLE User (
   Salt VARCHAR (60) NOT NULL,
 	Name VARCHAR (30) NOT NULL,
 	Surname VARCHAR(30) NOT NULL,
-	PRIMARY KEY (UserId),
+  Discount TINYINT,
+  Balance INT NOT NULL,
+  PRIMARY KEY (UserId),
 	FOREIGN KEY (UserRoleId) REFERENCES UserRole (UserRoleId),
 	UNIQUE (Login)
-);
-
-CREATE TABLE Visitor (
-	UserId INT NOT NULL,
-	Discount TINYINT,
-  Vip BOOLEAN,
-  Regular BOOLEAN,
-  Balance INT NOT NULL,
-	PRIMARY KEY (UserId),
-	FOREIGN KEY (UserId) REFERENCES User (UserId)
 );
 
 CREATE TABLE Booking (

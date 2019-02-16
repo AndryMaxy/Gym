@@ -1,6 +1,7 @@
 package connection;
 
-import connection.exception.DBInitException;
+import connection.exception.ConnectionException;
+import connection.exception.DBException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,7 +11,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class ConnectionPool {
 
-    private static final ConnectionPool instance = new ConnectionPool();
+    private static final ConnectionPool INSTANCE = new ConnectionPool();
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class.getSimpleName());
 
     private ArrayBlockingQueue<ProxyConnection> connections;
@@ -19,7 +20,7 @@ public class ConnectionPool {
     private ConnectionPool(){}
 
     public static ConnectionPool getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public void init(int poolSize) {
@@ -33,12 +34,17 @@ public class ConnectionPool {
             }
         } catch (SQLException e) {
             LOGGER.fatal("Can't init connection pool", e);
-            throw new DBInitException();
+            throw new DBException();
         }
     }
 
     public ProxyConnection getConnection(){
-        ProxyConnection connection = connections.poll();
+        ProxyConnection connection;
+        try {
+            connection = connections.take();
+        } catch (InterruptedException e) {
+            throw new ConnectionException("Can't take connection", e);
+        }
         takenConnections.add(connection);
         return connection;
     }

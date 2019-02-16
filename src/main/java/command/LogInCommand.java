@@ -2,58 +2,46 @@ package command;
 
 import entity.User;
 import entity.UserRole;
-import entity.Visitor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import service.Service;
 import service.UserService;
 import service.exception.ServiceException;
 import service.impl.UserServiceImpl;
-import util.Encoder;
 import util.exception.EncoderException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LogInCommand implements Command {
+public class LogInCommand extends Command {
 
     private static final Logger LOGGER = LogManager.getLogger(LogInCommand.class.getSimpleName());
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
+    private static final String PAGE = "visitor.jsp";
+    private String url = "/controller?command=main&login=";
+    //private String url = "/main/";
+
+    public LogInCommand(HttpServletRequest request, HttpServletResponse response) {
+        super(request, response);
+    }
 
     @Override
-    public Status execute(HttpServletRequest request) {
+    public Response execute() throws ServiceException, EncoderException {
         String login = request.getParameter(LOGIN);
-        String password = request.getParameter(PASSWORD);
-        UserService service = new UserServiceImpl();
-        System.out.println(login);
-        User user;
-        try {
-            user = service.getByLogin(login);
-        } catch (ServiceException e) {
-            return Status.EXCEPTION;
-        }
-        String hash = user.getHash();
-        String salt = user.getSalt();
-        System.out.println(hash);
-        System.out.println(salt);
-        boolean isValid = false;
-        try {
-            isValid = Encoder.check(password, hash.getBytes(), salt.getBytes());
-        } catch (EncoderException e) {
-            e.printStackTrace();
-        }
+        char[] password = request.getParameter(PASSWORD).toCharArray();
+        UserService service = UserServiceImpl.getInstance();
+        LOGGER.info(login + " tried log in");
+        boolean isValid = service.checkUser(login, password);
         if (isValid) {
+            LOGGER.info("GJ!!!!!!!!!!!!!!!!!!!");
             HttpSession session = request.getSession();
-            if (user.getUserRole() == UserRole.VISITOR) {
-                session.setAttribute("visitor", user);
-            } else {
-                session.setAttribute("user", user);
-            }
+            session.setAttribute("role", UserRole.VISITOR);
+            session.setAttribute("login", login);
+            return new Response(url + login, true);
         } else {
             LOGGER.info("ALERT!!!!!!!!!!!!!!!!!!!");
-            return Status.EXCEPTION;
+            return new Response("/", true, false);
         }
-        return Status.OK;
     }
 }
