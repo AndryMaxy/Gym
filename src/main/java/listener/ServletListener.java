@@ -2,8 +2,8 @@ package listener;
 
 import connection.DBResourceManager;
 import connection.ConnectionPool;
-import connection.DBKey;
 import connection.exception.DBException;
+import entity.Constants;
 import entity.Membership;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,15 +22,16 @@ public class ServletListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         DBResourceManager manager = DBResourceManager.getInstance();
-        String driver = manager.getString(DBKey.DRIVER);
-        int poolSize = manager.getInt(DBKey.POOL_SIZE);
+        String driver = manager.getString(Constants.DBKey.DRIVER);
+        int poolSize = manager.getInt(Constants.DBKey.POOL_SIZE);
         try {
             Class.forName(driver);
             ConnectionPool.getInstance().init(poolSize);
         } catch (ClassNotFoundException e) {
-            LOGGER.fatal("Can't set db driver.", e);
+            LOGGER.fatal("Can't setData db driver.", e);
             throw new DBException();
         }
+        //TODO HOW TO UPLOAD?? AND WHERE. ONCE UP OR EVERYONE?
         List<Membership> memberships = new ArrayList<>();
         memberships.add(Membership.ULTRA);
         memberships.add(Membership.SUPER);

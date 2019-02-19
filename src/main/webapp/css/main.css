@@ -1,0 +1,19 @@
+.table {
+    text-align: center;
+}
+
+.table tr {
+    font-size: 14pt;
+}
+
+.table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table th {
+    vertical-align: middle;
+}
+.table thead th {
+    vertical-align: middle;
+}

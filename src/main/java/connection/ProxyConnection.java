@@ -27,7 +27,7 @@ public class ProxyConnection implements AutoCloseable {
         try {
             connection.close();
         } catch (SQLException e) {
-            LOGGER.error("Can't close connection.", e);
+            LOGGER.fatal("Can't close connection.", e);
             throw new DBException();
         }
     }
@@ -45,7 +45,13 @@ public class ProxyConnection implements AutoCloseable {
         connection.commit();
     }
 
-    public void rollback() throws SQLException {
-        connection.rollback();
+    public void rollback() {
+        try {
+            connection.rollback();
+            close();
+        } catch (SQLException e) {
+            LOGGER.error("Can't rollback transaction");
+            close();
+        }
     }
 }

@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "controller", urlPatterns = {"/controller", "/main/*"})
+@WebServlet(name = "controller", urlPatterns = {
+        "/controller", "/home", "/doAppoint", "/register"})
 public class ControllerServlet extends HttpServlet {
 
     private static final String COMMAND = "command";
@@ -28,7 +29,7 @@ public class ControllerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        handle(request, response);
+        handle(request,response);
     }
 
     private void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -2,12 +2,21 @@ package entity;
 
 public class Exercise {
 
+    private int id;
     private String name;
     private int setCount;
     private int repCount;
     private int weight;
 
     public Exercise(){}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

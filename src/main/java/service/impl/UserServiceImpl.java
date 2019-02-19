@@ -1,10 +1,14 @@
 package service.impl;
 
-import dao.OrderDAO;
-import dao.UserDAO;
+import dao.AdminDAO;
+import dao.BookingDAO;
+import dao.TrainerDAO;
+import dao.VisitorDAO;
 import dao.exception.DAOException;
-import dao.impl.OrderDAOImpl;
-import dao.impl.UserDAOImpl;
+import dao.impl.AdminDAOImpl;
+import dao.impl.BookingDAOImpl;
+import dao.impl.TrainerDAOImpl;
+import dao.impl.VisitorDAOImpl;
 import entity.Appointment;
 import entity.Exercise;
 import entity.Membership;
@@ -19,7 +23,9 @@ import java.util.List;
 //TODO MB SEPARATE BY ROLE
 public class UserServiceImpl implements UserService {
 
-    private final UserDAO userDAO = UserDAOImpl.getInstance();
+    private final AdminDAO adminDAO = AdminDAOImpl.getInstance();
+    private final TrainerDAO trainerDAO = TrainerDAOImpl.getInstance();
+    private final VisitorDAO visitorDAO = VisitorDAOImpl.getInstance();
 
     private static class UserServiceImplHolder {
         static final UserServiceImpl INSTANCE = new UserServiceImpl();
@@ -34,38 +40,63 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserLoginExist(String login) throws ServiceException {
         try {
-            return userDAO.isUserLoginExist(login);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    public User getByLogin(String login) throws ServiceException {
-        try {
-            return userDAO.getByLogin(login);
+            return visitorDAO.isUserLoginExist(login);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public User getById(int id) throws ServiceException {
+    public User getUserByLogin(String login) throws ServiceException {
         try {
-            return userDAO.getById(id);
+            return visitorDAO.getByLogin(login);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
-    public boolean checkUser(String login, char[] password) throws ServiceException, EncoderException {
+    @Override
+    public User getUser(int id) throws ServiceException {
         try {
-            User user = userDAO.getByLogin(login);
+            return visitorDAO.getById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int logIn(String login, char[] password) throws ServiceException, EncoderException {
+        try {
+            User user = visitorDAO.getByLogin(login);
             if (user == null) {
-                return false;
+                return 0;
             }
             String hash = user.getHash();
             String salt = user.getSalt();
-            return Encoder.check(password, hash.getBytes(), salt.getBytes());
+            boolean correct = Encoder.check(password, hash.getBytes(), salt.getBytes());
+            if (correct){
+                return user.getId();
+            } else {
+                return 0;
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<User> getVisitors() throws ServiceException {
+        try {
+            return trainerDAO.getVisitors();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public User getVisitor(int id) throws ServiceException {
+        try {
+            return trainerDAO.getVisitor(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -74,44 +105,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean add(User user) throws ServiceException {
         try {
-            return userDAO.add(user);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Appointment getAppointment(int id) throws ServiceException {
-        try {
-            List<Exercise> exercises = userDAO.getExercises(id);
-            List<Product> products = userDAO.getProducts(id);
-            if (exercises.isEmpty() && products.isEmpty()) {
-                return null;
-            }
-            Appointment appointment = new Appointment();
-            appointment.setExercises(exercises);
-            appointment.setProducts(products);
-            return appointment;
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-    //TODO MB MOVE TO ORDER SERVICE
-    @Override
-    public boolean buyMembership(int userId, String membershipStr) throws ServiceException {
-        try {
-            User user = userDAO.getById(userId);
-            Membership membership = Membership.valueOf(membershipStr);
-            int price = membership.getPrice();
-            int cost = price / 100 * (100 - user.getDiscount());
-            int balance = user.getBalance();
-            if (balance < cost) {
-                return false;
-            }
-            user.setBalance(balance - cost);
-            userDAO.update(user);
-            OrderDAO orderDAO = OrderDAOImpl.getInstance();
-            return orderDAO.add(userId, membership.getCount());
+            return visitorDAO.add(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
