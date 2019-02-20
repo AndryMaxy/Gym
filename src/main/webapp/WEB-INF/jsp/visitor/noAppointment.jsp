@@ -14,8 +14,8 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${applicationScope.memberships}" var="membership">
-        <tr>
+    <c:forEach items="${requestScope.memberships}" var="membership">
+        <tr style="font-size: 150%">
             <td><c:out value="${membership}"/></td>
             <td><c:out value="${membership.count}"/></td>
             <td><c:out value="${membership.price}"/></td>

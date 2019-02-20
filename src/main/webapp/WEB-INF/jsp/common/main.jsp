@@ -11,9 +11,6 @@
     <c:when test="${sessionScope.role == 'VISITOR'}">
         <c:import url="/WEB-INF/jsp/visitor/visitor.jsp" charEncoding="utf-8"/>
     </c:when>
-    <c:when test="${sessionScope.role == 'GUEST'}">
-        <c:import url="/WEB-INF/jsp/common/login.jsp" charEncoding="utf-8"/>
-    </c:when>
     <c:otherwise>
         <c:import url="/WEB-INF/jsp/common/error.jsp" charEncoding="utf-8"/>
     </c:otherwise>

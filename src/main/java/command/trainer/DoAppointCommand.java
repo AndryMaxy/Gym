@@ -2,13 +2,8 @@ package command.trainer;
 
 import command.Command;
 import command.Response;
-import dao.AppointmentDAO;
-import dao.exception.DAOException;
-import dao.impl.ExerciseDAOImpl;
 import entity.Appointment;
 import entity.Constants;
-import entity.Exercise;
-import entity.Product;
 import entity.User;
 import service.AppointmentService;
 import service.UserService;
@@ -28,17 +23,17 @@ public class DoAppointCommand extends Command {
 
     @Override
     public Response execute() throws ServiceException, EncoderException {
-        UserService userService = UserServiceImpl.getInstance();
         String userIdStr = request.getParameter(Constants.Parameter.USER_ID);
         int userId = Integer.parseInt(userIdStr);
+        UserService userService = UserServiceImpl.getInstance();
         User user = userService.getVisitor(userId);
         if (user == null) {
-            return new Response(Constants.URL.MAIN, false);
+            return new Response(Constants.URL.REDIRECT, true);
         }
         AppointmentService service = AppointmentServiceImpl.getInstance();
         Appointment appointment = service.getAll();
         request.setAttribute("visitor", user);
         request.setAttribute("appointment", appointment);
-        return new Response("/app", false);
+        return new Response(Constants.URL.APPOINT, false);
     }
 }

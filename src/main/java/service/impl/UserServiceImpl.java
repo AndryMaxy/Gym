@@ -1,18 +1,8 @@
 package service.impl;
 
-import dao.AdminDAO;
-import dao.BookingDAO;
-import dao.TrainerDAO;
-import dao.VisitorDAO;
+import dao.UserDAO;
 import dao.exception.DAOException;
-import dao.impl.AdminDAOImpl;
-import dao.impl.BookingDAOImpl;
-import dao.impl.TrainerDAOImpl;
-import dao.impl.VisitorDAOImpl;
-import entity.Appointment;
-import entity.Exercise;
-import entity.Membership;
-import entity.Product;
+import dao.impl.UserDAOImpl;
 import entity.User;
 import service.UserService;
 import service.exception.ServiceException;
@@ -23,9 +13,7 @@ import java.util.List;
 //TODO MB SEPARATE BY ROLE
 public class UserServiceImpl implements UserService {
 
-    private final AdminDAO adminDAO = AdminDAOImpl.getInstance();
-    private final TrainerDAO trainerDAO = TrainerDAOImpl.getInstance();
-    private final VisitorDAO visitorDAO = VisitorDAOImpl.getInstance();
+    private final UserDAO userDAO = UserDAOImpl.getInstance();
 
     private static class UserServiceImplHolder {
         static final UserServiceImpl INSTANCE = new UserServiceImpl();
@@ -38,18 +26,19 @@ public class UserServiceImpl implements UserService {
     private UserServiceImpl(){}
 
     @Override
-    public boolean isUserLoginExist(String login) throws ServiceException {
+    public List<User> getAll() throws ServiceException {
         try {
-            return visitorDAO.isUserLoginExist(login);
+            return userDAO.getAll();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public User getUserByLogin(String login) throws ServiceException {
+    public boolean isUserLoginExist(String login) throws ServiceException {
         try {
-            return visitorDAO.getByLogin(login);
+            User user = userDAO.getByLogin(login);
+            return user != null;
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -58,7 +47,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(int id) throws ServiceException {
         try {
-            return visitorDAO.getById(id);
+            return userDAO.getById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -67,7 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int logIn(String login, char[] password) throws ServiceException, EncoderException {
         try {
-            User user = visitorDAO.getByLogin(login);
+            User user = userDAO.getByLogin(login);
             if (user == null) {
                 return 0;
             }
@@ -87,7 +76,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getVisitors() throws ServiceException {
         try {
-            return trainerDAO.getVisitors();
+            return userDAO.getVisitors();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -96,7 +85,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getVisitor(int id) throws ServiceException {
         try {
-            return trainerDAO.getVisitor(id);
+            return userDAO.getVisitor(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -105,7 +94,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean add(User user) throws ServiceException {
         try {
-            return visitorDAO.add(user);
+            return userDAO.add(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void update(User user) throws ServiceException {
+        try {
+            userDAO.update(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void delete(int userId) throws ServiceException {
+        try {
+            userDAO.delete(userId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

@@ -20,25 +20,21 @@ import javax.servlet.http.HttpServletResponse;
 public class SignInCommand extends Command {
 
     private static final Logger LOGGER = LogManager.getLogger(SignInCommand.class.getSimpleName());
-    private UserService service;
 
     public SignInCommand(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
-        this.service = UserServiceImpl.getInstance();
     }
 
     @Override
     public Response execute() throws ServiceException, EncoderException {
         String login = request.getParameter(Constants.Parameter.LOGIN);
-
+        UserService service = UserServiceImpl.getInstance();
         if (service.isUserLoginExist(login)) {
             //TODO !
             throw new Error();
         }
-
         char[] password = request.getParameter(Constants.Parameter.PASSWORD).toCharArray();
-        String[] encoded;
-        encoded = Encoder.encode(password);
+        String[] encoded = Encoder.encode(password);
         String hash = encoded[0];
         String salt = encoded[1]; //TODO Спросить как записывать соль и хеш в базу. Сохранять ли в объекте?
         String name = request.getParameter(Constants.Parameter.NAME);
@@ -53,6 +49,6 @@ public class SignInCommand extends Command {
                 .buildSalt(salt)
                 .build();
         service.add(user);
-        return new Response("controller?command=logIn", false);
+        return new Response("/controller?command=logIn", false);
     }
 }

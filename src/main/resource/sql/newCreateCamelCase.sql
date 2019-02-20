@@ -1,4 +1,4 @@
-CREATE DATABASE Gym CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE Gym CHARACTER SET utf8;
 USE Gym;
 
 CREATE TABLE UserRole
@@ -38,10 +38,12 @@ CREATE TABLE Booking
 (
   BookingId      INT NOT NULL AUTO_INCREMENT,
   UserId         INT NOT NULL,
-  VisitCountLeft INT NOT NULL,
+  MembershipId INT NOT NULL,
+  VisitCountLeft  INT,
   Feedback       VARCHAR(500),
   PRIMARY KEY (BookingId),
-  FOREIGN KEY (UserId) REFERENCES User (UserId) ON DELETE CASCADE
+  FOREIGN KEY (UserId) REFERENCES User (UserId) ON DELETE CASCADE,
+  FOREIGN KEY (MembershipId) REFERENCES Membership (MembershipId)
 );
 
 CREATE TABLE Exercise
@@ -94,6 +96,7 @@ SELECT default_character_set_name FROM information_schema.SCHEMATA WHERE schema_
 
 ALTER DATABASE gym DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 ALTER TABLE gym.user CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE gym.user CONVERT TO CHARACTER SET utf8;
 
 SHOW TABLE STATUS;
 

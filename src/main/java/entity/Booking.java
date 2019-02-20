@@ -4,7 +4,8 @@ public class Booking {
 
     private int id;
     private int userId;
-    private int visitsLeft;
+    private Membership membership;
+    private int visitCountLeft;
     private String feedback;
 
     public int getId() {
@@ -23,12 +24,20 @@ public class Booking {
         this.userId = userId;
     }
 
-    public int getVisitsLeft() {
-        return visitsLeft;
+    public Membership getMembership() {
+        return membership;
     }
 
-    public void setVisitsLeft(int visitsLeft) {
-        this.visitsLeft = visitsLeft;
+    public void setMembership(Membership membership) {
+        this.membership = membership;
+    }
+
+    public int getVisitCountLeft() {
+        return visitCountLeft;
+    }
+
+    public void setVisitCountLeft(int visitCountLeft) {
+        this.visitCountLeft = visitCountLeft;
     }
 
     public String getFeedback() {

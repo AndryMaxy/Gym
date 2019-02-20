@@ -9,9 +9,19 @@
     <c:import url="/WEB-INF/jsp/fragment/header.jsp" charEncoding="utf-8"/>
 </head>
 <body>
-<div class="container mt-5">
-    <div style="height: 100px; background-color: #dfdb9d; justify-content: center; align-items: center; display: flex">
-        <h2><fmt:message key="trainer.for"/> ${requestScope.visitor.name} ${requestScope.visitor.surname}</h2>
+<div class="container mainCont">
+    <div class="hat">
+        <div class="row justify-content-end align-items-center">
+            <form action="controller" method="post" class="col-md-auto"
+                  style="margin: 0; margin-right: 25px; padding: 0;">
+                <fmt:message key="common.logOut" var="logOut"/>
+                <input type="hidden" name="command" value="logOut">
+                <input type="submit" value="${logOut}" class="btn btn-outline-primary">
+            </form>
+        </div>
+    </div>
+    <div class="botHat">
+        <p class="name"><fmt:message key="trainer.for"/> ${requestScope.visitor.name} ${requestScope.visitor.surname}</p>
     </div>
     <form action="controller" method="post">
         <input type="hidden" name="command" value="appoint">
@@ -29,7 +39,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${requestScope.appointment.exercises}" varStatus="status" var="exercise">
+                        <c:forEach items="${requestScope.appointment.exercises}" var="exercise">
                             <tr bgcolor="#EBEBE4" id="trEx-${exercise.id}">
                                 <td><c:out value="${exercise.name}"/></td>
                                 <td><input type="number" min="5" max="200" name="repCount-${exercise.id}" disabled>

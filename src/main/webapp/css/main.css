@@ -1,3 +1,7 @@
+body {
+    background-color: #e7ebf0;
+}
+
 .table {
     text-align: center;
 }
@@ -16,4 +20,46 @@
 }
 .table thead th {
     vertical-align: middle;
+}
+
+.mainCont {
+    background-color: ghostwhite;
+    min-height: 100%;
+    padding: 0;
+}
+
+.hat {
+    background-color: #4a76a8;
+    padding: 0;
+}
+
+.botHat {
+    background: linear-gradient(to bottom, #4a76a8, #5391bc);
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 0;
+}
+
+.param {
+    line-height: 0.5;
+    font-size: 18px;
+    margin-left: 25px;
+    color: #f4ffff;
+}
+
+.name {
+    padding: 10px;
+    padding-left: 0;
+    line-height: 1;
+    font-size: 35px;
+    margin-left: 25px;
+    margin-bottom: 0;
+    color: #f4ffff;
+}
+
+.btn {
+    border: none;
+    color: #f4ffff
 }

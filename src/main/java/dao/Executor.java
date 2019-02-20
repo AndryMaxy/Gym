@@ -22,7 +22,7 @@ public class Executor {
     public boolean execute(String query, StatementHandler stmtHandler) throws SQLException {
         ProxyConnection connection = pool.getConnection();
         PreparedStatement stmt = connection.prepareStatement(query);
-        stmtHandler.setData(stmt);
+        stmtHandler.setStatement(stmt);
         boolean result = stmt.execute();
         stmt.close();
         connection.close();
@@ -32,7 +32,7 @@ public class Executor {
     public <T> T executeQuery(String query, StatementHandler stmtHandler, ResultHandler<T> resHandler) throws SQLException {
         ProxyConnection connection = pool.getConnection();
         PreparedStatement stmt = connection.prepareStatement(query);
-        stmtHandler.setData(stmt);
+        stmtHandler.setStatement(stmt);
         stmt.executeQuery();
         ResultSet result = stmt.getResultSet();
         T value = resHandler.handle(result);

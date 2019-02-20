@@ -8,6 +8,8 @@ import entity.Membership;
 import service.BookingService;
 import service.exception.ServiceException;
 
+import java.util.List;
+
 public class BookingServiceImpl implements BookingService {
 
     private static class BookingServiceImplHolder {
@@ -36,6 +38,15 @@ public class BookingServiceImpl implements BookingService {
         try {
             BookingDAO bookingDAO = BookingDAOImpl.getInstance();
             return bookingDAO.add(userId, balance, membership);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Booking> getBookings(int userId) throws ServiceException {
+        try {
+            return bookingDAO.getAll(userId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

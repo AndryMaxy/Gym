@@ -28,17 +28,10 @@ public class ServletListener implements ServletContextListener {
             Class.forName(driver);
             ConnectionPool.getInstance().init(poolSize);
         } catch (ClassNotFoundException e) {
-            LOGGER.fatal("Can't setData db driver.", e);
+            LOGGER.fatal("Can't setStatement db driver.", e);
             throw new DBException();
         }
         //TODO HOW TO UPLOAD?? AND WHERE. ONCE UP OR EVERYONE?
-        List<Membership> memberships = new ArrayList<>();
-        memberships.add(Membership.ULTRA);
-        memberships.add(Membership.SUPER);
-        memberships.add(Membership.STANDARD);
-        memberships.add(Membership.EASY);
-        memberships.add(Membership.ONE);
-        sce.getServletContext().setAttribute("memberships", memberships);
     }
 
     @Override

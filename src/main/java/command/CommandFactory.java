@@ -1,6 +1,8 @@
 package command;
 
+import command.admin.ChangeRoleCommand;
 import command.admin.DeleteUserCommand;
+import command.admin.OpenOrderCommand;
 import command.common.ChangeLocaleCommand;
 import command.common.LogInCommand;
 import command.common.LogOutCommand;
@@ -30,6 +32,8 @@ public enum CommandFactory {
                 return new LogOutCommand(request, response);
             case Constants.Command.DELETE_USER:
                 return new DeleteUserCommand(request, response);
+            case Constants.Command.CHANGE_ROLE:
+                return new ChangeRoleCommand(request, response);
             case Constants.Command.HOME:
                 return new MainPageCommand(request, response);
             case Constants.Command.BUY_MEMBERSHIP:
@@ -40,6 +44,8 @@ public enum CommandFactory {
                 return new DoAppointCommand(request, response);
             case Constants.Command.APPOINT:
                 return new AppointCommand(request, response);
+            case Constants.Command.OPEN_ORDER:
+                return new OpenOrderCommand(request, response);
             default:
                 throw new IllegalArgumentException();
         }

@@ -5,6 +5,7 @@ import command.Response;
 import entity.Appointment;
 import entity.Booking;
 import entity.Constants;
+import entity.Membership;
 import entity.User;
 import service.AppointmentService;
 import service.BookingService;
@@ -18,10 +19,12 @@ import util.exception.EncoderException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainPageCommand extends Command {
 
+    private static final String USERS = "users";
     private UserService userService;
 
     public MainPageCommand(HttpServletRequest request, HttpServletResponse response) {
@@ -35,8 +38,8 @@ public class MainPageCommand extends Command {
         int userId = (int) session.getAttribute(Constants.Parameter.USER_ID);
         User user = userService.getUser(userId);
         request.setAttribute(Constants.Parameter.USER, user);
-        session.setAttribute(Constants.Parameter.ROLE, user.getUserRole());
-        switch (user.getUserRole()) {
+        session.setAttribute(Constants.Parameter.ROLE, user.getRole());
+        switch (user.getRole()) {
             case VISITOR:
                 visitorPage(userId);
                 break;
@@ -59,15 +62,24 @@ public class MainPageCommand extends Command {
             if (appointment != null) {
                 request.setAttribute("appointment", appointment);
             }
+        } else {
+            List<Membership> memberships = new ArrayList<>();
+            memberships.add(Membership.ULTRA);
+            memberships.add(Membership.SUPER);
+            memberships.add(Membership.STANDARD);
+            memberships.add(Membership.EASY);
+            memberships.add(Membership.ONE);
+            request.setAttribute("memberships", memberships);
         }
     }
 
-    private void adminPage(){
-        //TODO
+    private void adminPage() throws ServiceException {
+        List<User> users = userService.getAll();
+        request.setAttribute(USERS, users);
     }
 
     private void trainerPage() throws ServiceException {
         List<User> users = userService.getVisitors();
-        request.setAttribute("users", users);
+        request.setAttribute(USERS, users);
     }
 }

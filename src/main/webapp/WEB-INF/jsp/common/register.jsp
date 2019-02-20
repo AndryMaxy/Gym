@@ -46,7 +46,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="mx-auto">
-                            <fmt:message key="register.name" var="name"/>
+                            <fmt:message key="common.name" var="name"/>
                             <input type="text" name="name" pattern="[A-zА-я]+" class="form-control"
                                    placeholder="${name}" autocomplete="current-hash" required>
                             <div class="invalid-feedback">
@@ -56,7 +56,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="mx-auto">
-                            <fmt:message key="register.name" var="surname"/>
+                            <fmt:message key="common.surname" var="surname"/>
                             <input type="text" name="surname" pattern="[A-zА-я]+" class="form-control"
                                    placeholder="${surname}" autocomplete="current-hash" required>
                             <div class="invalid-feedback">

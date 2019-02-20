@@ -8,10 +8,9 @@ public class User implements Entity{
     private String salt;
     private String name;
     private String surname;
-    private UserRole userRole;
+    private UserRole role;
     private int discount;
     private int balance = 1000;
-    private boolean isAppointmentReady;
 
     public int getId() {
         return id;
@@ -61,12 +60,12 @@ public class User implements Entity{
         this.surname = surname;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     public int getDiscount() {
@@ -83,13 +82,5 @@ public class User implements Entity{
 
     public void setBalance(int balance) {
         this.balance = balance;
-    }
-
-    public boolean isAppointmentReady() {
-        return isAppointmentReady;
-    }
-
-    public void setAppointmentReady(boolean appointmentReady) {
-        isAppointmentReady = appointmentReady;
     }
 }

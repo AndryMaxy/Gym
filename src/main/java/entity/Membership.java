@@ -1,18 +1,24 @@
 package entity;
 
 public enum Membership {
-    ULTRA(30, 1000),
-    SUPER(20, 800),
-    STANDARD(15, 600),
-    EASY(10, 500),
-    ONE(1, 100);
+    ULTRA(1,30, 1000),
+    SUPER(2,20, 800),
+    STANDARD(3,15, 600),
+    EASY(4,10, 500),
+    ONE(5,1, 100);
 
+    private int id;
     private int count;
     private int price;
 
-    Membership(int count, int price) {
+    Membership(int id, int count, int price) {
+        this.id = id;
         this.count = count;
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getCount() {

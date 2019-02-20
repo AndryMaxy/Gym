@@ -68,7 +68,7 @@ public class UserBuilder {
         user.setHash(hash);
         user.setSalt(salt);
         user.setSurname(surname);
-        user.setUserRole(userRole);
+        user.setRole(userRole);
         user.setDiscount(discount);
         user.setBalance(balance);
         return user;

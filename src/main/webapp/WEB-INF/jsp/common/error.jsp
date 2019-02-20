@@ -22,11 +22,9 @@
     <p><fmt:message key="error.request"/> ${pageContext.errorData.requestURI} <fmt:message key="error.fail"/></p>
     <p><fmt:message key="error.servlet"/>: ${pageContext.errorData.servletName}</p>
     <p><fmt:message key="error.code"/>: ${pageContext.errorData.statusCode}</p>
-    <form action="main.jsp">
-        <%--<input type="hidden" name="command" value="main">--%>
-        <fmt:message key="error.main" var="main"/>
-        <input type="submit" value="${main}" class="btn btn-primary">
-    </form>
+    <a href="${pageContext.request.contextPath}" class="btn btn-primary">
+        <fmt:message key="error.main"/>
+    </a>
 </div>
 </body>
 </html>

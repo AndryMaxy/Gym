@@ -12,6 +12,7 @@ public final class Constants {
         public static final String ROLE = "Role";
         public static final String DISCOUNT = "Discount";
         public static final String BALANCE = "Balance";
+        public static final String VISIT_COUNT_LEFT = "VisitCountLeft";
     }
 
     public static final class Command {
@@ -19,19 +20,23 @@ public final class Constants {
         public static final String SIGN_IN = "signIn";
         public static final String LOG_IN = "logIn";
         public static final String LOG_OUT = "logOut";
-        public static final String DELETE_USER = "deleteUser";
+        public static final String DELETE_USER = "delete";
         public static final String HOME = "home";
         public static final String REGISTER = "register";
         public static final String BUY_MEMBERSHIP = "buy";
         public static final String CHANGE_LOCALE = "locale";
         public static final String DO_APPOINT = "doAppoint";
         public static final String APPOINT = "appoint";
+        public static final String CHANGE_ROLE = "role";
+        public static final String OPEN_ORDER = "order";
     }
 
     public static final class URL {
         public static final String REDIRECT = "";
-        public static final String HOME = "/home";
         public static final String MAIN = "/main";
+        public static final String APPOINT = "/app";
+        public static final String ORDER = "/lookOrder";
+        public static final String HOME = "/home";
         public static final String REGISTER = "/registration";
     }
 
