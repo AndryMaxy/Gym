@@ -1,41 +1,36 @@
 body {
-    background-color: #e7ebf0;
+    background: url('background.jpg');
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .table {
     text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border: 1px solid #969696;
 }
 
 .table tr {
     font-size: 14pt;
 }
 
-.table td {
+.table td, .table th {
     vertical-align: middle;
     text-align: center;
 }
 
-.table th {
-    vertical-align: middle;
-}
 .table thead th {
+    border-top: 1px solid #969696;
     vertical-align: middle;
 }
 
 .mainCont {
-    background-color: ghostwhite;
+    background-color: rgba(248, 248, 255, 0.95);
     min-height: 100%;
     padding: 0;
 }
-
-.hat {
-    background-color: #4a76a8;
-    padding: 0;
-}
-
 .botHat {
     background: linear-gradient(to bottom, #4a76a8, #5391bc);
-    height: 100px;
+    height: 70px;
     justify-content: center;
     align-items: center;
     display: flex;
@@ -43,10 +38,11 @@ body {
 }
 
 .param {
-    line-height: 0.5;
+    line-height: 1.2;
     font-size: 18px;
-    margin-left: 25px;
     color: #f4ffff;
+    margin-bottom: 0;
+
 }
 
 .name {
@@ -54,6 +50,7 @@ body {
     padding-left: 0;
     line-height: 1;
     font-size: 35px;
+    text-align: center;
     margin-left: 25px;
     margin-bottom: 0;
     color: #f4ffff;
@@ -63,3 +60,34 @@ body {
     border: none;
     color: #f4ffff
 }
+
+.logo {
+    width: 60px;
+    height: 60px;
+}
+
+.top-nav {
+    margin-top: 20px;
+    background-color: #4a76a8;
+    padding: 10px;
+}
+.top-nav_menu {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.top-nav_menu li {
+    margin-right: 30px;
+}
+
+.top-nav_menu li a {
+    text-decoration: none;
+    color: yellow;
+
+}
+
+a {
+    color: #f4ffff;
+}
+

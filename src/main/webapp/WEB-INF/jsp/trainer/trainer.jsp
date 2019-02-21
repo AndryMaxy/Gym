@@ -10,29 +10,17 @@
 <body>
 <form name="lang" action="controller" style="text-align: right; margin: 0">
     <input type="hidden" name="command" value="locale"/>
-    <select id="language" name="locale" onchange="mySubmit()" style="font-size: 130%">
+    <select id="language" name="locale" onchange="mySubmit('lang')" style="font-size: 130%">
         <option value="ru-RU" ${sessionScope.locale.toLanguageTag() == 'ru-RU' ? 'selected' : ''}>Русский</option>
         <option value="en-US" ${sessionScope.locale.toLanguageTag() == 'en-US' ? 'selected' : ''}>English</option>
         <option value="be-BY" ${sessionScope.locale.toLanguageTag() == 'be-BY' ? 'selected' : ''}>Беларускі</option>
     </select>
-    <script>
-        function mySubmit() {
-            document.lang.submit();
-        }
-    </script>
 </form>
 <div class="container mainCont">
-    <div class="hat">
-        <div class="row justify-content-between align-items-center">
-            <div class="col-md-auto">
-                <p class="name">${requestScope.user.name} ${requestScope.user.surname}</p>
-            </div>
-            <form action="controller" method="post" class="col-md-auto"
-                  style="margin: 0; margin-right: 25px; padding: 0;">
-                <fmt:message key="common.logOut" var="logOut"/>
-                <input type="hidden" name="command" value="logOut">
-                <input type="submit" value="${logOut}" class="btn btn-outline-primary">
-            </form>
+    <c:import url="/WEB-INF/jsp/fragment/hat.jsp" charEncoding="utf-8"/>
+    <div class="botHat">
+        <div class="col-md-auto">
+            <p class="name">${requestScope.user.name} ${requestScope.user.surname}</p>
         </div>
     </div>
     <c:choose>
@@ -51,7 +39,7 @@
             </div>
             <div class="row" style="margin-top: 5px">
                 <div class="col-8 mx-auto">
-                    <table class="table table-bordered">
+                    <table class="table">
                         <thead>
                         <tr>
                             <th><fmt:message key="common.name"/></th>

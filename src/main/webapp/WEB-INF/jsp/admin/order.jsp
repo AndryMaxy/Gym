@@ -10,49 +10,63 @@
 </head>
 <body>
 <div class="container mainCont">
-    <div class="hat">
-        <div class="row justify-content-end align-items-center">
-            <form action="controller" method="post" class="col-md-auto"
-                  style="margin: 0; margin-right: 25px; padding: 0;">
-                <fmt:message key="common.logOut" var="logOut"/>
-                <input type="hidden" name="command" value="logOut">
-                <input type="submit" value="${logOut}" class="btn btn-outline-primary">
-            </form>
-        </div>
-    </div>
+    <c:import url="/WEB-INF/jsp/fragment/hat.jsp" charEncoding="utf-8"/>
     <div class="botHat">
-        <p class="name"><fmt:message key="order.of"/> ${requestScope.user.name} ${requestScope.user.surname}</p>
-    </div>
-    <form action="controller" method="post">
-        <input type="hidden" name="command" value="reduce">
-        <input type="hidden" name="userId" value="${requestScope.user.id}">
-        <div style="margin-top: 50px">
-            <div class="row">
-                <div class="col-8">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th style="width: 10%">№</th>
-                            <th style="width: 25%"><fmt:message key="order.membership"/></th>
-                            <th style="width: 15%"><fmt:message key="order.visitsLeft"/></th>
-                            <th style="width: 50%"><fmt:message key="order.feedback"/></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${requestScope.bookings}" varStatus="i" var="booking">
-                            <tr>
-                                <td>${i.index}</td>
-                                <td><c:out value="${booking.membership}"/></td>
-                                <td><c:out value="${booking.visitCountLeft}"/></td>
-                                <td><c:out value="${booking.feedback}"/></td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="col-md-auto">
+            <p class="name"><fmt:message key="order.of"/> ${requestScope.user.name} ${requestScope.user.surname}</p>
         </div>
-    </form>
+    </div>
+    <c:set var="size" value="${requestScope.bookings.size()}"/>
+    <c:if test="${size != 0}">
+        <c:set var="lastBooking" value="${requestScope.bookings.get(size - 1)}"/>
+        <c:set var="visitCountLeft" value="${requestScope.lastBooking.visitCountLeft}"/>
+    </c:if>
+    <c:choose>
+        <c:when test="${size != 0}">
+            <c:if test="${visitCountLeft > 0}">
+                <div class="row justify-content-center align-items-center" style="margin: 0; margin-top: 40px">
+                    <p style="font-size: 24px"><fmt:message
+                            key="order.current"/>: ${visitCountLeft}
+                    </p>
+                    <form action="controller" method="post" style="margin-left: 20px">
+                        <input type="hidden" name="command" value="reduce">
+                        <input type="hidden" name="userId" value="${requestScope.user.id}">
+                        <input type="hidden" name="bookingId" value="${requestScope.lastBooking.id}">
+                        <fmt:message key="order.reduce" var="reduce"/>
+                        <input type="submit" value="${reduce}" class="btn btn-success">
+                    </form>
+                </div>
+            </c:if>
+            <table class="table" style="margin-top: 50px">
+                <thead>
+                <tr>
+                    <th style="width: 5%">№</th>
+                    <th style="width: 15%"><fmt:message key="order.membership"/></th>
+                    <th style="width: 10%"><fmt:message key="order.visitsLeft"/></th>
+                    <th style="width: 70%"><fmt:message key="order.feedback"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${requestScope.bookings}" varStatus="i" var="booking">
+                    <tr>
+                        <td>${i.index}</td>
+                        <td><c:out value="${booking.membership}"/></td>
+                        <td><c:out value="${booking.visitCountLeft}"/></td>
+                        <td><c:out value="${booking.feedback}"/></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:when>
+        <c:otherwise>
+            <div style="text-align: center; margin-top: 50px">
+                <h2><fmt:message key="order.no"/></h2>
+                <fmt:message key="common.image" var="img"/>
+                <img src="${pageContext.request.contextPath}/img/noOrders.gif" alt="${img}"
+                     style="width: 600px; height: 600px;">
+            </div>
+        </c:otherwise>
+    </c:choose>
 </div>
 </body>
 </html>

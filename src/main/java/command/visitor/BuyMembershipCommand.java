@@ -39,10 +39,7 @@ public class BuyMembershipCommand extends Command {
         }
         int newBalance = balance - cost;
         BookingService bookingService = BookingServiceImpl.getInstance();
-        boolean result = bookingService.buyMembership(userId, newBalance, membership);
-        if (!result) {
-            return new Response(Constants.URL.HOME, true); //TODO НУЖЕН МЕССЕДЖ НА НЕУДАЧУ
-        }
+        bookingService.buyMembership(userId, newBalance, membership);
         return new Response(Constants.URL.HOME, true);
     }
 }

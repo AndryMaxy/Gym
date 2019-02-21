@@ -29,6 +29,7 @@ public final class Constants {
         public static final String APPOINT = "appoint";
         public static final String CHANGE_ROLE = "role";
         public static final String OPEN_ORDER = "order";
+        public static final String REDUCE_VISITS = "reduce";
     }
 
     public static final class URL {

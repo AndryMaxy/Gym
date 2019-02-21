@@ -54,7 +54,7 @@ public class MainPageCommand extends Command {
 
     private void visitorPage(int userId) throws ServiceException {
         BookingService bookingService = BookingServiceImpl.getInstance();
-        Booking booking = bookingService.getBooking(userId);
+        Booking booking = bookingService.getBookingByUserId(userId);
         if (booking != null) {
             request.setAttribute("booking", booking);
             AppointmentService appointmentService = AppointmentServiceImpl.getInstance();

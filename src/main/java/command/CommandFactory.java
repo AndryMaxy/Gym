@@ -3,6 +3,7 @@ package command;
 import command.admin.ChangeRoleCommand;
 import command.admin.DeleteUserCommand;
 import command.admin.OpenOrderCommand;
+import command.admin.ReduceVisitsCommand;
 import command.common.ChangeLocaleCommand;
 import command.common.LogInCommand;
 import command.common.LogOutCommand;
@@ -46,8 +47,10 @@ public enum CommandFactory {
                 return new AppointCommand(request, response);
             case Constants.Command.OPEN_ORDER:
                 return new OpenOrderCommand(request, response);
+            case Constants.Command.REDUCE_VISITS:
+                return new ReduceVisitsCommand(request, response);
             default:
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException(); //TODO MB REDIRECT HOME?
         }
     }
 }

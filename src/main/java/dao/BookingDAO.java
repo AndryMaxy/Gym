@@ -8,9 +8,10 @@ import java.util.List;
 
 public interface BookingDAO {
 
-    boolean add(int userId, int balance, Membership membership) throws DAOException;
+    void add(int userId, int balance, Membership membership) throws DAOException;
     List<Booking> getAll(int userId) throws DAOException;
-    boolean update() throws DAOException;
-    boolean delete() throws DAOException;
-    Booking get(int userId) throws DAOException;
+    void update(Booking booking) throws DAOException;
+    void delete() throws DAOException;
+    Booking get(int bookingId) throws DAOException;
+    Booking getByUserId(int userId) throws DAOException;
 }

@@ -75,9 +75,9 @@ public class UserDAOImpl extends AbstractUserDAO implements UserDAO {
     }
 
     @Override
-    public boolean add(User user) throws DAOException {
+    public void add(User user) throws DAOException {
         try {
-            return executor.execute(INSERT, statement -> {
+            executor.execute(INSERT, statement -> {
                 statement.setInt(1, UserRole.VISITOR.getId());
                 statement.setString(2, user.getLogin());
                 statement.setString(3, user.getHash());

@@ -4,7 +4,7 @@
 <fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="content"/>
 <h3 align="center"><fmt:message key="visitor.purchase"/></h3>
-<table class="table table-bordered">
+<table class="table">
     <thead>
     <tr>
         <th scope="col" style="width: 25%"><fmt:message key="visitor.membership"/></th>

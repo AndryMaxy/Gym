@@ -14,7 +14,7 @@ public interface UserService {
     int logIn(String login, char[] password) throws ServiceException, EncoderException;
     User getVisitor(int id) throws ServiceException;
     List<User> getVisitors() throws ServiceException;
-    boolean add(User user) throws ServiceException;
+    void add(User user) throws ServiceException;
     void update(User user) throws ServiceException;
     void delete(int userId) throws ServiceException;
 }

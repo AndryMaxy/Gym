@@ -25,19 +25,30 @@ public class BookingServiceImpl implements BookingService {
     private BookingServiceImpl(){}
 
     @Override
-    public Booking getBooking(int userId) throws ServiceException {
+    public Booking getBooking(int bookingId) throws ServiceException {
         try {
-            return bookingDAO.get(userId);
+            return bookingDAO.get(bookingId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
+
     @Override
-    public boolean buyMembership(int userId, int balance, Membership membership) throws ServiceException {
+    public Booking getBookingByUserId(int userId) throws ServiceException {
+        try {
+            return bookingDAO.getByUserId(userId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+
+    @Override
+    public void buyMembership(int userId, int balance, Membership membership) throws ServiceException {
         try {
             BookingDAO bookingDAO = BookingDAOImpl.getInstance();
-            return bookingDAO.add(userId, balance, membership);
+            bookingDAO.add(userId, balance, membership);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -47,6 +58,15 @@ public class BookingServiceImpl implements BookingService {
     public List<Booking> getBookings(int userId) throws ServiceException {
         try {
             return bookingDAO.getAll(userId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void update(Booking booking) throws ServiceException {
+        try {
+            bookingDAO.update(booking);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

@@ -92,9 +92,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean add(User user) throws ServiceException {
+    public void add(User user) throws ServiceException {
         try {
-            return userDAO.add(user);
+            userDAO.add(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

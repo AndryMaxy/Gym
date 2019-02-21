@@ -6,7 +6,7 @@
 <h3 align="center"><fmt:message key="visitor.appointment"/></h3>
 <div class="row">
     <div class="col-auto mx-auto">
-        <table class="table table-bordered">
+        <table class="table">
             <thead>
             <tr>
                 <th style="width: 25%"><fmt:message key="common.exercise"/></th>
@@ -30,7 +30,7 @@
 </div>
 <div class="row">
     <div class="col-md-auto mx-auto">
-        <table class="table table-bordered">
+        <table class="table">
             <thead>
             <tr>
                 <th scope="col"><fmt:message key="common.product"/></th>
