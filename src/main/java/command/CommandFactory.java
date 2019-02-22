@@ -5,6 +5,7 @@ import command.admin.DeleteUserCommand;
 import command.admin.OpenOrderCommand;
 import command.admin.ReduceVisitsCommand;
 import command.common.ChangeLocaleCommand;
+import command.common.FeedbackPageCommand;
 import command.common.LogInCommand;
 import command.common.LogOutCommand;
 import command.common.MainPageCommand;
@@ -12,6 +13,7 @@ import command.common.RegisterCommand;
 import command.common.SignInCommand;
 import command.trainer.AppointCommand;
 import command.trainer.DoAppointCommand;
+import command.visitor.AddFeedbackCommand;
 import command.visitor.BuyMembershipCommand;
 import entity.Constants;
 
@@ -49,8 +51,12 @@ public enum CommandFactory {
                 return new OpenOrderCommand(request, response);
             case Constants.Command.REDUCE_VISITS:
                 return new ReduceVisitsCommand(request, response);
+            case Constants.Command.FEEDBACK:
+                return new FeedbackPageCommand(request, response);
+            case Constants.Command.ADD_FEEDBACK:
+                return new AddFeedbackCommand(request, response);
             default:
-                throw new IllegalArgumentException(); //TODO MB REDIRECT HOME?
+                throw new IllegalArgumentException(); //TODO MB ROOT HOME?
         }
     }
 }

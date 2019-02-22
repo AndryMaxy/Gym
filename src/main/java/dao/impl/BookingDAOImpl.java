@@ -6,6 +6,7 @@ import dao.StatementHandler;
 import dao.exception.DAOException;
 import dao.exception.ExecutorException;
 import entity.Booking;
+import entity.Feedback;
 import entity.Membership;
 
 import java.sql.ResultSet;
@@ -160,6 +161,28 @@ public class BookingDAOImpl implements BookingDAO {
                 }
                 return newBooking(resultSet, id);
             });
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+    //TODO ?????????????????????
+    private static final String SELECT_FEEDBACK = "SELECT u.Name, b.Feedback FROM Booking b JOIN User u ON b.UserId = u.UserId WHERE b.Feedback IS NOT NULL";
+    @Override
+    public List<Feedback> getFeedbackList() throws DAOException {
+        try {
+            return executor.executeQuery(SELECT_FEEDBACK, statement -> {},
+                    resultSet -> {
+                        List<Feedback> feedbackList = new ArrayList<>();
+                        while (resultSet.next()) {
+                            String name = resultSet.getString("Name");
+                            String feedbackStr = resultSet.getString("Feedback");
+                            Feedback feedback = new Feedback();
+                            feedback.setName(name);
+                            feedback.setFeedback(feedbackStr);
+                            feedbackList.add(feedback);
+                        }
+                        return feedbackList;
+                    });
         } catch (SQLException e) {
             throw new DAOException(e);
         }

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "controller", urlPatterns = {
-        "/controller", "/home", "/doAppoint", "/register", "/order"})
+        "/controller", "/home", "/doAppoint", "/register", "/order" , "/feedback"})
 public class ControllerServlet extends HttpServlet {
 
     private static final String COMMAND = "command";

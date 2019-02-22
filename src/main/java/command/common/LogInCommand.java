@@ -36,7 +36,7 @@ public class LogInCommand extends Command {
             session.setAttribute(Constants.Parameter.USER_ID, userId);
             return new Response(Constants.URL.HOME, true);
         } else {
-            return new Response(Constants.URL.REDIRECT, true, false);
+            return new Response(Constants.URL.ROOT, true, false);
         }
     }
 }

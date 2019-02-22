@@ -30,10 +30,12 @@ public final class Constants {
         public static final String CHANGE_ROLE = "role";
         public static final String OPEN_ORDER = "order";
         public static final String REDUCE_VISITS = "reduce";
+        public static final String FEEDBACK = "feedback";
+        public static final String ADD_FEEDBACK = "addFeedback";
     }
 
     public static final class URL {
-        public static final String REDIRECT = "";
+        public static final String ROOT = "";
         public static final String MAIN = "/main";
         public static final String APPOINT = "/app";
         public static final String ORDER = "/lookOrder";

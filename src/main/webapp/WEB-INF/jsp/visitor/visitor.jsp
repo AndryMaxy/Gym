@@ -59,7 +59,7 @@
                     <h2 align="center"><fmt:message key="visitor.wait"/></h2>
                     <p style="text-align: center">
                         <fmt:message key="common.image" var="img"/>
-                        <img src="${pageContext.request.contextPath}/img/jdyn.jpg" alt="${img}"
+                        <img src="${pageContext.request.contextPath}/resources/img/jdyn.jpg" alt="${img}"
                              style="width: 440px; height: 440px;">
                     </p>
                 </c:when>

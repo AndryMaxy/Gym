@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(filterName = "filter1",
+@WebFilter(filterName = "filter2",
         initParams = {
         @WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param") })
 public class EncodingFilter implements Filter {
@@ -25,11 +25,6 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String uri = request.getRequestURI();
-        if (uri.endsWith("jpg") | uri.endsWith("css")) {
-            return;
-        }
         String codeRequest = servletRequest.getCharacterEncoding();
         if (code != null && !code.equalsIgnoreCase(codeRequest)) {
             servletRequest.setCharacterEncoding(code);

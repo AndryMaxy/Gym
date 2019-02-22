@@ -20,7 +20,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebFilter (filterName = "filter2")
+@WebFilter (filterName = "filter3")
 public class MainFilter implements Filter {
 
     @Override
@@ -42,9 +42,9 @@ public class MainFilter implements Filter {
             requestWrapper.setParameter("command", command);
             filterChain.doFilter(requestWrapper, servletResponse);
         } else if (session.getAttribute(Constants.Parameter.ROLE) != UserRole.GUEST){
-            response.sendRedirect(request.getContextPath() + "/home");
+            response.sendRedirect(request.getContextPath() + Constants.URL.HOME);
         } else {
-            request.getRequestDispatcher(Constants.URL.MAIN).forward(request, servletResponse);
+            request.getRequestDispatcher(Constants.URL.ROOT).forward(request, servletResponse);
         }
     }
 

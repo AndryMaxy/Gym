@@ -1,6 +1,7 @@
 package service;
 
 import entity.Booking;
+import entity.Feedback;
 import entity.Membership;
 import service.exception.ServiceException;
 
@@ -13,4 +14,5 @@ public interface BookingService {
     List<Booking> getBookings(int userId) throws ServiceException;
     void buyMembership(int userId, int balance, Membership membership) throws ServiceException;
     void update(Booking booking) throws ServiceException;
+    List<Feedback> getFeedbackList() throws ServiceException;
 }

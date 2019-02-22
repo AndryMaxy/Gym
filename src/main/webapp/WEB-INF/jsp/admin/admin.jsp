@@ -75,7 +75,7 @@
                                 <input type="hidden" name="userId" value="${user.id}">
                                 <button type="submit" class="btn btn-secondary mx-auto">
                                     <fmt:message key="common.image" var="img"/>
-                                    <img src="${pageContext.request.contextPath}/img/delete.png" alt="${img}"
+                                    <img src="${pageContext.request.contextPath}/resources/img/delete.png" alt="${img}"
                                          style="width: 25px; height: 25px;">
                                 </button>
                             </form>

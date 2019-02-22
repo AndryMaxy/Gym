@@ -25,6 +25,6 @@ public class ChangeLocaleCommand extends Command {
         HttpSession session = request.getSession();
         Locale locale = Locale.forLanguageTag(localeStr);
         session.setAttribute(LOCALE, locale);
-        return new Response(Constants.URL.REDIRECT, true);
+        return new Response(Constants.URL.ROOT, true);
     }
 }

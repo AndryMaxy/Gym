@@ -31,7 +31,7 @@ public class SignInCommand extends Command {
         UserService service = UserServiceImpl.getInstance();
         if (service.isUserLoginExist(login)) {
             //TODO !
-            throw new Error();
+            throw new Error("exist");
         }
         char[] password = request.getParameter(Constants.Parameter.PASSWORD).toCharArray();
         String[] encoded = Encoder.encode(password);

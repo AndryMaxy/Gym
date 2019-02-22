@@ -31,7 +31,7 @@ public class OpenOrderCommand extends Command {
         User user = userService.getUser(userId);
         UserRole userRole = user.getRole();
         if ((userRole == UserRole.ADMIN) || (userRole == UserRole.TRAINER)) {
-            return new Response(Constants.URL.REDIRECT, true);
+            return new Response(Constants.URL.ROOT, true);
         }
         BookingService service = BookingServiceImpl.getInstance();
         List<Booking> bookings = service.getBookings(userId);

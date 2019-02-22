@@ -4,6 +4,7 @@ import dao.BookingDAO;
 import dao.exception.DAOException;
 import dao.impl.BookingDAOImpl;
 import entity.Booking;
+import entity.Feedback;
 import entity.Membership;
 import service.BookingService;
 import service.exception.ServiceException;
@@ -67,6 +68,15 @@ public class BookingServiceImpl implements BookingService {
     public void update(Booking booking) throws ServiceException {
         try {
             bookingDAO.update(booking);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Feedback> getFeedbackList() throws ServiceException {
+        try {
+            return bookingDAO.getFeedbackList();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

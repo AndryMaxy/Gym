@@ -18,6 +18,6 @@ public class LogOutCommand extends Command {
     public Response execute() {
         HttpSession session = request.getSession();
         session.invalidate();
-        return new Response(Constants.URL.REDIRECT, true);
+        return new Response(Constants.URL.ROOT, true);
     }
 }

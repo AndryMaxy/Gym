@@ -62,7 +62,7 @@
             <div style="text-align: center; margin-top: 50px">
                 <h2><fmt:message key="order.no"/></h2>
                 <fmt:message key="common.image" var="img"/>
-                <img src="${pageContext.request.contextPath}/img/noOrders.gif" alt="${img}"
+                <img src="${pageContext.request.contextPath}/resources/img/noOrders.gif" alt="${img}"
                      style="width: 600px; height: 600px;">
             </div>
         </c:otherwise>

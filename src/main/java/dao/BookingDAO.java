@@ -2,6 +2,7 @@ package dao;
 
 import dao.exception.DAOException;
 import entity.Booking;
+import entity.Feedback;
 import entity.Membership;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface BookingDAO {
     void delete() throws DAOException;
     Booking get(int bookingId) throws DAOException;
     Booking getByUserId(int userId) throws DAOException;
+
+    List<Feedback> getFeedbackList() throws DAOException;
 }

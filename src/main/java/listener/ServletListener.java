@@ -37,6 +37,5 @@ public class ServletListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         ConnectionPool.getInstance().finish();
-        System.out.println("destroy");
     }
 }

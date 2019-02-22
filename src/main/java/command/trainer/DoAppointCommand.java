@@ -28,7 +28,7 @@ public class DoAppointCommand extends Command {
         UserService userService = UserServiceImpl.getInstance();
         User user = userService.getVisitor(userId);
         if (user == null) {
-            return new Response(Constants.URL.REDIRECT, true);
+            return new Response(Constants.URL.ROOT, true);
         }
         AppointmentService service = AppointmentServiceImpl.getInstance();
         Appointment appointment = service.getAll();

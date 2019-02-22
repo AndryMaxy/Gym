@@ -9,14 +9,14 @@
             <div>
                 <fmt:message key="common.image" var="img"/>
                 <a href="${pageContext.request.contextPath}">
-                    <img class="logo" alt="${img}" src="${pageContext.request.contextPath}/img/logo.svg">
+                    <img class="logo" alt="${img}" src="${pageContext.request.contextPath}/resources/img/logo.png">
                 </a>
             </div>
         </div>
         <div class="col-md-auto">
             <ul class="nav justify-content-end align-items-center">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">
+                    <a class="nav-link active" href="${pageContext.request.contextPath}/feedback">
                         <fmt:message key="hat.feedback"/>
                     </a>
                 </li>
