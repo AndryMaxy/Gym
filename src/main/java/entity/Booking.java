@@ -1,9 +1,15 @@
 package entity;
 
+import java.util.Objects;
+
+/**
+ * This class represents order of gym.
+ * @author Andrey Akuclich
+ */
 public class Booking {
 
     private int id;
-    private int userId;
+    private User user;
     private Membership membership;
     private int visitCountLeft;
     private String feedback;
@@ -16,12 +22,12 @@ public class Booking {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Membership getMembership() {
@@ -46,5 +52,41 @@ public class Booking {
 
     public void setFeedback(String feedback) {
         this.feedback = feedback;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Booking)) {
+            return false;
+        }
+        Booking booking = (Booking) o;
+        return id == booking.id &&
+                visitCountLeft == booking.visitCountLeft &&
+                Objects.equals(user, booking.user) &&
+                membership == booking.membership &&
+                Objects.equals(feedback, booking.feedback);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user, membership, visitCountLeft, feedback);
+    }
+
+    /**
+     * Return string of this object with all fields.
+     * @return string of this object with all fields.
+     */
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", user=" + user +
+                ", membership=" + membership +
+                ", visitCountLeft=" + visitCountLeft +
+                ", feedback='" + feedback + '\'' +
+                '}';
     }
 }

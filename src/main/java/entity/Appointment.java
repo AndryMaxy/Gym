@@ -1,25 +1,25 @@
 package entity;
-
+//TODO PACKAGE?
 import java.util.List;
 
 public class Appointment {
 
-    private List<Exercise> exercises;
-    private List<Product> products;
+    private List<ExerciseAppointment> exerciseAppointments;
+    private List<ProductAppointment> productAppointments;
 
-    public List<Exercise> getExercises() {
-        return exercises;
+    public List<ExerciseAppointment> getExerciseAppointments() {
+        return exerciseAppointments;
     }
 
-    public void setExercises(List<Exercise> exercises) {
-        this.exercises = exercises;
+    public void setExerciseAppointments(List<ExerciseAppointment> exerciseAppointments) {
+        this.exerciseAppointments = exerciseAppointments;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<ProductAppointment> getProductAppointments() {
+        return productAppointments;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProductAppointments(List<ProductAppointment> productAppointments) {
+        this.productAppointments = productAppointments;
     }
 }

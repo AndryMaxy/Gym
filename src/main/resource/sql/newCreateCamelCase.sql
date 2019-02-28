@@ -63,28 +63,28 @@ CREATE TABLE Product
 
 CREATE TABLE ProductAppointment
 (
-  UserId    INT NOT NULL,
+  BookingId  INT NOT NULL,
   ProductId INT NOT NULL,
   GramInDay INT NOT NULL,
-  FOREIGN KEY (UserId) REFERENCES User (UserId) ON DELETE CASCADE,
+  FOREIGN KEY (BookingId) REFERENCES Booking (BookingId) ON DELETE CASCADE,
   FOREIGN KEY (ProductId) REFERENCES Product (ProductId)
 );
 
 CREATE TABLE ExerciseAppointment
 (
-  UserId     INT NOT NULL,
+  BookingId  INT NOT NULL,
   ExerciseId INT NOT NULL,
   SetCount   INT NOT NULL,
   RepCount   INT NOT NULL,
   Weight     INT,
-  FOREIGN KEY (UserId) REFERENCES User (UserId) ON DELETE CASCADE,
+  FOREIGN KEY (BookingId) REFERENCES Booking (BookingId) ON DELETE CASCADE,
   FOREIGN KEY (ExerciseId) REFERENCES Exercise (ExerciseId)
 );
 
 DROP TABLE ProductAppointment;
-DROP TABLE product;
 DROP TABLE ExerciseAppointment;
 DROP TABLE Exercise;
+DROP TABLE Product;
 DROP TABLE Booking;
 DROP TABLE User;
 DROP TABLE UserRole;

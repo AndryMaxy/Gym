@@ -8,14 +8,7 @@
     <c:import url="/WEB-INF/jsp/fragment/header.jsp" charEncoding="utf-8"/>
 </head>
 <body>
-<form name="lang" action="controller" style="text-align: right; margin: 0">
-    <input type="hidden" name="command" value="locale"/>
-    <select id="language" name="locale" onchange="mySubmit('lang')" style="font-size: 130%">
-        <option value="ru-RU" ${sessionScope.locale.toLanguageTag() == 'ru-RU' ? 'selected' : ''}>Русский</option>
-        <option value="en-US" ${sessionScope.locale.toLanguageTag() == 'en-US' ? 'selected' : ''}>English</option>
-        <option value="be-BY" ${sessionScope.locale.toLanguageTag() == 'be-BY' ? 'selected' : ''}>Беларускі</option>
-    </select>
-</form>
+<c:import url="/WEB-INF/jsp/fragment/locale.jsp" charEncoding="utf-8"/>
 <div class="container mainCont">
     <c:import url="/WEB-INF/jsp/fragment/hat.jsp" charEncoding="utf-8"/>
     <div class="botHat">
@@ -32,7 +25,7 @@
             </div>
         </div>
         <div class="col-6">
-            <p class="name">${requestScope.user.name} ${requestScope.user.surname}</p>
+            <p class="name"><c:out value="${requestScope.user.name} ${requestScope.user.surname}"/></p>
         </div>
         <div class="col-3" style="display: inline-block; vertical-align: middle; float: none">
             <c:if test="${requestScope.booking != null}">
@@ -52,7 +45,7 @@
     <div class="row" style="margin-top: 50px">
         <div class="col-md-auto mx-auto">
             <c:choose>
-                <c:when test="${requestScope.booking == null}">
+                <c:when test="${requestScope.booking == null || requestScope.booking.visitCountLeft == 0}">
                     <c:import url="/WEB-INF/jsp/visitor/noAppointment.jsp" charEncoding="utf-8"/>
                 </c:when>
                 <c:when test="${requestScope.appointment == null}">
@@ -69,5 +62,12 @@
             </c:choose>
         </div>
     </div>
+    <c:if test="${param.bad == 't'}">
+    <div class="row">
+        <div class="mx-auto" style="font-size: 24px">
+            <fmt:message key="visitor.lowBalance"/>
+        </div>
+    </div>
+    </c:if>
 </div>
 </body>

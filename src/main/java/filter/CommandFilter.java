@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @WebFilter (filterName = "filter3")
-public class MainFilter implements Filter {
+public class CommandFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -39,7 +39,7 @@ public class MainFilter implements Filter {
         if (split.length >= 3) {
             command = split[2];
             RequestWrapper requestWrapper = new RequestWrapper(request);
-            requestWrapper.setParameter("command", command);
+            requestWrapper.setParameter(Constants.Command.COMMAND, command);
             filterChain.doFilter(requestWrapper, servletResponse);
         } else if (session.getAttribute(Constants.Parameter.ROLE) != UserRole.GUEST){
             response.sendRedirect(request.getContextPath() + Constants.URL.HOME);

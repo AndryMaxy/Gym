@@ -1,30 +1,29 @@
 package command.common;
 
 import command.Command;
-import command.Response;
 import entity.Constants;
-import service.exception.ServiceException;
-import util.exception.EncoderException;
+import entity.Response;
+import util.exception.IncorrectURIException;
+import util.URLFormatter;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
 public class ChangeLocaleCommand extends Command {
 
-    private static final String LOCALE = "locale";
+    private static final String REFERER = "referer";
 
-    public ChangeLocaleCommand(HttpServletRequest request, HttpServletResponse response) {
-        super(request, response);
+    public ChangeLocaleCommand(HttpServletRequest request) {
+        super(request);
     }
 
     @Override
-    public Response execute() throws ServiceException, EncoderException {
-        String localeStr = request.getParameter(LOCALE);
-        HttpSession session = request.getSession();
+    public Response execute() throws IncorrectURIException {
+        String localeStr = request.getParameter(Constants.Parameter.LOCALE);
         Locale locale = Locale.forLanguageTag(localeStr);
-        session.setAttribute(LOCALE, locale);
-        return new Response(Constants.URL.ROOT, true);
+        String referer = request.getHeader(REFERER);
+        String url = URLFormatter.toURL(referer);
+        session.setAttribute(Constants.Parameter.LOCALE, locale);
+        return new Response(url, true);
     }
 }

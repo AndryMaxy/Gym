@@ -9,6 +9,7 @@
     <title><fmt:message key="hat.feedback"/></title>
 </head>
 <body>
+<c:import url="/WEB-INF/jsp/fragment/locale.jsp" charEncoding="utf-8"/>
 <div class="container mainCont">
     <c:import url="/WEB-INF/jsp/fragment/hat.jsp" charEncoding="utf-8"/>
     <c:if test="${sessionScope.role == 'VISITOR' && requestScope.booking != null && requestScope.booking.feedback == null}">
@@ -19,7 +20,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="feed" style="margin-bottom: 0"><fmt:message key="feedback.field"/></label>
-                            <textarea name="feedbackArea" maxlength="500" class="form-control" id="feed" rows="3"
+                            <textarea name="feedbackArea" minlength="20" maxlength="500" class="form-control" id="feed" rows="3"
                                       style="resize: none"></textarea>
                         </div>
                     </div>
@@ -31,15 +32,17 @@
             </div>
         </form>
     </c:if>
-    <div class="col-10 mx-auto" STYLE="margin-top: 25px">
+    <div class="col-10 mx-auto" style="margin-top: 25px">
         <h3 style="text-align: center"><fmt:message key="feedback.list"/></h3>
-        <table class="table" style="border: 0">
+        <table class="table" style="border: 0; margin-top: 15px">
             <tbody>
-            <c:forEach items="${requestScope.feedbackList}" var="feedback">
+            <c:forEach items="${requestScope.bookings}" var="booking">
+                <c:if test="${booking.feedback != null}">
                 <tr>
-                    <td style="width: 15%"><c:out value="${feedback.name}"/></td>
-                    <td><c:out value="${feedback.feedback}"/></td>
+                    <td style="width: 15%"><c:out value="${booking.user.name}"/></td>
+                    <td style="text-align: left"><c:out value="${booking.feedback}"/></td>
                 </tr>
+                </c:if>
             </c:forEach>
             </tbody>
         </table>

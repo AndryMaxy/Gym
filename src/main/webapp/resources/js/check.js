@@ -11,13 +11,19 @@ function checkExercise(id) {
     var trEl = document.getElementById(tr);
     if (checkerEl.checked) {
         repEl.disabled = false;
+        repEl.required = true;
         setEl.disabled = false;
+        setEl.required = true;
         weightEl.disabled = false;
+        weightEl.required = true;
         trEl.bgColor = "#ffffff";
     } else {
         repEl.disabled = true;
+        repEl.required = false;
         setEl.disabled = true;
+        setEl.required = false;
         weightEl.disabled = true;
+        weightEl.required = false;
         trEl.bgColor = "#EBEBE4";
     }
 }
@@ -30,9 +36,11 @@ function checkProduct(id) {
     var trEl = document.getElementById(tr);
     if (checkerEl.checked) {
         gramEl.disabled = false;
+        gramEl.required = true;
         trEl.bgColor = "#ffffff";
     } else {
         gramEl.disabled = true;
+        gramEl.required = false;
         trEl.bgColor = "#EBEBE4";
     }
 }

@@ -2,7 +2,10 @@ package dao;
 
 import connection.ConnectionPool;
 import connection.ProxyConnection;
+import connection.exception.ConnectionException;
 import dao.exception.ExecutorException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Executor {
+
+    private static final Logger LOGGER = LogManager.getLogger(Executor.class.getSimpleName());
 
     private static class ExecutorHolder {
         static final Executor INSTANCE = new Executor();
@@ -23,33 +28,51 @@ public class Executor {
     }
 
     private ConnectionPool pool = ConnectionPool.getInstance();
-                                                                    //TODO MB ALWAYS THROWS EXECUTOR EXC
-    public void execute(String query, StatementHandler stmtHandler) throws SQLException {
-        ProxyConnection connection = pool.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(query);
-        stmtHandler.setStatement(stmt);
-        stmt.execute();
-        stmt.close();
-        connection.close();
+
+    public void execute(String query, StatementHandler stmtHandler) throws ExecutorException {
+        try (ProxyConnection connection = pool.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(query)) {
+                stmtHandler.setStatement(stmt);
+                stmt.execute();
+            }
+        } catch (ConnectionException | SQLException e) {
+            throw new ExecutorException(e);
+        }
+
     }
 
-    public <T> T executeQuery(String query, StatementHandler stmtHandler, ResultHandler<T> resHandler) throws SQLException {
-        ProxyConnection connection = pool.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(query);
-        stmtHandler.setStatement(stmt);
-        stmt.executeQuery();
-        ResultSet result = stmt.getResultSet();
-        T value = resHandler.handle(result);
-        result.close();
-        stmt.close();
-        connection.close();
-        return value;
+    public <T> T executeQuery(String query, StatementHandler stmtHandler, ResultHandler<T> resHandler) throws ExecutorException {
+        try (ProxyConnection connection = pool.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(query)) {
+                stmtHandler.setStatement(stmt);
+                stmt.executeQuery();
+                try (ResultSet result = stmt.getResultSet()) {
+                    return resHandler.handle(result);
+                }
+            }
+        } catch (ConnectionException | SQLException e) {
+            throw new ExecutorException(e);
+        }
+    }
+
+    public <T> T executeQuery(String query, ResultHandler<T> resHandler) throws ExecutorException {
+        try (ProxyConnection connection = pool.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(query)) {
+                stmt.executeQuery();
+                try (ResultSet result = stmt.getResultSet()) {
+                    return resHandler.handle(result);
+                }
+            }
+        } catch (ConnectionException | SQLException e) {
+            throw new ExecutorException(e);
+        }
     }
 
     public void executeTransaction(String[] query, StatementHandler[] stmtHandler) throws ExecutorException {
-        ProxyConnection connection = pool.getConnection();
         List<PreparedStatement> statements = new ArrayList<>();
+        ProxyConnection connection = null;
         try {
+            connection = pool.getConnection();
             connection.setAutoCommit(false);
             for (int i = 0; i < query.length; i++) {
                 PreparedStatement statement = connection.prepareStatement(query[i]);
@@ -58,17 +81,22 @@ public class Executor {
                 statements.add(statement);
             }
             connection.commit();
-            connection.setAutoCommit(true);
-            for (PreparedStatement st : statements) {
-                st.close();
-            }
-            connection.close();
-        } catch (SQLException e) {
-            try {
-                connection.setAutoCommit(true);
+        } catch (SQLException | ConnectionException e) {
+            if (connection != null) {
                 connection.rollback();
-            } catch (SQLException e1) {
-                throw new ExecutorException(e1);
+            }
+            throw new ExecutorException(e);
+        } finally {
+            for (PreparedStatement st : statements) {
+                try {
+                    st.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Can't close statement", e);
+                }
+            }
+            if (connection != null) {
+                connection.setAutoCommit(true);
+                connection.close();
             }
         }
     }

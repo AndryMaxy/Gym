@@ -1,9 +1,10 @@
-package command;
-
+package entity;
+//TODO PACKAGE?
 public class Response {
 
+    private static final String BAD = "?bad=t";
     private String url;
-    private boolean isGoodMessage;
+    private boolean isBadMessage;
     private boolean isRedirect;
 
     public Response(String url, boolean isRedirect) {
@@ -11,13 +12,16 @@ public class Response {
         this.isRedirect = isRedirect;
     }
 
-    public Response(String url, boolean isRedirect, boolean isGoodMessage) {
+    public Response(String url, boolean isRedirect, boolean isBadMessage) {
         this.url = url;
         this.isRedirect = isRedirect;
-        this.isGoodMessage = isGoodMessage;
+        this.isBadMessage = isBadMessage;
     }
 
     public String getUrl() {
+        if (isBadMessage) {
+            url = url + BAD;
+        }
         return url;
     }
 
@@ -33,11 +37,11 @@ public class Response {
         isRedirect = redirect;
     }
 
-    public boolean isGoodMessage() {
-        return isGoodMessage;
+    public boolean isBadMessage() {
+        return isBadMessage;
     }
 
-    public void setGoodMessage(boolean goodMessage) {
-        isGoodMessage = goodMessage;
+    public void setBadMessage(boolean badMessage) {
+        isBadMessage = badMessage;
     }
 }

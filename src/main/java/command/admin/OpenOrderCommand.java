@@ -1,7 +1,7 @@
 package command.admin;
 
 import command.Command;
-import command.Response;
+import entity.Response;
 import entity.Booking;
 import entity.Constants;
 import entity.User;
@@ -11,30 +11,28 @@ import service.UserService;
 import service.exception.ServiceException;
 import service.impl.BookingServiceImpl;
 import service.impl.UserServiceImpl;
-import util.exception.EncoderException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class OpenOrderCommand extends Command {
 
-    public OpenOrderCommand(HttpServletRequest request, HttpServletResponse response) {
-        super(request, response);
+    private UserService userService = UserServiceImpl.getInstance();
+    private BookingService bookingService = BookingServiceImpl.getInstance();
+
+    public OpenOrderCommand(HttpServletRequest request) {
+        super(request);
     }
 
     @Override
-    public Response execute() throws ServiceException, EncoderException {
+    public Response execute() throws ServiceException {
         String userIdStr = request.getParameter(Constants.Parameter.USER_ID);
-        int userId = Integer.parseInt(userIdStr);
-        UserService userService = UserServiceImpl.getInstance();
-        User user = userService.getUser(userId);
+        User user = userService.getUser(userIdStr);
         UserRole userRole = user.getRole();
         if ((userRole == UserRole.ADMIN) || (userRole == UserRole.TRAINER)) {
             return new Response(Constants.URL.ROOT, true);
         }
-        BookingService service = BookingServiceImpl.getInstance();
-        List<Booking> bookings = service.getBookings(userId);
+        List<Booking> bookings = bookingService.getBookingList(userIdStr);
         request.setAttribute("user", user);
         request.setAttribute("bookings", bookings);
         return new Response(Constants.URL.ORDER, false);

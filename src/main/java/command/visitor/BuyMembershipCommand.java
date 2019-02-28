@@ -1,9 +1,8 @@
 package command.visitor;
 
 import command.Command;
-import command.Response;
+import entity.Response;
 import entity.Constants;
-import entity.Membership;
 import entity.User;
 import service.BookingService;
 import service.UserService;
@@ -12,34 +11,25 @@ import service.impl.BookingServiceImpl;
 import service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class BuyMembershipCommand extends Command {
 
+    private UserService userService = UserServiceImpl.getInstance();
+    private BookingService bookingService = BookingServiceImpl.getInstance();
 
-    public BuyMembershipCommand(HttpServletRequest request, HttpServletResponse response) {
-        super(request, response);
+    public BuyMembershipCommand(HttpServletRequest request) {
+        super(request);
     }
 
     @Override
     public Response execute() throws ServiceException {
         String membershipStr = request.getParameter(Constants.Parameter.MEMBERSHIP);
-        HttpSession session = request.getSession();
-        int userId = (int) session.getAttribute(Constants.Parameter.USER_ID);
-        UserService userService = UserServiceImpl.getInstance();
+        String userId = (String) session.getAttribute(Constants.Parameter.USER_ID);
         User user = userService.getUser(userId);
-        int discount = user.getDiscount();
-        int balance = user.getBalance();
-        Membership membership = Membership.valueOf(membershipStr);
-        int price = membership.getPrice();
-        int cost = price / 100 * (100 - discount);
-        if (balance < cost) {
-            return new Response(Constants.URL.HOME, true); //TODO НУЖЕН МЕССЕДЖ НА НЕУДАЧУ
+        boolean result = bookingService.buyMembership(user, membershipStr);
+        if (!result) {
+            return new Response(Constants.URL.HOME, true, true);
         }
-        int newBalance = balance - cost;
-        BookingService bookingService = BookingServiceImpl.getInstance();
-        bookingService.buyMembership(userId, newBalance, membership);
         return new Response(Constants.URL.HOME, true);
     }
 }

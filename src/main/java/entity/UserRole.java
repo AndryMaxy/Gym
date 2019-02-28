@@ -15,4 +15,11 @@ public enum UserRole {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "UserRole{" +
+                "id=" + id +
+                '}';
+    }
 }

@@ -37,21 +37,23 @@ public class ProxyConnection implements AutoCloseable {
 
     }
 
-    public void setAutoCommit(boolean autoCommit) throws SQLException {
-        connection.setAutoCommit(autoCommit);
-    }
-
     public void commit() throws SQLException {
         connection.commit();
+    }
+
+    public void setAutoCommit(boolean autoCommit) {
+        try {
+            connection.setAutoCommit(autoCommit);
+        } catch (SQLException e) {
+            LOGGER.error("Can't set autocommit transaction", e);
+        }
     }
 
     public void rollback() {
         try {
             connection.rollback();
-            close();
         } catch (SQLException e) {
-            LOGGER.error("Can't rollback transaction");
-            close();
+            LOGGER.error("Can't rollback transaction", e);
         }
     }
 }

@@ -1,8 +1,6 @@
 package dao;
 
 import dao.exception.DAOException;
-import entity.Exercise;
-import entity.Product;
 import entity.User;
 
 import java.util.List;

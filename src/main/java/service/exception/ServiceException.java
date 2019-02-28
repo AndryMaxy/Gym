@@ -2,6 +2,8 @@ package service.exception;
 
 public class ServiceException extends Exception {
 
+    private static final long serialVersionUID = -6198721201385178485L;
+
     public ServiceException() {
     }
 

@@ -8,19 +8,12 @@
     <c:import url="/WEB-INF/jsp/fragment/header.jsp" charEncoding="utf-8"/>
 </head>
 <body>
-<form name="lang" action="controller" style="text-align: right; margin: 0">
-    <input type="hidden" name="command" value="locale"/>
-    <select id="language" name="locale" onchange="mySubmit('lang')" style="font-size: 130%">
-        <option value="ru-RU" ${sessionScope.locale.toLanguageTag() == 'ru-RU' ? 'selected' : ''}>Русский</option>
-        <option value="en-US" ${sessionScope.locale.toLanguageTag() == 'en-US' ? 'selected' : ''}>English</option>
-        <option value="be-BY" ${sessionScope.locale.toLanguageTag() == 'be-BY' ? 'selected' : ''}>Беларускі</option>
-    </select>
-</form>
+<c:import url="/WEB-INF/jsp/fragment/locale.jsp" charEncoding="utf-8"/>
 <div class="container mainCont">
     <c:import url="/WEB-INF/jsp/fragment/hat.jsp" charEncoding="utf-8"/>
     <div class="botHat">
         <div class="col-md-auto">
-            <p class="name">${requestScope.user.name} ${requestScope.user.surname}</p>
+            <p class="name"><c:out value="${requestScope.user.name} ${requestScope.user.surname}"/></p>
         </div>
     </div>
     <c:choose>
@@ -28,6 +21,12 @@
             <div class="row" style="margin-top: 75px">
                 <div class="mx-auto">
                     <h3><fmt:message key="trainer.noVisitors"/></h3>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 40px">
+                <div class="mx-auto">
+                    <fmt:message key="common.image" var="img"/>
+                    <img src="${pageContext.request.contextPath}/resources/img/empty.jpg" alt="${img}">
                 </div>
             </div>
         </c:when>
@@ -54,7 +53,6 @@
                                 <td><c:out value="${user.surname}"/></td>
                                 <td>
                                     <form action="doAppoint" method="get" class="my-auto">
-                                            <%--<input type="hidden" name="command" value="doAppoint">--%>
                                         <input type="hidden" name="userId" value="${user.id}">
                                         <button type="submit" class="btn btn-success mx-auto">
                                             <fmt:message key="trainer.appoint"/>

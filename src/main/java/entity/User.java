@@ -1,7 +1,9 @@
 package entity;
 
-public class User implements Entity{
-    //TODO EQUALS HASHCODE TO STRING
+import java.util.Objects;
+
+public class User {
+
     private int id;
     private String login;
     private String hash;
@@ -10,7 +12,7 @@ public class User implements Entity{
     private String surname;
     private UserRole role;
     private int discount;
-    private int balance = 1000;
+    private int balance = 800;
 
     public int getId() {
         return id;
@@ -82,5 +84,45 @@ public class User implements Entity{
 
     public void setBalance(int balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+        User user = (User) o;
+        return id == user.id &&
+                discount == user.discount &&
+                balance == user.balance &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(hash, user.hash) &&
+                Objects.equals(salt, user.salt) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(surname, user.surname) &&
+                role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, hash, salt, name, surname, role, discount, balance);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", hash='" + hash + '\'' +
+                ", salt='" + salt + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", role=" + role +
+                ", discount=" + discount +
+                ", balance=" + balance +
+                '}';
     }
 }

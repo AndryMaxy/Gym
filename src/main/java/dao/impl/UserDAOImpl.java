@@ -1,10 +1,10 @@
 package dao.impl;
 
 import builder.UserBuilder;
-import dao.AbstractUserDAO;
+import dao.Executor;
 import dao.UserDAO;
 import dao.exception.DAOException;
-import entity.Constants;
+import dao.exception.ExecutorException;
 import entity.User;
 import entity.UserRole;
 
@@ -13,29 +13,32 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImpl extends AbstractUserDAO implements UserDAO {
+public class UserDAOImpl implements UserDAO {
     private static final String INSERT =
             "INSERT INTO User ( UserRoleId, Login, Hash, Salt, Name, Surname, Balance ) VALUES ( ?, ?, ?, ?, ?, ?, ? )";
     private static final String SELECT_USER_BY_LOGIN =
-            "SELECT * FROM User u JOIN UserRole r on u.UserRoleId = r.UserRoleId WHERE Login = ?";
+            "SELECT u.UserId, u.Login, u.Name, u.Surname, u.Hash, u.Salt, u.Discount, u.Balance, r.Role FROM User u JOIN UserRole r ON u.UserRoleId = r.UserRoleId WHERE Login = ?";
     private static final String SELECT_USER_BY_ID =
-            "SELECT * FROM User u JOIN UserRole r on u.UserRoleId = r.UserRoleId WHERE UserId = ?";
+            "SELECT u.UserId, u.Login, u.Name, u.Surname, u.Hash, u.Salt, u.Discount, u.Balance, r.Role FROM User u JOIN UserRole r ON u.UserRoleId = r.UserRoleId WHERE UserId = ?";
     private static final String SELECT_ALL =
-            "SELECT * FROM User u JOIN UserRole r on u.UserRoleId = r.UserRoleId";
-    private static final String SELECT_VISITORS =
-            "SELECT * FROM User u JOIN UserRole r on u.UserRoleId = r.UserRoleId LEFT JOIN ExerciseAppointment e on u.UserId = e.UserId WHERE u.UserRoleId = 3 && e.UserId IS NULL";
+            "SELECT u.UserId, u.Login, u.Name, u.Surname, u.Hash, u.Salt, u.Discount, u.Balance, r.Role FROM User u JOIN UserRole r ON u.UserRoleId = r.UserRoleId";
+    private static final String SELECT_VISITORS_OLD =
+            "SELECT u.UserId, u.Login, u.Name, u.Surname, u.Hash, u.Salt, u.Discount, u.Balance, r.Role FROM User u JOIN UserRole r ON u.UserRoleId = r.UserRoleId LEFT JOIN ExerciseAppointment e on u.UserId = e.UserId WHERE u.UserRoleId = 3 && e.UserId IS NULL";
+    private static final String SELECT_WITHOUT_APPOINTMENT =
+            "SELECT u.UserId, u.Login, u.Name, u.Surname, u.Hash, u.Salt, u.Discount, u.Balance, r.Role FROM User u JOIN UserRole r ON u.UserRoleId = r.UserRoleId JOIN Booking b ON u.UserId = b.UserId LEFT JOIN ExerciseAppointment e ON b.BookingId = e.BookingId WHERE u.UserRoleId = 3 && e.BookingId IS NULL";
     private static final String SELECT_VISITOR =
-            "SELECT * FROM User u JOIN UserRole r on u.UserRoleId = r.UserRoleId LEFT JOIN ExerciseAppointment e on u.UserId = e.UserId WHERE u.UserRoleId = 3 && e.UserId IS NULL && u.UserId = ?";
+            "SELECT u.UserId, u.Login, u.Name, u.Surname, u.Hash, u.Salt, u.Discount, u.Balance, r.Role FROM User u JOIN UserRole r ON u.UserRoleId = r.UserRoleId JOIN Booking b ON u.UserId = b.UserId LEFT JOIN ExerciseAppointment e ON b.BookingId = e.BookingId WHERE u.UserRoleId = 3 && e.BookingId IS NULL && u.UserId = ?";
     private static final String UPDATE =
             "UPDATE User SET UserRoleId = ?, Login = ?, Hash = ?, Salt = ?, Name = ?, Surname = ?, Discount = ?, Balance = ? WHERE UserId = ?";
     private static final String DELETE = "DELETE FROM User WHERE UserId = ?";
 
+    private Executor executor = Executor.getInstance();
 
     private static class UserDAOHolder {
         static final UserDAOImpl INSTANCE = new UserDAOImpl();
     }
 
-    private UserDAOImpl() { }
+    private UserDAOImpl() {}
 
     public static UserDAOImpl getInstance() {
         return UserDAOHolder.INSTANCE;
@@ -59,9 +62,9 @@ public class UserDAOImpl extends AbstractUserDAO implements UserDAO {
                 if (!resultSet.next()) {
                     return null;
                 }
-                return newUser(resultSet);
+                return parseUser(resultSet);
             });
-        } catch (SQLException e) {
+        } catch (ExecutorException e) {
             throw new DAOException();
         }
     }
@@ -71,7 +74,7 @@ public class UserDAOImpl extends AbstractUserDAO implements UserDAO {
     }
 
     public List<User> getVisitors() throws DAOException {
-        return getUserList(SELECT_VISITORS);
+        return getUserList(SELECT_WITHOUT_APPOINTMENT);
     }
 
     @Override
@@ -86,7 +89,7 @@ public class UserDAOImpl extends AbstractUserDAO implements UserDAO {
                 statement.setString(6, user.getSurname());
                 statement.setInt(7, user.getBalance());
             });
-        } catch (SQLException e) {
+        } catch (ExecutorException e) {
             throw new DAOException(e);
         }
     }
@@ -105,7 +108,7 @@ public class UserDAOImpl extends AbstractUserDAO implements UserDAO {
                 statement.setInt(8, user.getBalance());
                 statement.setInt(9, user.getId());
             });
-        } catch (SQLException e) {
+        } catch (ExecutorException e) {
             throw new DAOException(e);
         }
     }
@@ -116,22 +119,22 @@ public class UserDAOImpl extends AbstractUserDAO implements UserDAO {
             executor.execute(DELETE, statement -> {
                 statement.setInt(1, userId);
             });
-        } catch (SQLException e) {
+        } catch (ExecutorException e) {
             throw new DAOException(e);
         }
     }
 
     private List<User> getUserList(String query) throws DAOException {
         try {
-            return executor.executeQuery(query, statement -> {}, resultSet -> {
+            return executor.executeQuery(query, resultSet -> {
                 List<User> users = new ArrayList<>();
                 while (resultSet.next()) {
-                    User user = newUser(resultSet);
+                    User user = parseUser(resultSet);
                     users.add(user);
                 }
                 return users;
             });
-        } catch (SQLException e) {
+        } catch (ExecutorException e) {
             throw new DAOException(e);
         }
     }
@@ -144,23 +147,23 @@ public class UserDAOImpl extends AbstractUserDAO implements UserDAO {
                 if (!resultSet.next()) {
                     return null;
                 }
-                return newUser(resultSet);
+                return parseUser(resultSet);
             });
-        } catch (SQLException e) {
+        } catch (ExecutorException e) {
             throw new DAOException();
         }
     }
 
-    private User newUser(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt(Constants.User.ID);
-        String login = resultSet.getString(Constants.User.LOGIN);
-        String name = resultSet.getString(Constants.User.NAME);
-        String surname = resultSet.getString(Constants.User.SURNAME);
-        String hash = resultSet.getString(Constants.User.HASH);
-        String salt = resultSet.getString(Constants.User.SALT);
-        String roleString = resultSet.getString(Constants.User.ROLE);
-        int discount = resultSet.getInt(Constants.User.DISCOUNT);
-        int balance = resultSet.getInt(Constants.User.BALANCE);
+    private User parseUser(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("UserId");
+        String login = resultSet.getString("Login");
+        String name = resultSet.getString("Name");
+        String surname = resultSet.getString("Surname");
+        String hash = resultSet.getString("Hash");
+        String salt = resultSet.getString("Salt");
+        String roleString = resultSet.getString("Role");
+        int discount = resultSet.getInt("Discount");
+        int balance = resultSet.getInt("Balance");
         UserRole userRole = UserRole.valueOf(roleString.toUpperCase());
         UserBuilder builder = new UserBuilder();
         return builder.buildId(id)

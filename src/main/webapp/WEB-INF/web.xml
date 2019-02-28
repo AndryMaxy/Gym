@@ -26,6 +26,14 @@
         <servlet-name>feedback.jsp</servlet-name>
         <jsp-file>/WEB-INF/jsp/common/feedback.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>about.jsp</servlet-name>
+        <jsp-file>/WEB-INF/jsp/common/about.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>about.jsp</servlet-name>
+        <url-pattern>/about.jsp</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>feedback.jsp</servlet-name>
         <url-pattern>/feedback.jsp</url-pattern>
@@ -61,6 +69,7 @@
         <url-pattern>/order</url-pattern>
         <url-pattern>/register</url-pattern>
         <url-pattern>/feedback</url-pattern>
+        <url-pattern>/about</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>filter4</filter-name>

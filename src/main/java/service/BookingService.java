@@ -1,18 +1,18 @@
 package service;
 
 import entity.Booking;
-import entity.Feedback;
-import entity.Membership;
+import entity.User;
 import service.exception.ServiceException;
 
 import java.util.List;
 
 public interface BookingService {
 
-    Booking getBooking(int bookingId) throws ServiceException;
-    Booking getBookingByUserId(int userId) throws ServiceException;
-    List<Booking> getBookings(int userId) throws ServiceException;
-    void buyMembership(int userId, int balance, Membership membership) throws ServiceException;
+    Booking getBooking(String bookingId) throws ServiceException;
+    Booking getBookingByUserId(String userId) throws ServiceException;
+    List<Booking> getBookingList(String userId) throws ServiceException;
+    List<Booking> getAll() throws ServiceException;
+    boolean buyMembership(User user, String membershipStr) throws ServiceException;
     void update(Booking booking) throws ServiceException;
-    List<Feedback> getFeedbackList() throws ServiceException;
+    void reduceVisits(Booking booking) throws ServiceException;
 }

@@ -9,11 +9,12 @@
     <c:import url="/WEB-INF/jsp/fragment/header.jsp" charEncoding="utf-8"/>
 </head>
 <body>
+<c:import url="/WEB-INF/jsp/fragment/locale.jsp" charEncoding="utf-8"/>
 <div class="container mainCont">
     <c:import url="/WEB-INF/jsp/fragment/hat.jsp" charEncoding="utf-8"/>
     <div class="botHat">
         <div class="col-md-auto">
-            <p class="name"><fmt:message key="trainer.for"/> ${requestScope.visitor.name} ${requestScope.visitor.surname}</p>
+            <p class="name"><fmt:message key="trainer.for"/> <c:out value="${requestScope.visitor.name} ${requestScope.visitor.surname}"/></p>
         </div>
     </div>
     <form action="controller" method="post">
@@ -33,14 +34,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${requestScope.appointment.exercises}" var="exercise">
+                        <c:forEach items="${requestScope.appointment.exerciseAppointments}" var="exercise">
                             <tr bgcolor="#EBEBE4" id="trEx-${exercise.id}">
                                 <td><c:out value="${exercise.name}"/></td>
                                 <td><input type="number" min="5" max="200" name="repCount-${exercise.id}" disabled>
                                 </td>
                                 <td><input type="number" min="1" max="20" name="setCount-${exercise.id}" disabled>
                                 </td>
-                                <td><input type="number" min="1" max="200" name="weight-${exercise.id}" disabled>
+                                <td><input type="number" min="0" max="200" name="weight-${exercise.id}" disabled>
                                 </td>
                                 <td><input type="checkbox" name="checkerEx-${exercise.id}"
                                            onclick="checkExercise('${exercise.id}')" style="transform: scale(1.8)"></td>
@@ -59,10 +60,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${requestScope.appointment.products}" varStatus="status" var="product">
+                        <c:forEach items="${requestScope.appointment.productAppointments}" varStatus="status" var="product">
                             <tr bgcolor="#EBEBE4" id="trPr-${product.id}">
                                 <td><c:out value="${product.name}"/></td>
-                                <td><input type="number" min="5" max="200" name="gram-${product.id}" disabled>
+                                <td><input type="number" min="20" max="1000" name="gram-${product.id}" disabled>
                                 </td>
                                 <td><input type="checkbox" name="checkerPr-${product.id}"
                                            onclick="checkProduct('${product.id}')" style="transform: scale(1.8)"></td>

@@ -9,6 +9,7 @@
     <c:import url="/WEB-INF/jsp/fragment/header.jsp" charEncoding="utf-8"/>
 </head>
 <body class="bg-light">
+<c:import url="/WEB-INF/jsp/fragment/locale.jsp" charEncoding="utf-8"/>
 <div class="container mainCont">
     <c:import url="/WEB-INF/jsp/fragment/hat.jsp" charEncoding="utf-8"/>
     <div style="margin-top: 70px">
@@ -29,10 +30,17 @@
                                        placeholder="${login}"
                                        required>
                                 <div class="invalid-feedback">
-                                    Login must contain minimum 6 letters or digits.
+                                    <fmt:message key="register.incorrectLogin"/>
                                 </div>
                             </div>
                         </div>
+                        <c:if test="${param.bad == 't'}">
+                            <div class="row form-group">
+                                <div class="mx-auto">
+                                    <fmt:message key="register.exists"/>
+                                </div>
+                            </div>
+                        </c:if>
                         <div class="row form-group">
                             <div class="mx-auto">
                                 <fmt:message key="login.password" var="password"/>
@@ -40,7 +48,7 @@
                                        class="form-control"
                                        placeholder="${password}" autocomplete="current-hash" required>
                                 <div class="invalid-feedback">
-                                    Password must contain minimum 5 letters and one digit.
+                                    <fmt:message key="register.incorrectPassword"/>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +58,7 @@
                                 <input type="text" name="name" pattern="[A-zА-я]+" class="form-control"
                                        placeholder="${name}" autocomplete="current-hash" required>
                                 <div class="invalid-feedback">
-                                    Name must contain only letters.
+                                    <fmt:message key="register.incorrectName"/>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +68,7 @@
                                 <input type="text" name="surname" pattern="[A-zА-я]+" class="form-control"
                                        placeholder="${surname}" autocomplete="current-hash" required>
                                 <div class="invalid-feedback">
-                                    Surname must contain only letters.
+                                    <fmt:message key="register.incorrectSurname"/>
                                 </div>
                             </div>
                         </div>

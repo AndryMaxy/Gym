@@ -1,6 +1,7 @@
 package entity;
 
 public enum Membership {
+
     ULTRA(1,30, 1000),
     SUPER(2,20, 800),
     STANDARD(3,15, 600),
@@ -29,9 +30,8 @@ public enum Membership {
         return price;
     }
 
-    //TODO TO STRING!
     @Override
     public String toString() {
-        return super.toString();
+        return name();
     }
 }

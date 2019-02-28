@@ -4,6 +4,7 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="content"/>
 <h3 align="center"><fmt:message key="visitor.appointment"/></h3>
+<c:if test="${requestScope.appointment.exerciseAppointments.size() > 0}">
 <div class="row">
     <div class="col-auto mx-auto">
         <table class="table">
@@ -16,18 +17,20 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${requestScope.appointment.exercises}" var="exercise">
+            <c:forEach items="${requestScope.appointment.exerciseAppointments}" var="exerciseAppointment">
                 <tr>
-                    <td><c:out value="${exercise.name}"/></td>
-                    <td><c:out value="${exercise.repCount}"/></td>
-                    <td><c:out value="${exercise.setCount}"/></td>
-                    <td><c:out value="${exercise.weight}"/></td>
+                    <td><c:out value="${exerciseAppointment.name}"/></td>
+                    <td><c:out value="${exerciseAppointment.repCount}"/></td>
+                    <td><c:out value="${exerciseAppointment.setCount}"/></td>
+                    <td><c:out value="${exerciseAppointment.weight}"/></td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </div>
 </div>
+</c:if>
+<c:if test="${requestScope.appointment.productAppointments.size() > 0}">
 <div class="row">
     <div class="col-md-auto mx-auto">
         <table class="table">
@@ -38,16 +41,17 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${requestScope.appointment.products}" var="product">
-                <tr>
-                    <td><c:out value="${product.name}"/></td>
-                    <td><c:out value="${product.gramInDay}"/></td>
-                </tr>
-            </c:forEach>
+                <c:forEach items="${requestScope.appointment.productAppointments}" var="productAppointment">
+                    <tr>
+                        <td><c:out value="${productAppointment.name}"/></td>
+                        <td><c:out value="${productAppointment.gramInDay}"/></td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
     </div>
 </div>
+</c:if>
 
 
 

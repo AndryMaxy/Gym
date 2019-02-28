@@ -2,7 +2,9 @@ package controller;
 
 import command.Command;
 import command.CommandFactory;
-import command.Response;
+import entity.Response;
+import util.exception.IncorrectURIException;
+import command.exception.NoCommandException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.exception.ServiceException;
@@ -16,9 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "controller", urlPatterns = {
-        "/controller", "/home", "/doAppoint", "/register", "/order" , "/feedback"})
+        "/controller", "/home", "/doAppoint", "/register", "/order" , "/feedback", "/about"})
 public class ControllerServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 6723792333495373893L;
     private static final String COMMAND = "command";
     private static final Logger LOGGER = LogManager.getLogger(ControllerServlet.class.getSimpleName());
 
@@ -34,39 +37,38 @@ public class ControllerServlet extends HttpServlet {
 
     private void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandName = request.getParameter(COMMAND);
-        LOGGER.info("command: " + commandName);
+        LOGGER.debug(COMMAND + ": " + commandName);
         CommandFactory factory = CommandFactory.INSTANCE;
-        Command command = factory.getCommand(commandName, request,  response);
-        Response resp;
+        Command command;
         try {
-            resp = command.execute();
+            command = factory.getCommand(commandName, request);
+        } catch (NoCommandException e) {
+            String errorMsg = String.format("Command %s does not exist", commandName);
+            LOGGER.error(errorMsg, e);
+            return;
+        }
+        Response myResponse;
+        try {
+            myResponse = command.execute();
         } catch (ServiceException e) {
-            LOGGER.error("not good", e);
-            //TODO ERROR MESSAGE
+            LOGGER.error("Service side trouble", e);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
         } catch (EncoderException e) {
-            LOGGER.error("cant encode", e);
-            //TODO ERROR MESSAGE
+            LOGGER.error("Can't encode data", e);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        } catch (IncorrectURIException e) {
+            LOGGER.error("You have an error in uri syntax", e);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
         }
-        LOGGER.info("message: " + resp.isGoodMessage());
-        String uri = resp.getUrl();
-        if (resp.isRedirect()) {
-            redirect(response, uri);
+        String url = myResponse.getUrl();
+        if (myResponse.isRedirect()) {
+            String contextPath = getServletContext().getContextPath();
+            response.sendRedirect(contextPath + url);
         } else {
-            request.setAttribute("message", resp.isGoodMessage());
-            forward(request, response, uri);
+            request.getRequestDispatcher(url).forward(request,response);
         }
-    }
-
-    private void redirect(HttpServletResponse response, String uri) throws IOException {
-        String contextPath = getServletContext().getContextPath();
-        System.out.println("redirect: " + contextPath + uri);
-        response.sendRedirect(contextPath + uri);
-    }
-
-    private void forward(HttpServletRequest request, HttpServletResponse response, String uri) throws ServletException, IOException {
-        System.out.println("forward: " + uri);
-        request.getRequestDispatcher(uri).forward(request,response);
     }
 }

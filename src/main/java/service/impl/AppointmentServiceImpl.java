@@ -2,13 +2,14 @@ package service.impl;
 
 import dao.AppointmentDAO;
 import dao.exception.DAOException;
-import dao.impl.ExerciseDAOImpl;
-import dao.impl.ProductDAOImpl;
+import dao.impl.ExerciseAppointmentDAOImpl;
+import dao.impl.ProductAppointmentDAOImpl;
 import entity.Appointment;
-import entity.Exercise;
-import entity.Product;
+import entity.ExerciseAppointment;
+import entity.ProductAppointment;
 import service.AppointmentService;
 import service.exception.ServiceException;
+import validator.ParameterValidator;
 
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class AppointmentServiceImpl implements AppointmentService {
         static final AppointmentServiceImpl INSTANCE = new AppointmentServiceImpl();
     }
 
-    private final AppointmentDAO<Exercise> exerciseDAO = ExerciseDAOImpl.getInstance();
-    private final AppointmentDAO<Product> productDAO = ProductDAOImpl.getInstance();
+    private final AppointmentDAO<ExerciseAppointment> exerciseDAO = ExerciseAppointmentDAOImpl.getInstance();
+    private final AppointmentDAO<ProductAppointment> productDAO = ProductAppointmentDAOImpl.getInstance();
 
     private AppointmentServiceImpl(){}
 
@@ -27,11 +28,11 @@ public class AppointmentServiceImpl implements AppointmentService {
         return AppointmentServiceHolder.INSTANCE;
     }
 
-    public Appointment getAppointment(int id) throws ServiceException {
+    public Appointment getAppointment(int bookingId) throws ServiceException {
         try {
-            List<Exercise> exercises = exerciseDAO.getByUserId(id);
-            List<Product> products = productDAO.getByUserId(id);
-            return get(exercises, products);
+            List<ExerciseAppointment> exerciseAppointments = exerciseDAO.getByUserId(bookingId);
+            List<ProductAppointment> productAppointments = productDAO.getByUserId(bookingId);
+            return get(exerciseAppointments, productAppointments);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -39,29 +40,32 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     public Appointment getAll() throws ServiceException {
         try {
-            List<Exercise> exercises = exerciseDAO.getAll();
-            List<Product> products = productDAO.getAll();
-            return get(exercises, products);
+            List<ExerciseAppointment> exerciseAppointments = exerciseDAO.getAll();
+            List<ProductAppointment> productAppointments = productDAO.getAll();
+            return get(exerciseAppointments, productAppointments);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
-    private Appointment get(List<Exercise> exercises, List<Product> products){
-        if (exercises.isEmpty() && products.isEmpty()) {
+    private Appointment get(List<ExerciseAppointment> exerciseAppointments, List<ProductAppointment> productAppointments){
+        if (exerciseAppointments.isEmpty() && productAppointments.isEmpty()) {
             return null;
         }
         Appointment appointment = new Appointment();
-        appointment.setExercises(exercises);
-        appointment.setProducts(products);
+        appointment.setExerciseAppointments(exerciseAppointments);
+        appointment.setProductAppointments(productAppointments);
         return appointment;
     }
 
     @Override
-    public boolean addAppointment(int userId, Appointment appointment) throws ServiceException {
+    public boolean addAppointment(int bookingId, List<ExerciseAppointment> exerciseAppointments, List<ProductAppointment> productAppointments) throws ServiceException {
         try {
-            exerciseDAO.addAppointment(userId, appointment.getExercises());
-            productDAO.addAppointment(userId, appointment.getProducts());
+            Appointment appointment = new Appointment();
+            appointment.setExerciseAppointments(exerciseAppointments);
+            appointment.setProductAppointments(productAppointments);
+            exerciseDAO.addAppointment(bookingId, appointment.getExerciseAppointments());
+            productDAO.addAppointment(bookingId, appointment.getProductAppointments());
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

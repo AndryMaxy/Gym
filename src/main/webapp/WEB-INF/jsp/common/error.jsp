@@ -19,9 +19,9 @@
         </c:otherwise>
     </c:choose>
     <hr class="my-4">
-    <p><fmt:message key="error.request"/> ${pageContext.errorData.requestURI} <fmt:message key="error.fail"/></p>
-    <p><fmt:message key="error.servlet"/>: ${pageContext.errorData.servletName}</p>
-    <p><fmt:message key="error.code"/>: ${pageContext.errorData.statusCode}</p>
+    <p><fmt:message key="error.request"/><c:out value="${pageContext.errorData.requestURI}"/> <fmt:message key="error.fail"/></p>
+    <p><fmt:message key="error.servlet"/>: <c:out value="${pageContext.errorData.servletName}"/></p>
+    <p><fmt:message key="error.code"/>: <c:out value="${pageContext.errorData.statusCode}"/></p>
     <a href="${pageContext.request.contextPath}" class="btn btn-primary">
         <fmt:message key="error.main"/>
     </a>

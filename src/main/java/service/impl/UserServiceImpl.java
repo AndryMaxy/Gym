@@ -4,13 +4,15 @@ import dao.UserDAO;
 import dao.exception.DAOException;
 import dao.impl.UserDAOImpl;
 import entity.User;
+import entity.UserRole;
 import service.UserService;
 import service.exception.ServiceException;
 import util.Encoder;
 import util.exception.EncoderException;
+import validator.ParameterValidator;
 
 import java.util.List;
-//TODO MB SEPARATE BY ROLE
+
 public class UserServiceImpl implements UserService {
 
     private final UserDAO userDAO = UserDAOImpl.getInstance();
@@ -23,7 +25,18 @@ public class UserServiceImpl implements UserService {
         return UserServiceImplHolder.INSTANCE;
     }
 
+    private final ParameterValidator validator = ParameterValidator.getInstance();
+
     private UserServiceImpl(){}
+
+    @Override
+    public void add(User user) throws ServiceException {
+        try {
+            userDAO.add(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 
     @Override
     public List<User> getAll() throws ServiceException {
@@ -36,6 +49,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUserLoginExist(String login) throws ServiceException {
+        if (!validator.validateLogin(login)) {
+            return false;
+        }
         try {
             User user = userDAO.getByLogin(login);
             return user != null;
@@ -45,9 +61,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(int id) throws ServiceException {
+    public User getUser(String id) throws ServiceException {
+        if (!validator.validateNumber(id)) {
+            return null;
+        }
         try {
-            return userDAO.getById(id);
+            int userId = Integer.parseInt(id);
+            return userDAO.getById(userId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -55,6 +75,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int logIn(String login, char[] password) throws ServiceException, EncoderException {
+        if (!validator.validateLogin(login) || !validator.validatePassword(password)) {
+            return 0;
+        }
         try {
             User user = userDAO.getByLogin(login);
             if (user == null) {
@@ -83,18 +106,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getVisitor(int id) throws ServiceException {
-        try {
-            return userDAO.getVisitor(id);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
+    public User getVisitor(String id) throws ServiceException {
+        if (!validator.validateNumber(id)) {
+            return null;
         }
-    }
-
-    @Override
-    public void add(User user) throws ServiceException {
+        int userId = Integer.parseInt(id);
         try {
-            userDAO.add(user);
+            return userDAO.getVisitor(userId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -110,11 +128,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(int userId) throws ServiceException {
+    public void delete(String id) throws ServiceException {
+        if (!validator.validateNumber(id)) {
+            return;
+        }
+        int userId = Integer.parseInt(id);
         try {
             userDAO.delete(userId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public void changeRole(String id, String roleStr) throws ServiceException {
+        if (!validator.validateNumber(id) || !validator.validateRole(roleStr)) {
+            return;
+        }
+        User user = getUser(id);
+        UserRole userRole = UserRole.valueOf(roleStr);
+        user.setRole(userRole);
+        update(user);
+    }
+
+    @Override
+    public void changeDiscount(String id, String discountStr) throws ServiceException {
+        if (!validator.validateNumber(id) || !validator.validateDiscount(discountStr)) {
+            return;
+        }
+        User user = getUser(id);
+        int discount = Integer.parseInt(discountStr);
+        user.setDiscount(discount);
+        update(user);
     }
 }

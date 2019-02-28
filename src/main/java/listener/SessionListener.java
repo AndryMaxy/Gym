@@ -1,5 +1,6 @@
 package listener;
 
+import entity.Constants;
 import entity.UserRole;
 
 import javax.servlet.annotation.WebListener;
@@ -14,7 +15,7 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
         HttpSession session = httpSessionEvent.getSession();
-        session.setAttribute("role", UserRole.GUEST);
+        session.setAttribute(Constants.Parameter.ROLE, UserRole.GUEST);
     }
 
     @Override

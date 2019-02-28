@@ -1,17 +1,19 @@
 package command.trainer;
 
 import command.Command;
-import command.Response;
-import entity.Appointment;
+import entity.Booking;
+import entity.Response;
 import entity.Constants;
-import entity.Exercise;
-import entity.Product;
+import entity.ExerciseAppointment;
+import entity.ProductAppointment;
 import service.AppointmentService;
+import service.BookingService;
 import service.exception.ServiceException;
 import service.impl.AppointmentServiceImpl;
+import service.impl.BookingServiceImpl;
+import validator.ParameterValidator;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -19,58 +21,58 @@ import java.util.Optional;
 
 public class AppointCommand extends Command {
 
-    public AppointCommand(HttpServletRequest request, HttpServletResponse response) {
-        super(request, response);
+    private ParameterValidator validator = ParameterValidator.getInstance();
+    private AppointmentService appointmentService = AppointmentServiceImpl.getInstance();
+
+    public AppointCommand(HttpServletRequest request) {
+        super(request);
     }
 
     @Override
     public Response execute() throws ServiceException {
         String userIdStr = request.getParameter(Constants.Parameter.USER_ID);
-        int userId = Integer.parseInt(userIdStr);
         Enumeration enumeration = request.getParameterNames();
         enumeration.nextElement();
         enumeration.nextElement();
-        List<Exercise> exercises = new ArrayList<>();
-        List<Product> products = new ArrayList<>();
-        Exercise exercise = null;
-        Product product;
+        List<ExerciseAppointment> exerciseAppointments = new ArrayList<>();
+        List<ProductAppointment> productAppointments = new ArrayList<>();
+        ExerciseAppointment exerciseAppointment = null;
+        ProductAppointment productAppointment;
         while (enumeration.hasMoreElements()) {
             String element = (String) enumeration.nextElement();
             String[] split = element.split("-");
             String name = split[0];
             int id = Integer.parseInt(split[1]);
-            String value = request.getParameter(element);
+            String valueStr = request.getParameter(element);
+            if (valueStr == null || valueStr.equals("") || !validator.validateNumber(valueStr)) {
+                continue;
+            }
+            int value = Integer.parseInt(valueStr);
             switch (name) {
                 case "repCount":
-                    exercise = new Exercise();
-                    exercise.setId(id);
-                    int repCount = Integer.parseInt(value);
-                    exercise.setRepCount(repCount);
+                    exerciseAppointment = new ExerciseAppointment();
+                    exerciseAppointment.setId(id);
+                    exerciseAppointment.setRepCount(value);
                     break;
                 case "setCount":
-                    int setCount = Integer.parseInt(value);
-                    Optional.ofNullable(exercise)
-                            .ifPresent(ex -> ex.setSetCount(setCount));
+                    Optional.ofNullable(exerciseAppointment)
+                            .ifPresent(ex -> ex.setSetCount(value));
                     break;
                 case "weight":
-                    int weight = Integer.parseInt(value);
-                    Optional.ofNullable(exercise)
-                            .ifPresent(ex -> ex.setWeight(weight));
-                    exercises.add(exercise);
+                    Optional.ofNullable(exerciseAppointment)
+                            .ifPresent(ex -> ex.setWeight(value));
+                    exerciseAppointments.add(exerciseAppointment);
                     break;
                 case "gram":
-                    product = new Product();
-                    product.setId(id);
-                    int gram = Integer.parseInt(value);
-                    product.setGramInDay(gram);
-                    products.add(product);
+                    productAppointment = new ProductAppointment();
+                    productAppointment.setId(id);
+                    productAppointment.setGramInDay(value);
+                    productAppointments.add(productAppointment);
             }
         }
-        Appointment appointment = new Appointment();
-        appointment.setExercises(exercises);
-        appointment.setProducts(products);
-        AppointmentService service = AppointmentServiceImpl.getInstance();
-        service.addAppointment(userId, appointment);
+        BookingService service = BookingServiceImpl.getInstance();
+        Booking booking = service.getBookingByUserId(userIdStr);
+        appointmentService.addAppointment(booking.getId(), exerciseAppointments, productAppointments);
         return new Response(Constants.URL.HOME, true);
     }
 }

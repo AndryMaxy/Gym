@@ -28,10 +28,9 @@ public class ServletListener implements ServletContextListener {
             Class.forName(driver);
             ConnectionPool.getInstance().init(poolSize);
         } catch (ClassNotFoundException e) {
-            LOGGER.fatal("Can't setStatement db driver.", e);
+            LOGGER.fatal("Can't set database driver.", e);
             throw new DBException();
         }
-        //TODO HOW TO UPLOAD?? AND WHERE. ONCE UP OR EVERYONE?
     }
 
     @Override

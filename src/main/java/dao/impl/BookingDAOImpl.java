@@ -6,8 +6,8 @@ import dao.StatementHandler;
 import dao.exception.DAOException;
 import dao.exception.ExecutorException;
 import entity.Booking;
-import entity.Feedback;
 import entity.Membership;
+import entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,22 +16,20 @@ import java.util.List;
 
 public class BookingDAOImpl implements BookingDAO {
 
-    private static final String ADD = "INSERT INTO Booking ( UserId, MembershipId, VisitCountLeft ) VALUE ( ?, ?, ? )";
-    private static final String SELECT_ALL = "SELECT b.BookingId, b.VisitCountLeft, b.Feedback, m.Name FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId WHERE UserId = ?";
+    private static final String INSERT = "INSERT INTO Booking ( UserId, MembershipId, VisitCountLeft ) VALUE ( ?, ?, ? )";
+    private static final String SELECT_ALL_BY_USER_ID = "SELECT b.BookingId, b.UserId, b.VisitCountLeft, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId WHERE b.UserId = ?";
     private static final String UPDATE_BALANCE = "UPDATE User SET Balance = ? WHERE UserId = ?";
-    //TODO ADD FEEDBACK and count
     private static final String UPDATE = "UPDATE Booking SET VisitCountLeft = ?, Feedback = ? WHERE BookingId = ?";
-    private static final String UPDATE_FEEDBACK = "UPDATE User SET Balance = ? WHERE UserId = ?";
-    private static final String UPDATE_VISIT_COUNT = "UPDATE Booking SET VisitCountLeft = ? WHERE UserId = ?";
-
-    private static final String SELECT = "SELECT b.BookingId, b.VisitCountLeft, b.Feedback, m.Name FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId WHERE BookingId = ?";
-    private static final String SELECT_BY_USER_ID = "SELECT b.BookingId, b.VisitCountLeft, b.Feedback, m.Name FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId WHERE UserId = ?";
-
+    private static final String SELECT = "SELECT b.BookingId, b.UserId, b.VisitCountLeft, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId WHERE BookingId = ?";
+    private static final String SELECT_BY_USER_ID = "SELECT b.BookingId, b.UserId, b.VisitCountLeft, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId WHERE b.UserId = ?";
+    private static final String SELECT_FEEDBACK = "SELECT b.BookingId, b.VisitCountLeft, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId WHERE b.Feedback IS NOT NULL";
+    private static final String SELECT_ALL = "SELECT b.BookingId, b.UserId, b.VisitCountLeft, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId";
+    //TODO FOR FEEDBACK. SELECT ALL OR ONLY FEEDBACK IS NOT NULL?
     private final Executor executor = Executor.getInstance();
-
 
     private static class OrderDAOImplHolder {
         private static final BookingDAOImpl INSTANCE = new BookingDAOImpl();
+
     }
 
     private BookingDAOImpl(){}
@@ -40,39 +38,9 @@ public class BookingDAOImpl implements BookingDAO {
         return OrderDAOImplHolder.INSTANCE;
     }
 
-    //TODO TRANSACTION NEEDED  / done?
-//    @Override
-////    public boolean add(int userId, int balance, Membership membership) throws DAOException {
-////        ConnectionPool pool = ConnectionPool.getInstance();
-////        ProxyConnection connection = pool.getConnection();
-////        try {
-////            connection.setAutoCommit(false);
-////            try (PreparedStatement addBooking = connection.prepareStatement(ADD)) {
-////                try (PreparedStatement updateUser = connection.prepareStatement(UPDATE_BALANCE)) {
-////                    addBooking.setInt(1, userId);
-////                    addBooking.setInt(2, membership.getId());
-////                    addBooking.setInt(3, membership.getCount());
-////                    addBooking.executeUpdate();
-////                    updateUser.setInt(1, balance);
-////                    updateUser.setInt(2, userId);
-////                    updateUser.executeUpdate();
-////                    connection.commit();
-////                    addBooking.close(); //TODO NEEDED?
-////                    updateUser.close();
-////                    connection.setAutoCommit(true);
-////                    connection.close();
-////                    return true;
-////                }
-////            }
-////        } catch (SQLException e) {
-////            connection.rollback();
-////            throw new DAOException(e);
-////        }
-////    }
-
     @Override
     public void add(int userId, int balance, Membership membership) throws DAOException {
-        String[] query = new String[]{ADD, UPDATE_BALANCE};
+        String[] query = new String[]{INSERT, UPDATE_BALANCE};
         StatementHandler[] statementHandlers = new StatementHandler[query.length];
         statementHandlers[0] = statement -> {
             statement.setInt(1, userId);
@@ -101,19 +69,21 @@ public class BookingDAOImpl implements BookingDAO {
     }
 
     @Override
-    public List<Booking> getAll(int userId) throws DAOException {
+    public List<Booking> getAll() throws DAOException {
         try {
-            return executor.executeQuery(SELECT_ALL, statement -> {
+            return executor.executeQuery(SELECT_ALL, this::getBookings);
+        } catch (ExecutorException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
+    public List<Booking> getBookingList(int userId) throws DAOException {
+        try {
+            return executor.executeQuery(SELECT_ALL_BY_USER_ID, statement -> {
                 statement.setInt(1, userId);
-            }, resultSet -> {
-                List<Booking> bookings = new ArrayList<>();
-                while (resultSet.next()) {
-                    Booking booking = newBooking(resultSet, userId);
-                    bookings.add(booking);
-                }
-                return bookings;
-            });
-        } catch (SQLException e) {
+            }, this::getBookings);
+        } catch (ExecutorException e) {
             throw new DAOException(e);
         }
     }
@@ -126,29 +96,9 @@ public class BookingDAOImpl implements BookingDAO {
                 statement.setString(2, booking.getFeedback());
                 statement.setInt(3, booking.getId());
             });
-        } catch (SQLException e) {
+        } catch (ExecutorException e) {
             throw new DAOException(e);
         }
-    }
-
-    @Override
-    public void delete() {
-        throw new UnsupportedOperationException();
-    }
-
-    private Booking newBooking(ResultSet resultSet, int userId) throws SQLException {
-        Booking booking = new Booking();
-        int bookingId = resultSet.getInt("BookingId");
-        String membershipSte = resultSet.getString("Name").toUpperCase();
-        int visitCountLeft = resultSet.getInt("VisitCountLeft");
-        String feedback = resultSet.getString("Feedback");
-        Membership membership = Membership.valueOf(membershipSte);
-        booking.setUserId(userId);
-        booking.setId(bookingId);
-        booking.setMembership(membership);
-        booking.setVisitCountLeft(visitCountLeft);
-        booking.setFeedback(feedback);
-        return booking;
     }
 
     private Booking getById(String query, int id) throws DAOException {
@@ -159,32 +109,62 @@ public class BookingDAOImpl implements BookingDAO {
                 if (!resultSet.last()) {
                     return null;
                 }
-                return newBooking(resultSet, id);
+                return parseBooking(resultSet);
             });
-        } catch (SQLException e) {
+        } catch (ExecutorException e) {
             throw new DAOException(e);
         }
     }
-    //TODO ?????????????????????
-    private static final String SELECT_FEEDBACK = "SELECT u.Name, b.Feedback FROM Booking b JOIN User u ON b.UserId = u.UserId WHERE b.Feedback IS NOT NULL";
-    @Override
-    public List<Feedback> getFeedbackList() throws DAOException {
-        try {
-            return executor.executeQuery(SELECT_FEEDBACK, statement -> {},
-                    resultSet -> {
-                        List<Feedback> feedbackList = new ArrayList<>();
-                        while (resultSet.next()) {
-                            String name = resultSet.getString("Name");
-                            String feedbackStr = resultSet.getString("Feedback");
-                            Feedback feedback = new Feedback();
-                            feedback.setName(name);
-                            feedback.setFeedback(feedbackStr);
-                            feedbackList.add(feedback);
-                        }
-                        return feedbackList;
-                    });
-        } catch (SQLException e) {
-            throw new DAOException(e);
+
+    private List<Booking> getBookings(ResultSet resultSet) throws SQLException {
+        List<Booking> bookings = new ArrayList<>();
+        while (resultSet.next()) {
+            Booking booking = parseBooking(resultSet);
+            bookings.add(booking);
         }
+        return bookings;
+    }
+
+    //    @Override
+//    public List<Booking> getBookingList() throws DAOException {
+//        try {
+//            return executor.executeQuery(SELECT_FEEDBACK,
+//                    resultSet -> {
+//                        List<Booking> bookings = new ArrayList<>();
+//                        while (resultSet.next()) {
+//                            String name = resultSet.getString("Name");
+//                            String feedbackStr = resultSet.getString("Feedback");
+//                            Booking booking = new Booking();
+//                            User user = new User();
+//                            user.setName(name);
+//                            booking.setFeedback(feedbackStr);
+//                            booking.setUser(user);
+//                            bookings.add(booking);
+//                        }
+//                        return bookings;
+//                    });
+//        } catch (ExecutorException e) {
+//            throw new DAOException(e);
+//        }
+//    }
+
+    private Booking parseBooking(ResultSet resultSet) throws SQLException {
+        Booking booking = new Booking();
+        int bookingId = resultSet.getInt("BookingId");
+        int visitCountLeft = resultSet.getInt("VisitCountLeft");
+        String feedback = resultSet.getString("Feedback");
+        String membershipSte = resultSet.getString("mName").toUpperCase();
+        int userId = resultSet.getInt("UserId");
+        String userName = resultSet.getString("uName");
+        Membership membership = Membership.valueOf(membershipSte);
+        User user = new User();
+        user.setId(userId);
+        user.setName(userName);
+        booking.setUser(user);
+        booking.setId(bookingId);
+        booking.setMembership(membership);
+        booking.setVisitCountLeft(visitCountLeft);
+        booking.setFeedback(feedback);
+        return booking;
     }
 }

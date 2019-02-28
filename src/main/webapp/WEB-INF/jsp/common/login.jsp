@@ -9,14 +9,7 @@
     <c:import url="/WEB-INF/jsp/fragment/header.jsp" charEncoding="utf-8"/>
 </head>
 <body>
-<form name="lang" action="controller" style="text-align: right; margin: 0">
-    <input type="hidden" name="command" value="locale"/>
-    <select id="language" name="locale" onchange="mySubmit('lang')" style="font-size: 130%">
-        <option value="ru-RU" ${sessionScope.locale.toLanguageTag() == 'ru-RU' ? 'selected' : ''}>Русский</option>
-        <option value="en-US" ${sessionScope.locale.toLanguageTag() == 'en-US' ? 'selected' : ''}>English</option>
-        <option value="be-BY" ${sessionScope.locale.toLanguageTag() == 'be-BY' ? 'selected' : ''}>Беларускі</option>
-    </select>
-</form>
+<c:import url="/WEB-INF/jsp/fragment/locale.jsp" charEncoding="utf-8"/>
 <div class="container mainCont">
     <c:import url="/WEB-INF/jsp/fragment/hat.jsp" charEncoding="utf-8"/>
     <div style="margin-top: 70px">
@@ -43,19 +36,19 @@
                     <fmt:message key="login.password" var="password"/>
                     <input type="password" pattern="[A-z0-9]{6,}" name="password" class="form-control"
                            placeholder="${password}"
-                           autocomplete="current-hash" required>
+                           autocomplete="current-pass" required>
                     <div class="invalid-feedback">
                         <fmt:message key="login.correctPassword"/>
                     </div>
                 </div>
             </div>
+            <c:if test="${param.bad == 't'}">
             <div class="row form-group">
-                <p class="mx-auto">
-                    <c:if test="${requestScope.isExister}">
-                        <fmt:message key="login.incorrectData"/>
-                    </c:if>
-                </p>
+                <div class="mx-auto">
+                    <fmt:message key="login.incorrectData"/>
+                </div>
             </div>
+            </c:if>
             <div class="row form-group">
                 <div class="mx-auto">
                     <fmt:message key="login.logIn" var="logIn"/>

@@ -3,6 +3,10 @@ package builder;
 import entity.User;
 import entity.UserRole;
 
+/**
+ * This class designed by Builder pattern and it uses for build {@link User}
+ * @author Andrey Akulich
+ */
 public class UserBuilder {
 
     private int id;
@@ -13,8 +17,13 @@ public class UserBuilder {
     private String surname;
     private UserRole userRole;
     private int discount;
-    private int balance = 1000;
+    private int balance = 800;
 
+    /**
+     * Sets the param in the id field
+     * @param id will be set in the id field
+     * @return this object
+     */
     public UserBuilder buildId(int id) {
         this.id = id;
         return this;

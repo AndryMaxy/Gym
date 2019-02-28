@@ -2,6 +2,8 @@ package dao.exception;
 
 public class DAOException extends Exception {
 
+    private static final long serialVersionUID = -1843336831760389589L;
+
     public DAOException() {
     }
 

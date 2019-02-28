@@ -38,7 +38,7 @@ public class ConnectionPool {
         }
     }
 
-    public ProxyConnection getConnection(){
+    public ProxyConnection getConnection() throws ConnectionException {
         ProxyConnection connection;
         try {
             connection = connections.take();

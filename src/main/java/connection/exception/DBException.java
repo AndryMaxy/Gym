@@ -2,8 +2,9 @@ package connection.exception;
 
 public class DBException extends RuntimeException {
 
-    public DBException() {
-    }
+    private static final long serialVersionUID = 1628827088870003890L;
+
+    public DBException() {}
 
     public DBException(String message) {
         super(message);

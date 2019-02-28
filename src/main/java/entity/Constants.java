@@ -1,19 +1,6 @@
 package entity;
-
+//TODO PACKAGE?
 public final class Constants {
-
-    public static final class User {
-        public static final String ID = "UserId";
-        public static final String LOGIN = "Login";
-        public static final String NAME = "Name";
-        public static final String SURNAME = "Surname";
-        public static final String HASH = "Hash";
-        public static final String SALT = "Salt";
-        public static final String ROLE = "Role";
-        public static final String DISCOUNT = "Discount";
-        public static final String BALANCE = "Balance";
-        public static final String VISIT_COUNT_LEFT = "VisitCountLeft";
-    }
 
     public static final class Command {
         public static final String COMMAND = "command";
@@ -32,6 +19,8 @@ public final class Constants {
         public static final String REDUCE_VISITS = "reduce";
         public static final String FEEDBACK = "feedback";
         public static final String ADD_FEEDBACK = "addFeedback";
+        public static final String CHANGE_DISCOUNT = "discount";
+        public static final String ABOUT = "about";
     }
 
     public static final class URL {
@@ -40,18 +29,25 @@ public final class Constants {
         public static final String APPOINT = "/app";
         public static final String ORDER = "/lookOrder";
         public static final String HOME = "/home";
-        public static final String REGISTER = "/registration";
+        public static final String REGISTER = "/register";
+        public static final String REGISTRATION = "/registration";
+        public static final String FEEDBACK = "/feedback";
+        public static final String ABOUT_JSP = "/about.jsp";
+        public static final String FEEDBACK_JSP = "/feedback.jsp";
     }
 
     public static final class Parameter {
-        public static final String USER = "user";
         public static final String USER_ID = "userId";
+        public static final String BOOKING_ID = "bookingId";
         public static final String LOGIN = "login";
         public static final String PASSWORD = "password";
         public static final String NAME = "name";
         public static final String SURNAME = "surname";
         public static final String ROLE = "role";
         public static final String MEMBERSHIP = "membership";
+        public static final String DISCOUNT = "discount";
+        public static final String FEEDBACK_AREA = "feedbackArea";
+        public static final String LOCALE = "locale";
     }
 
     public final class DBKey {
