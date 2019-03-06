@@ -1,8 +1,8 @@
 package dao;
 
-import connection.ConnectionPool;
-import connection.ProxyConnection;
-import connection.exception.ConnectionException;
+import dao.connection.ConnectionPool;
+import dao.connection.ProxyConnection;
+import dao.connection.exception.ConnectionException;
 import dao.exception.DAOException;
 import dao.exception.ExecutorException;
 
@@ -17,10 +17,10 @@ public abstract class AppointmentDAO<T> {
     private Executor executor = Executor.getInstance();
 
     protected abstract String getAllQuery();
-    protected abstract String getByUserIdQuery();
+    protected abstract String getByBookingIdQuery();
     protected abstract String addAppointmentQuery();
     protected abstract void handleAllResult(List<T> list, ResultSet resultSet) throws SQLException;
-    protected abstract void handleByUserIdResult(List<T> list, ResultSet resultSet) throws SQLException;
+    protected abstract void handleByBookingIdResult(List<T> list, ResultSet resultSet) throws SQLException;
     protected abstract void handleAdd(int bookingId, T t, PreparedStatement statement) throws SQLException;
 
     public List<T> getAll() throws DAOException {
@@ -37,14 +37,14 @@ public abstract class AppointmentDAO<T> {
         }
     }
 
-    public List<T> getByUserId(int userId) throws DAOException {
+    public List<T> getByBookingId(int userId) throws DAOException {
         try {
-            return executor.executeQuery(getByUserIdQuery(), statement -> {
+            return executor.executeQuery(getByBookingIdQuery(), statement -> {
                 statement.setInt(1, userId);
             }, resultSet -> {
                 List<T> ts = new ArrayList<>();
                 while (resultSet.next()){
-                    handleByUserIdResult(ts, resultSet);
+                    handleByBookingIdResult(ts, resultSet);
                 }
                 return ts;
             });

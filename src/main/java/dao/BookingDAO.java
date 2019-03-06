@@ -10,7 +10,7 @@ public interface BookingDAO {
 
     void add(int userId, int balance, Membership membership) throws DAOException;
     List<Booking> getAll() throws DAOException;
-    List<Booking> getBookingList(int userId) throws DAOException;
+    List<Booking> getUserBookingList(int userId) throws DAOException;
     void update(Booking booking) throws DAOException;
     Booking get(int bookingId) throws DAOException;
     Booking getByUserId(int userId) throws DAOException;

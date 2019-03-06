@@ -1,21 +1,26 @@
 package service.impl;
 
+import builder.UserBuilder;
 import dao.UserDAO;
 import dao.exception.DAOException;
 import dao.impl.UserDAOImpl;
 import entity.User;
 import entity.UserRole;
 import service.UserService;
+import service.exception.InvalidInputException;
 import service.exception.ServiceException;
 import util.Encoder;
 import util.exception.EncoderException;
-import validator.ParameterValidator;
+import service.ParameterValidator;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private final UserDAO userDAO = UserDAOImpl.getInstance();
+    private UserDAO userDAO = UserDAOImpl.getInstance();
+    private Encoder encoder = Encoder.getInstance();
+    private ParameterValidator validator = ParameterValidator.getInstance();
 
     private static class UserServiceImplHolder {
         static final UserServiceImpl INSTANCE = new UserServiceImpl();
@@ -25,9 +30,12 @@ public class UserServiceImpl implements UserService {
         return UserServiceImplHolder.INSTANCE;
     }
 
-    private final ParameterValidator validator = ParameterValidator.getInstance();
-
     private UserServiceImpl(){}
+
+    private UserServiceImpl(UserDAO userDAO, Encoder encoder){
+        this.userDAO = userDAO;
+        this.encoder = encoder;
+    }
 
     @Override
     public void add(User user) throws ServiceException {
@@ -48,9 +56,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isUserLoginExist(String login) throws ServiceException {
+    public boolean isUserLoginExist(String login) throws ServiceException, InvalidInputException {
         if (!validator.validateLogin(login)) {
-            return false;
+            throw new InvalidInputException();
         }
         try {
             User user = userDAO.getByLogin(login);
@@ -61,9 +69,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String id) throws ServiceException {
+    public User getUser(String id) throws ServiceException, InvalidInputException {
         if (!validator.validateNumber(id)) {
-            return null;
+            throw new InvalidInputException();
         }
         try {
             int userId = Integer.parseInt(id);
@@ -74,9 +82,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int logIn(String login, char[] password) throws ServiceException, EncoderException {
+    public int logIn(String login, char[] password) throws ServiceException, InvalidInputException {
         if (!validator.validateLogin(login) || !validator.validatePassword(password)) {
-            return 0;
+            throw new InvalidInputException();
         }
         try {
             User user = userDAO.getByLogin(login);
@@ -85,7 +93,12 @@ public class UserServiceImpl implements UserService {
             }
             String hash = user.getHash();
             String salt = user.getSalt();
-            boolean correct = Encoder.check(password, hash.getBytes(), salt.getBytes());
+            boolean correct;
+            try {
+                correct = encoder.check(password, hash.getBytes(), salt.getBytes());
+            } catch (EncoderException e) {
+                throw new ServiceException(e);
+            }
             if (correct){
                 return user.getId();
             } else {
@@ -99,16 +112,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getVisitors() throws ServiceException {
         try {
-            return userDAO.getVisitors();
+            return userDAO.getVisitorsWithoutApp();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public User getVisitor(String id) throws ServiceException {
+    public User getNewVisitor(String id) throws ServiceException, InvalidInputException {
         if (!validator.validateNumber(id)) {
-            return null;
+            throw new InvalidInputException();
         }
         int userId = Integer.parseInt(id);
         try {
@@ -119,18 +132,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(User user) throws ServiceException {
-        try {
-            userDAO.update(user);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void delete(String id) throws ServiceException {
+    public void delete(String id) throws ServiceException, InvalidInputException {
         if (!validator.validateNumber(id)) {
-            return;
+            throw new InvalidInputException();
         }
         int userId = Integer.parseInt(id);
         try {
@@ -141,9 +145,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeRole(String id, String roleStr) throws ServiceException {
+    public User createUser(String login, char[] password, String name, String surname) throws ServiceException, InvalidInputException {
+        if (!validator.validateName(name) || !validator.validateName(surname) || !validator.validatePassword(password)) {
+            throw new InvalidInputException();
+        }
+        String[] encoded;
+        try {
+            encoded = encoder.encode(password);
+        } catch (EncoderException e) {
+            throw new ServiceException(e);
+        }
+        String hash = encoded[0];
+        String salt = encoded[1];
+        UserRole role = UserRole.VISITOR;
+        UserBuilder builder = new UserBuilder();
+        return builder.buildLogin(login)
+                .buildName(name)
+                .buildSurname(surname)
+                .buildUserRole(role)
+                .buildHash(hash)
+                .buildSalt(salt)
+                .build();
+    }
+
+    @Override
+    public void changeRole(String id, String roleStr) throws ServiceException, InvalidInputException {
         if (!validator.validateNumber(id) || !validator.validateRole(roleStr)) {
-            return;
+            throw new InvalidInputException();
         }
         User user = getUser(id);
         UserRole userRole = UserRole.valueOf(roleStr);
@@ -152,13 +180,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeDiscount(String id, String discountStr) throws ServiceException {
+    public void changeDiscount(String id, String discountStr) throws ServiceException, InvalidInputException {
         if (!validator.validateNumber(id) || !validator.validateDiscount(discountStr)) {
-            return;
+            throw new InvalidInputException();
         }
         User user = getUser(id);
         int discount = Integer.parseInt(discountStr);
         user.setDiscount(discount);
         update(user);
     }
+
+    private void update(User user) throws ServiceException {
+        try {
+            userDAO.update(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
 }

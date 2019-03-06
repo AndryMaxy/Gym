@@ -65,7 +65,7 @@ public class ExerciseAppointment {
                 setCount == that.setCount &&
                 repCount == that.repCount &&
                 weight == that.weight &&
-                name.equals(that.name);
+                Objects.equals(name, that.name);
     }
 
     @Override

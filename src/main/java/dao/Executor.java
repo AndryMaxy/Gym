@@ -1,8 +1,8 @@
 package dao;
 
-import connection.ConnectionPool;
-import connection.ProxyConnection;
-import connection.exception.ConnectionException;
+import dao.connection.ConnectionPool;
+import dao.connection.ProxyConnection;
+import dao.connection.exception.ConnectionException;
 import dao.exception.ExecutorException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

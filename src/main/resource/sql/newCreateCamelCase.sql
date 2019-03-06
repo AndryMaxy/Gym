@@ -40,6 +40,7 @@ CREATE TABLE Booking
   UserId         INT NOT NULL,
   MembershipId INT NOT NULL,
   VisitCountLeft  INT,
+  NeedAppointment  TINYINT NOT NULL,
   Feedback       VARCHAR(500),
   PRIMARY KEY (BookingId),
   FOREIGN KEY (UserId) REFERENCES User (UserId) ON DELETE CASCADE,

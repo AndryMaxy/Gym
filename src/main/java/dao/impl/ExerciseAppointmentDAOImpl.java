@@ -11,7 +11,7 @@ import java.util.List;
 public class ExerciseAppointmentDAOImpl extends AppointmentDAO<ExerciseAppointment> {
 
     private static final String SELECT_ALL = "SELECT ExerciseId, Name FROM Exercise";
-    private static final String SELECT_BY_USER_ID =
+    private static final String SELECT_BY_BOOKING_ID =
             "SELECT e.Name, a.RepCount, a.SetCount, a.Weight FROM Exercise e JOIN ExerciseAppointment a ON e.ExerciseId = a.ExerciseId WHERE a.BookingId = ?";
     private static final String INSERT = "INSERT INTO ExerciseAppointment (BookingId, ExerciseId, SetCount, RepCount, Weight) VALUE (?, ?, ?, ?, ?)";
 
@@ -31,13 +31,13 @@ public class ExerciseAppointmentDAOImpl extends AppointmentDAO<ExerciseAppointme
     }
 
     @Override
-    protected String getByUserIdQuery() {
-        return SELECT_BY_USER_ID;
+    protected String getByBookingIdQuery() {
+        return SELECT_BY_BOOKING_ID;
     }
 
 
     @Override
-    protected void handleByUserIdResult(List<ExerciseAppointment> list, ResultSet resultSet) throws SQLException {
+    protected void handleByBookingIdResult(List<ExerciseAppointment> list, ResultSet resultSet) throws SQLException {
         ExerciseAppointment exerciseAppointment = new ExerciseAppointment();
         String name = resultSet.getString("Name");
         int repCount = resultSet.getInt("RepCount");

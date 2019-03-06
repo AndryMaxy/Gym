@@ -1,14 +1,15 @@
-package controller;
+package setvlet;
 
 import command.Command;
 import command.CommandFactory;
+import command.exception.CommandException;
+import entity.Constants;
 import entity.Response;
-import util.exception.IncorrectURIException;
+import service.exception.InvalidInputException;
 import command.exception.NoCommandException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.exception.ServiceException;
-import util.exception.EncoderException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "controller", urlPatterns = {
-        "/controller", "/home", "/doAppoint", "/register", "/order" , "/feedback", "/about"})
+        "/controller", "/home", "/doAppoint", "/order", "/feedback"})
 public class ControllerServlet extends HttpServlet {
 
     private static final long serialVersionUID = 6723792333495373893L;
@@ -37,7 +38,7 @@ public class ControllerServlet extends HttpServlet {
 
     private void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandName = request.getParameter(COMMAND);
-        LOGGER.debug(COMMAND + ": " + commandName);
+        LOGGER.trace(COMMAND + ": " + commandName);
         CommandFactory factory = CommandFactory.INSTANCE;
         Command command;
         try {
@@ -54,21 +55,31 @@ public class ControllerServlet extends HttpServlet {
             LOGGER.error("Service side trouble", e);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
-        } catch (EncoderException e) {
-            LOGGER.error("Can't encode data", e);
+        } catch (CommandException e) {
+            LOGGER.error("Exception in command", e);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
-        } catch (IncorrectURIException e) {
-            LOGGER.error("You have an error in uri syntax", e);
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (InvalidInputException e) {
+            LOGGER.error("Someone try to hack us", e);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
         String url = myResponse.getUrl();
-        if (myResponse.isRedirect()) {
-            String contextPath = getServletContext().getContextPath();
-            response.sendRedirect(contextPath + url);
-        } else {
-            request.getRequestDispatcher(url).forward(request,response);
+        String contextPath = getServletContext().getContextPath();
+        switch (myResponse.getStatus()) {
+            case Constants.ResponseStatus.FORWARD:
+                request.getRequestDispatcher(url).forward(request, response);
+                break;
+            case Constants.ResponseStatus.REDIRECT:
+                response.sendRedirect(contextPath + url);
+                break;
+            case Constants.ResponseStatus.INCORRECT_INPUT:
+                url += "?error=true";
+                response.sendRedirect(contextPath + url);
+                break;
+            case Constants.ResponseStatus.NOT_FOUND:
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                break;
         }
     }
 }

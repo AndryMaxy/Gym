@@ -32,7 +32,7 @@ public class ProductAppointmentDAOImpl extends AppointmentDAO<ProductAppointment
     }
 
     @Override
-    protected String getByUserIdQuery() {
+    protected String getByBookingIdQuery() {
         return SELECT_BY_USER_ID;
     }
 
@@ -47,7 +47,7 @@ public class ProductAppointmentDAOImpl extends AppointmentDAO<ProductAppointment
     }
 
     @Override
-    protected void handleByUserIdResult(List<ProductAppointment> list, ResultSet resultSet) throws SQLException {
+    protected void handleByBookingIdResult(List<ProductAppointment> list, ResultSet resultSet) throws SQLException {
         ProductAppointment productAppointment = new ProductAppointment();
         String name = resultSet.getString("Name");
         int gramInDay = resultSet.getInt("GramInDay");

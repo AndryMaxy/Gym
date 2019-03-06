@@ -1,6 +1,6 @@
-package connection;
+package dao.connection;
 
-import connection.exception.DBException;
+import dao.connection.exception.DBException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

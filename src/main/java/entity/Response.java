@@ -1,27 +1,22 @@
 package entity;
-//TODO PACKAGE?
+
+import java.util.Objects;
+
 public class Response {
 
-    private static final String BAD = "?bad=t";
     private String url;
-    private boolean isBadMessage;
-    private boolean isRedirect;
+    private int status;
 
-    public Response(String url, boolean isRedirect) {
-        this.url = url;
-        this.isRedirect = isRedirect;
+    public Response(int status) {
+        this.status = status;
     }
 
-    public Response(String url, boolean isRedirect, boolean isBadMessage) {
+    public Response(String url, int status) {
         this.url = url;
-        this.isRedirect = isRedirect;
-        this.isBadMessage = isBadMessage;
+        this.status = status;
     }
 
     public String getUrl() {
-        if (isBadMessage) {
-            url = url + BAD;
-        }
         return url;
     }
 
@@ -29,19 +24,37 @@ public class Response {
         this.url = url;
     }
 
-    public boolean isRedirect() {
-        return isRedirect;
+    public int getStatus() {
+        return status;
     }
 
-    public void setRedirect(boolean redirect) {
-        isRedirect = redirect;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public boolean isBadMessage() {
-        return isBadMessage;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Response)) {
+            return false;
+        }
+        Response response = (Response) o;
+        return status == response.status &&
+                Objects.equals(url, response.url);
     }
 
-    public void setBadMessage(boolean badMessage) {
-        isBadMessage = badMessage;
+    @Override
+    public int hashCode() {
+        return Objects.hash(url, status);
+    }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "url='" + url + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

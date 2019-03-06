@@ -21,7 +21,7 @@
             <td><c:out value="${membership.price}"/></td>
             <td>
                 <div class="container">
-                    <form action="controller" method="post" class="row my-auto">
+                    <form action="controller" method="post" class="row my-auto" onsubmit="return buyMembership(this)">
                         <input type="hidden" name="command" value="buy">
                         <input type="hidden" name="membership" value="${membership}">
                         <button type="submit" class="btn btn-success mx-auto">

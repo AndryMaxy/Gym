@@ -1,9 +1,9 @@
 package command;
 
-import util.exception.IncorrectURIException;
+import command.exception.CommandException;
+import service.exception.InvalidInputException;
 import entity.Response;
 import service.exception.ServiceException;
-import util.exception.EncoderException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,13 +13,21 @@ import javax.servlet.http.HttpSession;
  * @author Andrey Akulich
  */
 public abstract class Command {
-//TODO WHAT SHOULD BE TESTED? DOC ALL CLASSES, METHODS AND FIELDS? AND TESTS???
+
     /**
-     * Current http request
+     * Current http servlet request
      */
     protected HttpServletRequest request;
+
+    /**
+     * Last request session
+     */
     protected HttpSession session;
 
+    /**
+     * Instantiates Command
+     * @param request current http servlet request
+     */
     public Command(HttpServletRequest request) {
         this.request = request;
         session = request.getSession();
@@ -29,8 +37,7 @@ public abstract class Command {
      * This abstract method should be override for implementation any user command
      * @return the {@link Response} instance which contains information about next page
      * @throws ServiceException from the service layer
-     * @throws EncoderException when encode has't algorithm or get incorrect specification key
-     * @throws IncorrectURIException when
+     * @throws InvalidInputException when input data can't to pass validation
      */
-    public abstract Response execute() throws ServiceException, EncoderException, IncorrectURIException;
+    public abstract Response execute() throws ServiceException, InvalidInputException, CommandException;
 }

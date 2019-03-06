@@ -24,9 +24,16 @@
                                       style="resize: none"></textarea>
                         </div>
                     </div>
+                    <c:if test="${param.error == 'true'}">
+                        <div class="col" style="margin-bottom: 15px; text-align: center">
+                            <div class="mx-auto" style="text-align: center">
+                                <fmt:message key="feedback.incorrect"/>
+                            </div>
+                        </div>
+                    </c:if>
                     <div class="col" style="text-align: right">
                         <fmt:message key="feedback.submit" var="submit"/>
-                        <input type="submit" value="${submit}">
+                        <input type="submit" value="${submit}" class="btn btn-success">
                     </div>
                 </div>
             </div>

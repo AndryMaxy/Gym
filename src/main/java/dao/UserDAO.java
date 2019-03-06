@@ -11,8 +11,8 @@ public interface UserDAO {
     User getById(int id) throws DAOException;
     User getByLogin(String login) throws DAOException;
     User getVisitor(int userId) throws DAOException;
-    List<User> getVisitors() throws DAOException;
-    void add(User entity) throws DAOException;
+    List<User> getVisitorsWithoutApp() throws DAOException;
+    void add(User user) throws DAOException;
     void update(User user) throws DAOException;
     void delete(int userId) throws DAOException;
 }

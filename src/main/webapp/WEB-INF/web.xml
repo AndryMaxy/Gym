@@ -27,12 +27,12 @@
         <jsp-file>/WEB-INF/jsp/common/feedback.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>about.jsp</servlet-name>
+        <servlet-name>about</servlet-name>
         <jsp-file>/WEB-INF/jsp/common/about.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>about.jsp</servlet-name>
-        <url-pattern>/about.jsp</url-pattern>
+        <servlet-name>about</servlet-name>
+        <url-pattern>/about</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>feedback.jsp</servlet-name>
@@ -52,7 +52,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
-        <url-pattern>/registration</url-pattern>
+        <url-pattern>/register</url-pattern>
     </servlet-mapping>
     <filter-mapping>
         <filter-name>filter1</filter-name>
@@ -67,13 +67,15 @@
         <url-pattern>/home</url-pattern>
         <url-pattern>/doAppoint</url-pattern>
         <url-pattern>/order</url-pattern>
-        <url-pattern>/register</url-pattern>
         <url-pattern>/feedback</url-pattern>
-        <url-pattern>/about</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>filter4</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/controller</url-pattern>
+        <url-pattern>/home</url-pattern>
+        <url-pattern>/doAppoint</url-pattern>
+        <url-pattern>/order</url-pattern>
+        <url-pattern>/feedback</url-pattern>
     </filter-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

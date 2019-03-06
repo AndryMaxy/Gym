@@ -7,9 +7,11 @@ import entity.Booking;
 import entity.Membership;
 import entity.User;
 import service.BookingService;
+import service.exception.InvalidInputException;
 import service.exception.ServiceException;
-import validator.ParameterValidator;
+import service.ParameterValidator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookingServiceImpl implements BookingService {
@@ -22,15 +24,19 @@ public class BookingServiceImpl implements BookingService {
         return BookingServiceImplHolder.INSTANCE;
     }
 
-    private final BookingDAO bookingDAO = BookingDAOImpl.getInstance(); //TODO MB STATIC FINAL
-    private final ParameterValidator validator = ParameterValidator.getInstance();
+    private BookingDAO bookingDAO = BookingDAOImpl.getInstance();
+    private ParameterValidator validator = ParameterValidator.getInstance();
 
     private BookingServiceImpl(){}
 
+    private BookingServiceImpl(BookingDAO bookingDAO){
+        this.bookingDAO = bookingDAO;
+    }
+
     @Override
-    public Booking getBooking(String bookingIdStr) throws ServiceException {
+    public Booking getBooking(String bookingIdStr) throws ServiceException, InvalidInputException  {
         if (!validator.validateNumber(bookingIdStr)) {
-            return null;
+            throw new InvalidInputException();
         }
         int bookingId = Integer.parseInt(bookingIdStr);
         try {
@@ -42,9 +48,9 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public Booking getBookingByUserId(String userIdStr) throws ServiceException {
+    public Booking getBookingByUserId(String userIdStr) throws ServiceException, InvalidInputException  {
         if (!validator.validateNumber(userIdStr)) {
-            return null;
+            throw new InvalidInputException();
         }
         int userId = Integer.parseInt(userIdStr);
         try {
@@ -56,9 +62,9 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public boolean buyMembership(User user, String membershipStr) throws ServiceException {
+    public boolean buyMembership(User user, String membershipStr) throws ServiceException, InvalidInputException  {
         if (!validator.validateMembership(membershipStr)) {
-            return false;
+            throw new InvalidInputException();
         }
         Membership membership = Membership.valueOf(membershipStr);
         int discount = user.getDiscount();
@@ -69,7 +75,6 @@ public class BookingServiceImpl implements BookingService {
             return false;
         }
         int newBalance = balance - cost;
-        BookingDAO bookingDAO = BookingDAOImpl.getInstance();
         try {
             bookingDAO.add(user.getId(), newBalance, membership);
             return true;
@@ -79,42 +84,67 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> getBookingList(String userIdStr) throws ServiceException {
+    public List<Booking> getBookingList(String userIdStr) throws ServiceException, InvalidInputException {
         if (!validator.validateNumber(userIdStr)) {
-            return null;
+            throw new InvalidInputException();
         }
         int userId = Integer.parseInt(userIdStr);
         try {
-            return bookingDAO.getBookingList(userId);
+            return bookingDAO.getUserBookingList(userId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public void update(Booking booking) throws ServiceException {
-        try {
-            bookingDAO.update(booking);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void reduceVisits(Booking booking) throws ServiceException {
+    public void reduceVisits(String bookingId) throws ServiceException, InvalidInputException {
+        Booking booking = getBooking(bookingId);
         int newCount = booking.getVisitCountLeft() - 1;
         booking.setVisitCountLeft(newCount);
-        try {
-            bookingDAO.update(booking);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
+        update(booking);
     }
 
     @Override
     public List<Booking> getAll() throws ServiceException {
         try {
             return bookingDAO.getAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean setFeedback(String userId, String feedback) throws ServiceException, InvalidInputException {
+        Booking booking = getBookingByUserId(userId);
+        if (!validator.validateText(feedback)) {
+            return false;
+        }
+        booking.setFeedback(feedback);
+        update(booking);
+        return true;
+    }
+
+    @Override
+    public void refuseAppointments(String bookingId) throws ServiceException, InvalidInputException {
+        Booking booking = getBooking(bookingId);
+        booking.setNeedAppointment(false);
+        update(booking);
+    }
+
+    @Override
+    public List<Membership> getMemberships(){
+        List<Membership> memberships = new ArrayList<>();
+        memberships.add(Membership.ULTRA);
+        memberships.add(Membership.SUPER);
+        memberships.add(Membership.STANDARD);
+        memberships.add(Membership.EASY);
+        memberships.add(Membership.ONE);
+        return memberships;
+    }
+
+    private void update(Booking booking) throws ServiceException {
+        try {
+            bookingDAO.update(booking);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

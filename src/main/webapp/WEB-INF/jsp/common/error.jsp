@@ -11,8 +11,11 @@
 <body bgcolor="bg-light">
 <div class="jumbotron">
     <c:choose>
-        <c:when test="${pageContext.errorData.statusCode == 500}">
+        <c:when test="${pageContext.errorData.statusCode == 400}">
             <h1 class="display-4"><fmt:message key="error.hack"/></h1>
+        </c:when>
+        <c:when test="${pageContext.errorData.statusCode == 500}">
+            <h1 class="display-4"><fmt:message key="error.serverError"/></h1>
         </c:when>
         <c:otherwise>
             <h1 class="display-4"><fmt:message key="error.sorry"/></h1>

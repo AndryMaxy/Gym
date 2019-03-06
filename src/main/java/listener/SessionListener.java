@@ -16,6 +16,7 @@ public class SessionListener implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
         HttpSession session = httpSessionEvent.getSession();
         session.setAttribute(Constants.Parameter.ROLE, UserRole.GUEST);
+        session.setAttribute("max", session.getMaxInactiveInterval());
     }
 
     @Override

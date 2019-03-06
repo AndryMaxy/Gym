@@ -22,10 +22,8 @@ public class UserDAOImpl implements UserDAO {
             "SELECT u.UserId, u.Login, u.Name, u.Surname, u.Hash, u.Salt, u.Discount, u.Balance, r.Role FROM User u JOIN UserRole r ON u.UserRoleId = r.UserRoleId WHERE UserId = ?";
     private static final String SELECT_ALL =
             "SELECT u.UserId, u.Login, u.Name, u.Surname, u.Hash, u.Salt, u.Discount, u.Balance, r.Role FROM User u JOIN UserRole r ON u.UserRoleId = r.UserRoleId";
-    private static final String SELECT_VISITORS_OLD =
-            "SELECT u.UserId, u.Login, u.Name, u.Surname, u.Hash, u.Salt, u.Discount, u.Balance, r.Role FROM User u JOIN UserRole r ON u.UserRoleId = r.UserRoleId LEFT JOIN ExerciseAppointment e on u.UserId = e.UserId WHERE u.UserRoleId = 3 && e.UserId IS NULL";
     private static final String SELECT_WITHOUT_APPOINTMENT =
-            "SELECT u.UserId, u.Login, u.Name, u.Surname, u.Hash, u.Salt, u.Discount, u.Balance, r.Role FROM User u JOIN UserRole r ON u.UserRoleId = r.UserRoleId JOIN Booking b ON u.UserId = b.UserId LEFT JOIN ExerciseAppointment e ON b.BookingId = e.BookingId WHERE u.UserRoleId = 3 && e.BookingId IS NULL";
+            "SELECT u.UserId, u.Login, u.Name, u.Surname, u.Hash, u.Salt, u.Discount, u.Balance, r.Role FROM User u JOIN UserRole r ON u.UserRoleId = r.UserRoleId JOIN Booking b ON u.UserId = b.UserId LEFT JOIN ExerciseAppointment e ON b.BookingId = e.BookingId WHERE u.UserRoleId = 3 && e.BookingId IS NULL && b.NeedAppointment = 1";
     private static final String SELECT_VISITOR =
             "SELECT u.UserId, u.Login, u.Name, u.Surname, u.Hash, u.Salt, u.Discount, u.Balance, r.Role FROM User u JOIN UserRole r ON u.UserRoleId = r.UserRoleId JOIN Booking b ON u.UserId = b.UserId LEFT JOIN ExerciseAppointment e ON b.BookingId = e.BookingId WHERE u.UserRoleId = 3 && e.BookingId IS NULL && u.UserId = ?";
     private static final String UPDATE =
@@ -73,7 +71,7 @@ public class UserDAOImpl implements UserDAO {
         return getUser(SELECT_VISITOR, userId);
     }
 
-    public List<User> getVisitors() throws DAOException {
+    public List<User> getVisitorsWithoutApp() throws DAOException {
         return getUserList(SELECT_WITHOUT_APPOINTMENT);
     }
 

@@ -34,7 +34,7 @@
                                 </div>
                             </div>
                         </div>
-                        <c:if test="${param.bad == 't'}">
+                        <c:if test="${param.error == 'true'}">
                             <div class="row form-group">
                                 <div class="mx-auto">
                                     <fmt:message key="register.exists"/>
@@ -44,7 +44,7 @@
                         <div class="row form-group">
                             <div class="mx-auto">
                                 <fmt:message key="login.password" var="password"/>
-                                <input type="password" pattern="(?=.*\d)(?=.*[A-zА-я).{6,}" name="password"
+                                <input type="password" pattern="(?=.*\d)(?=.*[A-zА-я]).{6,}" name="password"
                                        class="form-control"
                                        placeholder="${password}" autocomplete="current-hash" required>
                                 <div class="invalid-feedback">

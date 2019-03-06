@@ -18,12 +18,13 @@
                 <h2><fmt:message key="login.welcome"/></h2>
             </div>
         </div>
-        <form action="controller" method="post" class="needs-validation" novalidate>
-            <input type="hidden" name="command" value="logIn"/>
+        <c:out value="${requestScope.text}"/>
+        <form action="controller" method="post" class="needs-validation" id="loginForm" novalidate onsubmit="tryFunc()">
+            <input type="hidden" name="command" id="command" value="logIn"/>
             <div class="row form-group">
                 <div class="mx-auto">
                     <fmt:message key="login.login" var="login"/>
-                    <input type="text" pattern="[A-z0-9]{6,}" name="login" class="form-control"
+                    <input id="loginIn" type="text" pattern="[A-z0-9А-я]{6,}" name="login" class="form-control"
                            placeholder="${login}"
                            required>
                     <div class="invalid-feedback">
@@ -34,7 +35,7 @@
             <div class="row form-group">
                 <div class="mx-auto">
                     <fmt:message key="login.password" var="password"/>
-                    <input type="password" pattern="[A-z0-9]{6,}" name="password" class="form-control"
+                    <input id="passwordIn" type="password" pattern="(?=.*\d)(?=.*[A-zА-я]).{6,}" name="password" class="form-control"
                            placeholder="${password}"
                            autocomplete="current-pass" required>
                     <div class="invalid-feedback">
@@ -42,17 +43,22 @@
                     </div>
                 </div>
             </div>
-            <c:if test="${param.bad == 't'}">
+            <c:if test="${param.error == 'true'}">
             <div class="row form-group">
                 <div class="mx-auto">
                     <fmt:message key="login.incorrectData"/>
                 </div>
             </div>
             </c:if>
+            <div id="invalidInputMsg" class="row form-group" style="display: none">
+                <div class="mx-auto">
+                    <fmt:message key="login.incorrectData"/>
+                </div>
+            </div>
             <div class="row form-group">
                 <div class="mx-auto">
                     <fmt:message key="login.logIn" var="logIn"/>
-                    <input type="submit" value="${logIn}" class="btn btn-success btn-lg"/>
+                    <input id="submitBnt" type="submit" value="${logIn}" class="btn btn-success btn-lg"/>
                 </div>
             </div>
         </form>

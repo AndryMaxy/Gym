@@ -1,46 +1,38 @@
 function checkExercise(id) {
-    var rep = 'repCount-' + id;
-    var repEl = document.getElementsByName(rep).item(0);
-    var set = 'setCount-' + id;
-    var setEl = document.getElementsByName(set).item(0);
-    var weight = 'weight-' + id;
-    var weightEl = document.getElementsByName(weight).item(0);
-    var checker = 'checkerEx-' + id;
-    var checkerEl = document.getElementsByName(checker).item(0);
+    var exercise = 'exercise-' + id;
+    var nodeList = document.getElementsByName(exercise);
+    var checkBox = 'checkerEx-' + id;
+    var checkerEl = document.getElementsByName(checkBox).item(0);
     var tr = 'trEx-' + id;
     var trEl = document.getElementById(tr);
-    if (checkerEl.checked) {
-        repEl.disabled = false;
-        repEl.required = true;
-        setEl.disabled = false;
-        setEl.required = true;
-        weightEl.disabled = false;
-        weightEl.required = true;
-        trEl.bgColor = "#ffffff";
-    } else {
-        repEl.disabled = true;
-        repEl.required = false;
-        setEl.disabled = true;
-        setEl.required = false;
-        weightEl.disabled = true;
-        weightEl.required = false;
-        trEl.bgColor = "#EBEBE4";
-    }
+    checker(checkerEl, nodeList, trEl);
 }
+
 function checkProduct(id) {
-    var gram = 'gram-' + id;
-    var gramEl = document.getElementsByName(gram).item(0);
-    var checker = 'checkerPr-' + id;
-    var checkerEl = document.getElementsByName(checker).item(0);
+    var product = 'product-' + id;
+    var nodeList = document.getElementsByName(product);
+    var checkBox = 'checkerPr-' + id;
+    var checkerEl = document.getElementsByName(checkBox).item(0);
     var tr = 'trPr-' + id;
     var trEl = document.getElementById(tr);
+    checker(checkerEl, nodeList, trEl);
+}
+
+function checker(checkerEl, nodeList, trEl) {
     if (checkerEl.checked) {
-        gramEl.disabled = false;
-        gramEl.required = true;
+        for (var i = 0; i < nodeList.length; i++) {
+            var element1 = nodeList.item(i);
+            element1.disabled = false;
+            element1.required = true;
+        }
         trEl.bgColor = "#ffffff";
     } else {
-        gramEl.disabled = true;
-        gramEl.required = false;
+        for (var j = 0; j < nodeList.length; j++) {
+            var element2 = nodeList.item(j);
+            element2.disabled = true;
+            element2.required = false;
+            element2.value = null;
+        }
         trEl.bgColor = "#EBEBE4";
     }
 }

@@ -1,7 +1,9 @@
-package validator;
+package service;
 //TODO SHOULD BE SINGLETON?
 public class ParameterValidator {
 
+
+    private static final String TEXT_REGEX = "([A-z0-9А-яёЁ,.!?]\\s*){20,}";
     private static final String NUMBER_REGEX = "\\d+";
     private static final String LOGIN_REGEX = "[A-z0-9А-я]{6,}";
     private static final String PASSWORD_REGEX = "(?=.*\\d)(?=.*[A-zА-я]).{6,}";
@@ -18,6 +20,10 @@ public class ParameterValidator {
 
     public static ParameterValidator getInstance() {
         return ValidatorHolder.INSTANCE;
+    }
+
+    public boolean validateText(String text) {
+        return text.matches(TEXT_REGEX);
     }
 
     public boolean validateNumber(String number) {

@@ -1,55 +1,69 @@
 package command.guest;
 
-import builder.UserBuilder;
 import command.Command;
 import entity.Response;
 import entity.Constants;
 import entity.User;
-import entity.UserRole;
 import service.UserService;
+import service.exception.InvalidInputException;
 import service.exception.ServiceException;
 import service.impl.UserServiceImpl;
-import util.Encoder;
-import util.exception.EncoderException;
-import validator.ParameterValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The class is used for sign in user account.
+ *
+ * @author Andrey Akulich
+ * @see Command
+ */
 public class SignInCommand extends Command {
 
-    private static final String SUCCESS_URL = "/controller?command=logIn";
-    private final UserService userService = UserServiceImpl.getInstance();
-    private final ParameterValidator validator = ParameterValidator.getInstance();
+    /**
+     * User service instance.
+     */
+    private UserService userService;
 
+    /**
+     * Instantiates SignInCommand.
+     *
+     * @param request current http request
+     */
     public SignInCommand(HttpServletRequest request) {
         super(request);
+        this.userService = UserServiceImpl.getInstance();
     }
 
+    /**
+     * Instantiates SignInCommand. This constructor uses for tests.
+     *
+     * @param request current http request
+     * @param userService user service instance
+     */
+    public SignInCommand(HttpServletRequest request, UserService userService) {
+        super(request);
+        this.userService = userService;
+    }
+
+    /**
+     * Signs in user account.
+     *
+     * @return the {@link Response} instance which contains information about next page
+     * @throws ServiceException from the userService layer
+     * @throws InvalidInputException  if user enter invalid data
+     */
     @Override
-    public Response execute() throws ServiceException, EncoderException {
+    public Response execute() throws ServiceException, InvalidInputException {
         String login = request.getParameter(Constants.Parameter.LOGIN);
-        if (userService.isUserLoginExist(login)) {
-            return new Response(Constants.URL.REGISTER, true, true);
+        boolean isExist = userService.isUserLoginExist(login);
+        if (isExist) {
+            return new Response(Constants.URL.REGISTER, Constants.ResponseStatus.INCORRECT_INPUT);
         }
-        String name = request.getParameter(Constants.Parameter.NAME);
-        String surname = request.getParameter(Constants.Parameter.SURNAME);
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
         char[] password = request.getParameter(Constants.Parameter.PASSWORD).toCharArray();
-        if (!validator.validateName(name) || !validator.validateName(surname) || !validator.validatePassword(password)) {
-            return new Response(Constants.URL.REGISTER, true, true);
-        }
-        String[] encoded = Encoder.encode(password);
-        String hash = encoded[0];
-        String salt = encoded[1];
-        UserRole role = UserRole.VISITOR;
-        UserBuilder builder = new UserBuilder();
-        User user = builder.buildLogin(login)
-                .buildName(name)
-                .buildSurname(surname)
-                .buildUserRole(role)
-                .buildHash(hash)
-                .buildSalt(salt)
-                .build();
+        User user = userService.createUser(login, password, name, surname);
         userService.add(user);
-        return new Response(SUCCESS_URL, false);
+        return new Response("/controller?command=logIn", Constants.ResponseStatus.FORWARD);
     }
 }

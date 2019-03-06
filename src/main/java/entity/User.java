@@ -2,6 +2,11 @@ package entity;
 
 import java.util.Objects;
 
+/**
+ * This class represents users of gym.
+ *
+ * @author Andrey Akulich
+ */
 public class User {
 
     private int id;
@@ -86,6 +91,14 @@ public class User {
         this.balance = balance;
     }
 
+    /**
+     * Returns {@code true} if the arguments are equal to each other
+     * and {@code false} otherwise.
+     *
+     * @param o an object to be compared with this object
+     * @return {@code true} if the arguments are equal to each other
+     * and {@code false} otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -106,11 +119,21 @@ public class User {
                 role == user.role;
     }
 
+    /**
+     * Returns a hash code value for the object.
+     *
+     * @return a hash code value for the object.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id, login, hash, salt, name, surname, role, discount, balance);
     }
 
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return a string representation of the object.
+     */
     @Override
     public String toString() {
         return "User{" +

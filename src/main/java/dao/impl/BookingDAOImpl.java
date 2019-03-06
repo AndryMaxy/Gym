@@ -16,20 +16,18 @@ import java.util.List;
 
 public class BookingDAOImpl implements BookingDAO {
 
-    private static final String INSERT = "INSERT INTO Booking ( UserId, MembershipId, VisitCountLeft ) VALUE ( ?, ?, ? )";
-    private static final String SELECT_ALL_BY_USER_ID = "SELECT b.BookingId, b.UserId, b.VisitCountLeft, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId WHERE b.UserId = ?";
+    private static final String INSERT = "INSERT INTO Booking ( UserId, MembershipId, VisitCountLeft, NeedAppointment ) VALUE ( ?, ?, ?, ? )";
+    private static final String SELECT_ALL_BY_USER_ID = "SELECT b.BookingId, b.UserId, b.VisitCountLeft, b.NeedAppointment, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId WHERE b.UserId = ?";
     private static final String UPDATE_BALANCE = "UPDATE User SET Balance = ? WHERE UserId = ?";
-    private static final String UPDATE = "UPDATE Booking SET VisitCountLeft = ?, Feedback = ? WHERE BookingId = ?";
-    private static final String SELECT = "SELECT b.BookingId, b.UserId, b.VisitCountLeft, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId WHERE BookingId = ?";
-    private static final String SELECT_BY_USER_ID = "SELECT b.BookingId, b.UserId, b.VisitCountLeft, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId WHERE b.UserId = ?";
-    private static final String SELECT_FEEDBACK = "SELECT b.BookingId, b.VisitCountLeft, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId WHERE b.Feedback IS NOT NULL";
-    private static final String SELECT_ALL = "SELECT b.BookingId, b.UserId, b.VisitCountLeft, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId";
-    //TODO FOR FEEDBACK. SELECT ALL OR ONLY FEEDBACK IS NOT NULL?
+    private static final String UPDATE = "UPDATE Booking SET VisitCountLeft = ?, NeedAppointment = ?, Feedback = ? WHERE BookingId = ?";
+    private static final String SELECT = "SELECT b.BookingId, b.UserId, b.VisitCountLeft, b.NeedAppointment, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId WHERE BookingId = ?";
+    private static final String SELECT_BY_USER_ID = "SELECT b.BookingId, b.UserId, b.VisitCountLeft, b.NeedAppointment, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId WHERE b.UserId = ?";
+    private static final String SELECT_ALL = "SELECT b.BookingId, b.UserId, b.VisitCountLeft, b.NeedAppointment, b.Feedback, m.Name AS mName, u.Name AS uName FROM Booking b JOIN Membership m ON b.MembershipId = m.MembershipId JOIN User u ON b.UserId = u.UserId";
+
     private final Executor executor = Executor.getInstance();
 
     private static class OrderDAOImplHolder {
         private static final BookingDAOImpl INSTANCE = new BookingDAOImpl();
-
     }
 
     private BookingDAOImpl(){}
@@ -46,6 +44,7 @@ public class BookingDAOImpl implements BookingDAO {
             statement.setInt(1, userId);
             statement.setInt(2, membership.getId());
             statement.setInt(3, membership.getCount());
+            statement.setBoolean(4, true);
         };
         statementHandlers[1] = statement -> {
             statement.setInt(1, balance);
@@ -78,7 +77,7 @@ public class BookingDAOImpl implements BookingDAO {
     }
 
     @Override
-    public List<Booking> getBookingList(int userId) throws DAOException {
+    public List<Booking> getUserBookingList(int userId) throws DAOException {
         try {
             return executor.executeQuery(SELECT_ALL_BY_USER_ID, statement -> {
                 statement.setInt(1, userId);
@@ -93,8 +92,9 @@ public class BookingDAOImpl implements BookingDAO {
         try {
             executor.execute(UPDATE, statement -> {
                 statement.setInt(1, booking.getVisitCountLeft());
-                statement.setString(2, booking.getFeedback());
-                statement.setInt(3, booking.getId());
+                statement.setInt(2, booking.isNeedAppointment() ? 1 : 0);
+                statement.setString(3, booking.getFeedback());
+                statement.setInt(4, booking.getId());
             });
         } catch (ExecutorException e) {
             throw new DAOException(e);
@@ -125,35 +125,13 @@ public class BookingDAOImpl implements BookingDAO {
         return bookings;
     }
 
-    //    @Override
-//    public List<Booking> getBookingList() throws DAOException {
-//        try {
-//            return executor.executeQuery(SELECT_FEEDBACK,
-//                    resultSet -> {
-//                        List<Booking> bookings = new ArrayList<>();
-//                        while (resultSet.next()) {
-//                            String name = resultSet.getString("Name");
-//                            String feedbackStr = resultSet.getString("Feedback");
-//                            Booking booking = new Booking();
-//                            User user = new User();
-//                            user.setName(name);
-//                            booking.setFeedback(feedbackStr);
-//                            booking.setUser(user);
-//                            bookings.add(booking);
-//                        }
-//                        return bookings;
-//                    });
-//        } catch (ExecutorException e) {
-//            throw new DAOException(e);
-//        }
-//    }
-
     private Booking parseBooking(ResultSet resultSet) throws SQLException {
         Booking booking = new Booking();
         int bookingId = resultSet.getInt("BookingId");
         int visitCountLeft = resultSet.getInt("VisitCountLeft");
         String feedback = resultSet.getString("Feedback");
         String membershipSte = resultSet.getString("mName").toUpperCase();
+        boolean needAppointment = resultSet.getInt("NeedAppointment") == 1;
         int userId = resultSet.getInt("UserId");
         String userName = resultSet.getString("uName");
         Membership membership = Membership.valueOf(membershipSte);
@@ -164,6 +142,7 @@ public class BookingDAOImpl implements BookingDAO {
         booking.setId(bookingId);
         booking.setMembership(membership);
         booking.setVisitCountLeft(visitCountLeft);
+        booking.setNeedAppointment(needAppointment);
         booking.setFeedback(feedback);
         return booking;
     }

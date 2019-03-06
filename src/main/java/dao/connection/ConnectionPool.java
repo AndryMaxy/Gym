@@ -1,7 +1,7 @@
-package connection;
+package dao.connection;
 
-import connection.exception.ConnectionException;
-import connection.exception.DBException;
+import dao.connection.exception.ConnectionException;
+import dao.connection.exception.DBException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,7 +33,7 @@ public class ConnectionPool {
                 connections.add(new ProxyConnection(connection));
             }
         } catch (SQLException e) {
-            LOGGER.fatal("Can't init connection pool", e);
+            LOGGER.fatal("Can't init dao.connection pool", e);
             throw new DBException();
         }
     }

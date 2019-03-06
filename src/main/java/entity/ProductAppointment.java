@@ -43,7 +43,7 @@ public class ProductAppointment {
         ProductAppointment that = (ProductAppointment) o;
         return id == that.id &&
                 gramInDay == that.gramInDay &&
-                name.equals(that.name);
+                Objects.equals(name, that.name);
     }
 
     @Override
