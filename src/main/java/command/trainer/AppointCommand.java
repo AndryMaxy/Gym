@@ -36,7 +36,7 @@ public class AppointCommand extends Command {
     private BookingService bookingService;
 
     /**
-     * Instantiates AppointCommand.
+     * Instantiates a new AppointCommand.
      *
      * @param request current http request
      */

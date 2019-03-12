@@ -35,7 +35,7 @@ public class DeleteUserCommand extends Command {
     }
 
     /**
-     * Instantiates DeleteUserCommand. This constructor uses for tests.
+     * Instantiates a new DeleteUserCommand. This constructor uses for tests.
      *
      * @param request current http request
      * @param userService user service instance

@@ -25,7 +25,7 @@ public class RefuseAppointmentsCommand extends Command {
     private BookingService bookingService;
 
     /**
-     * Instantiates RefuseAppointmentsCommand.
+     * Instantiates a new RefuseAppointmentsCommand.
      * @param request current http request
      */
     public RefuseAppointmentsCommand(HttpServletRequest request) {

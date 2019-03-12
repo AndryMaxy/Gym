@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * This functional interface sets the designated parameter to SQL.
+ * The functional interface sets the designated parameter to SQL.
  *
  * @author Andrey Akulich
  */

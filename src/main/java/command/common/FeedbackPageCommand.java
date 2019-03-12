@@ -37,7 +37,7 @@ public class FeedbackPageCommand extends Command {
     }
 
     /**
-     * Instantiates FeedbackPageCommand. This constructor uses for tests.
+     * Instantiates a new FeedbackPageCommand. This constructor uses for tests.
      *
      * @param request current http request
      * @param bookingService booking service instance

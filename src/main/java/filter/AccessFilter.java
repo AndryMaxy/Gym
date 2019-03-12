@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * This class filters requests by specific url.
+ * The class filters requests by specific url.
  * The filter checks if the role matches the command entered.
  *
  * @author Andrey Akulich
@@ -27,6 +27,7 @@ public class AccessFilter implements Filter {
 
     /**
      * Initialize this class.
+     *
      * @param filterConfig filter configuration
      */
     @Override

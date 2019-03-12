@@ -1,8 +1,8 @@
 package listener;
 
-import dao.connection.DBResourceManager;
-import dao.connection.ConnectionPool;
-import dao.connection.exception.DBException;
+import connection.DBResourceManager;
+import connection.ConnectionPool;
+import connection.exception.DBException;
 import entity.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +20,7 @@ import javax.servlet.annotation.WebListener;
 public class ServletListener implements ServletContextListener {
 
     /**
-     * Logs this class.
+     * A constant has an instance of {@link Logger} to logs this class.
      */
     private static final Logger LOGGER = LogManager.getLogger(ServletListener.class.getSimpleName());
 

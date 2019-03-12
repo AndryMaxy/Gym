@@ -33,7 +33,7 @@ public class DoAppointCommand extends Command {
     private AppointmentService appointmentService;
 
     /**
-     * Instantiates DoAppointCommand.
+     * Instantiates a new DoAppointCommand.
      *
      * @param request current http request
      */

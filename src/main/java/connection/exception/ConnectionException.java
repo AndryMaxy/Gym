@@ -1,27 +1,28 @@
-package dao.connection.exception;
+package connection.exception;
 
 /**
- * This exception throws when connection pool init or finalize troubles happens.
+ * The exception throws when there are problems with taking a connection.
  * @author Andrey Akulich
  */
-public class DBException extends RuntimeException {
+public class ConnectionException extends Exception {
 
     /**
      * SerialVersionUID is used for interoperability.
      */
-    private static final long serialVersionUID = 1628827088870003890L;
+    private static final long serialVersionUID = 4955481852476293176L;
 
     /**
      * Constructs a new exception with {@code null} as its detail message.
      */
-    public DBException() {}
+    public ConnectionException() {
+    }
 
     /**
      * Constructs a new exception with the specified detail message.
      * @param message he detail message. The detail message is saved for
      *        later retrieval by the {@link #getMessage()} method.
      */
-    public DBException(String message) {
+    public ConnectionException(String message) {
         super(message);
     }
 
@@ -34,7 +35,7 @@ public class DBException extends RuntimeException {
      * @param  cause the cause (which is saved for later retrieval by the
      *         {@link #getCause()} method).
      */
-    public DBException(String message, Throwable cause) {
+    public ConnectionException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -42,7 +43,7 @@ public class DBException extends RuntimeException {
      * Constructs a new exception with the specified cause and a detail message.
      * @param cause the cause of exception
      */
-    public DBException(Throwable cause) {
+    public ConnectionException(Throwable cause) {
         super(cause);
     }
 
@@ -59,7 +60,7 @@ public class DBException extends RuntimeException {
      * @param writableStackTrace whether or not the stack trace should
      *                           be writable
      */
-    public DBException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public ConnectionException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

@@ -36,7 +36,7 @@ public class ReduceVisitsCommand extends Command {
     }
 
     /**
-     * Instantiates ReduceVisitsCommand. This constructor uses for tests.
+     * Instantiates a new ReduceVisitsCommand. This constructor uses for tests.
      *
      * @param request current http request
      * @param bookingService booking service instance

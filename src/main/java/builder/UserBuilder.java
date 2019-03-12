@@ -4,26 +4,61 @@ import entity.User;
 import entity.UserRole;
 
 /**
- * This class designed by Builder pattern and it uses for build {@link User}
+ * The class designed by Builder pattern and it uses for build {@link User}
  *
  * @author Andrey Akulich
  */
 public class UserBuilder {
 
+    /**
+     * User identifier in database.
+     */
     private int id;
+
+    /**
+     * User login.
+     */
     private String login;
+
+    /**
+     * Hash of password.
+     */
     private String hash;
+
+    /**
+     * Salt for hash.
+     */
     private String salt;
+
+    /**
+     * User first name.
+     */
     private String name;
+
+    /**
+     * User last name.
+     */
     private String surname;
+
+    /**
+     * User role.
+     */
     private UserRole userRole;
+
+    /**
+     * User discount.
+     */
     private int discount;
+
+    /**
+     * User balance.
+     */
     private int balance = 800;
 
     /**
-     * Sets a param in the id field
+     * Sets a user's identifier in database.
      *
-     * @param id will be set in the id field
+     * @param id a user's identifier in database
      * @return this object
      */
     public UserBuilder buildId(int id) {
@@ -32,9 +67,9 @@ public class UserBuilder {
     }
 
     /**
-     * Sets a param in the login field
+     * Sets a login.
      *
-     * @param login will be set in the login field
+     * @param login a user's login
      * @return this object
      */
     public UserBuilder buildLogin(String login) {
@@ -43,9 +78,9 @@ public class UserBuilder {
     }
 
     /**
-     * Sets a param in the hash field
+     * Sets a hash of password.
      *
-     * @param hash will be set in the hash field
+     * @param hash hash of password
      * @return this object
      */
     public UserBuilder buildHash(String hash) {
@@ -54,9 +89,9 @@ public class UserBuilder {
     }
 
     /**
-     * Sets a param in the salt field
+     * Sets a salt.
      *
-     * @param salt will be set in the salt field
+     * @param salt a salt for hashed password
      * @return this object
      */
     public UserBuilder buildSalt(String salt) {
@@ -65,9 +100,9 @@ public class UserBuilder {
     }
 
     /**
-     * Sets a param in the name field
+     * Sets a user name
      *
-     * @param name will be set in the name field
+     * @param name a user name
      * @return this object
      */
     public UserBuilder buildName(String name) {
@@ -76,9 +111,9 @@ public class UserBuilder {
     }
 
     /**
-     * Sets a param in the surname field
+     * Sets a user surname
      *
-     * @param surname will be set in the surname field
+     * @param surname a user surname
      * @return this object
      */
     public UserBuilder buildSurname(String surname) {
@@ -87,9 +122,9 @@ public class UserBuilder {
     }
 
     /**
-     * Sets a param in the userRole field
+     * Sets a user role.
      *
-     * @param userRole will be set in the userRole field
+     * @param userRole a user role
      * @return this object
      */
     public UserBuilder buildUserRole(UserRole userRole) {
@@ -98,9 +133,9 @@ public class UserBuilder {
     }
 
     /**
-     * Sets a param in the discount field
+     * Sets a discount for user.
      *
-     * @param discount will be set in the discount field
+     * @param discount a user's discount
      * @return this object
      */
     public UserBuilder buildDiscount(int discount) {
@@ -109,9 +144,9 @@ public class UserBuilder {
     }
 
     /**
-     * Sets a param in the balance field
+     * Sets a balance for user.
      *
-     * @param balance will be set in the balance field
+     * @param balance a user's balance
      * @return this object
      */
     public UserBuilder buildBalance(int balance) {

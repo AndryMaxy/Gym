@@ -12,29 +12,28 @@ public enum UserRole {
     VISITOR(3),
     GUEST(4);
 
+    /**
+     * User role identifier in database.
+     */
     private int id;
 
     /**
      * Constructs instance of this class.
      *
-     * @param id object identifier
+     * @param id a identifier in database
      */
     UserRole(int id) {
         this.id = id;
     }
 
     /**
-     * Returns object identifier.
-     *
-     * @return object identifier
+     * @return a identifier in database
      */
     public int getId() {
         return id;
     }
 
     /**
-     * Returns a string representation of the object.
-     *
      * @return a string representation of the object.
      */
     @Override

@@ -27,7 +27,7 @@ public class LogInCommand extends Command {
     private UserService userService;
 
     /**
-     * Instantiates LogInCommand.
+     * Instantiates a new LogInCommand.
      *
      * @param request current http request
      */

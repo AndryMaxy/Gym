@@ -45,7 +45,7 @@ public class HomePageCommand extends Command {
     private AppointmentService appointmentService;
 
     /**
-     * Instantiates HomePageCommand.
+     * Instantiates a new HomePageCommand.
      *
      * @param request current http request
      */

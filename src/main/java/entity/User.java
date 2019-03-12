@@ -9,84 +9,195 @@ import java.util.Objects;
  */
 public class User {
 
+    /**
+     * User identifier in database.
+     */
     private int id;
+
+    /**
+     * User login.
+     */
     private String login;
+
+    /**
+     * Hash of password.
+     */
     private String hash;
+
+    /**
+     * Salt for hash.
+     */
     private String salt;
+
+    /**
+     * User first name.
+     */
     private String name;
+
+    /**
+     * User last name.
+     */
     private String surname;
+
+    /**
+     * User role.
+     */
     private UserRole role;
+
+    /**
+     * User discount.
+     */
     private int discount;
+
+    /**
+     * User balance.
+     */
     private int balance = 800;
 
+    /**
+     * Constructs this class
+     */
+    public User() {
+    }
+
+    /**
+     * @return a user identifier in database
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @param id a user identifier in database
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * @return a user login
+     */
     public String getLogin() {
         return login;
     }
 
+    /**
+     * Sets a user login.
+     *
+     * @param login a user login
+     */
     public void setLogin(String login) {
         this.login = login;
     }
 
+    /**
+     * @return a hash of password
+     */
     public String getHash() {
         return hash;
     }
 
+    /**
+     * Sets a hash of password.
+     *
+     * @param hash a hash of password
+     */
     public void setHash(String hash) {
         this.hash = hash;
     }
 
+    /**
+     * @return a salt for hash
+     */
     public String getSalt() {
         return salt;
     }
 
+    /**
+     * Sets a salt for hash.
+     *
+     * @param salt a salt for hash.
+     */
     public void setSalt(String salt) {
         this.salt = salt;
     }
 
+    /**
+     * @return a user name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets a user name.
+     *
+     * @param name a user name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * @return a user surname.
+     */
     public String getSurname() {
         return surname;
     }
 
+    /**
+     * Sets a user surname.
+     *
+     * @param surname a user surname
+     */
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
+    /**
+     * @return a user role
+     */
     public UserRole getRole() {
         return role;
     }
 
+    /**
+     * Sets a user role.
+     *
+     * @param role a user role
+     */
     public void setRole(UserRole role) {
         this.role = role;
     }
 
+    /**
+     * @return a user discount
+     */
     public int getDiscount() {
         return discount;
     }
 
+    /**
+     * Sets a discount for user.
+     *
+     * @param discount a user's discount
+     */
     public void setDiscount(int discount) {
         this.discount = discount;
     }
 
+    /**
+     * @return a user's balance
+     */
     public int getBalance() {
         return balance;
     }
 
+    /**
+     * Sets a balance for user.
+     *
+     * @param balance a user's balance
+     */
     public void setBalance(int balance) {
         this.balance = balance;
     }
@@ -120,8 +231,6 @@ public class User {
     }
 
     /**
-     * Returns a hash code value for the object.
-     *
      * @return a hash code value for the object.
      */
     @Override
@@ -130,8 +239,6 @@ public class User {
     }
 
     /**
-     * Returns a string representation of the object.
-     *
      * @return a string representation of the object.
      */
     @Override

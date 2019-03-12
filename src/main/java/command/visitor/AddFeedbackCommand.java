@@ -27,7 +27,7 @@ public class AddFeedbackCommand extends Command {
     private BookingService bookingService;
 
     /**
-     * Instantiates AddFeedbackCommand.
+     * Instantiates a new AddFeedbackCommand.
      *
      * @param request current http request
      */

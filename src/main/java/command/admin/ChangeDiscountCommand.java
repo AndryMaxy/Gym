@@ -35,7 +35,7 @@ public class ChangeDiscountCommand extends Command {
     }
 
     /**
-     * Instantiates ChangeDiscountCommand. This constructor uses for tests.
+     * Instantiates a new ChangeDiscountCommand. This constructor uses for tests.
      *
      * @param request current http request
      * @param userService user service instance

@@ -35,7 +35,7 @@ public class CommandFilter implements Filter {
      * @param filterConfig filter configuration
      */
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -81,24 +81,27 @@ public class CommandFilter implements Filter {
 
         /**
          * Constructs instance of this class
+         *
          * @param request current request
          */
-        public RequestWrapper(HttpServletRequest request) {
+        RequestWrapper(HttpServletRequest request) {
             super(request);
             map = new HashMap(request.getParameterMap());
         }
 
         /**
          * Sets the key and value to the map.
+         *
          * @param key the key for the map
          * @param value the value for the map
          */
-        public void setParameter(String key, String value){
+        void setParameter(String key, String value){
             map.put(key, new String[]{value});
         }
 
         /**
          * Returns the value according the key.
+         *
          * @param name the key for the map
          * @return the value according the key
          */
@@ -109,6 +112,7 @@ public class CommandFilter implements Filter {
 
         /**
          * Returns parameter map.
+         *
          * @return parameter map
          */
         @Override
@@ -118,6 +122,7 @@ public class CommandFilter implements Filter {
 
         /**
          * Return enumeration which contains parameter names.
+         *
          * @return enumeration which contains parameter names
          */
         @Override
@@ -127,6 +132,7 @@ public class CommandFilter implements Filter {
 
         /**
          * Returns the values according the key.
+         *
          * @param name the key for the map
          * @return the values according the key
          */

@@ -22,6 +22,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     private static final String EXERCISE = "exercise";
     private static final String PRODUCT = "product";
 
+    /**
+     * This class represents initialization-on-demand holder idiom for {@link AppointmentServiceImpl}
+     */
     private static class AppointmentServiceHolder {
         static final AppointmentServiceImpl INSTANCE = new AppointmentServiceImpl();
     }

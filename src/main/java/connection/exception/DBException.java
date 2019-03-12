@@ -1,28 +1,27 @@
-package dao.connection.exception;
+package connection.exception;
 
 /**
- * This exception throws when there are problems with taking a connection.
+ * The exception throws when connection pool init or finalize troubles happens.
  * @author Andrey Akulich
  */
-public class ConnectionException extends Exception {
+public class DBException extends RuntimeException {
 
     /**
      * SerialVersionUID is used for interoperability.
      */
-    private static final long serialVersionUID = 4955481852476293176L;
+    private static final long serialVersionUID = 1628827088870003890L;
 
     /**
      * Constructs a new exception with {@code null} as its detail message.
      */
-    public ConnectionException() {
-    }
+    public DBException() {}
 
     /**
      * Constructs a new exception with the specified detail message.
      * @param message he detail message. The detail message is saved for
      *        later retrieval by the {@link #getMessage()} method.
      */
-    public ConnectionException(String message) {
+    public DBException(String message) {
         super(message);
     }
 
@@ -35,7 +34,7 @@ public class ConnectionException extends Exception {
      * @param  cause the cause (which is saved for later retrieval by the
      *         {@link #getCause()} method).
      */
-    public ConnectionException(String message, Throwable cause) {
+    public DBException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -43,7 +42,7 @@ public class ConnectionException extends Exception {
      * Constructs a new exception with the specified cause and a detail message.
      * @param cause the cause of exception
      */
-    public ConnectionException(Throwable cause) {
+    public DBException(Throwable cause) {
         super(cause);
     }
 
@@ -60,7 +59,7 @@ public class ConnectionException extends Exception {
      * @param writableStackTrace whether or not the stack trace should
      *                           be writable
      */
-    public ConnectionException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public DBException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

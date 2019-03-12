@@ -3,40 +3,67 @@ package entity;
 import java.util.Objects;
 
 /**
- * This class represents order of gym.
+ * The class represents order of gym.
  *
  * @author Andrey Akuclich
  */
 public class Booking {
 
+    /**
+     * A booking identifier in database
+     */
     private int id;
+
+    /**
+     * User instance
+     */
     private User user;
+
+    /**
+     * Membership instance
+     */
     private Membership membership;
+
+    /**
+     * A number of remaining visits
+     */
     private int visitCountLeft;
+
+    /**
+     * {@code true} if visitor need appointment
+     */
     private boolean needAppointment;
+
+    /**
+     * Visitor feedback of this order
+     */
     private String feedback;
 
     /**
-     * Returns object identifier.
+     * Constructs this class
+     */
+    public Booking() {
+    }
+
+    /**
+     * Returns a booking identifier in database.
      *
-     * @return object identifier
+     * @return a booking identifier in database
      */
     public int getId() {
         return id;
     }
 
     /**
-     * Sets object identifier.
+     * Sets a booking identifier in database.
      *
-     * @param id object identifier.
+     * @param id a booking identifier in database
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * Returns {@link User} instance.
-     *
      * @return {@link User} instance
      */
     public User getUser() {
@@ -53,8 +80,6 @@ public class Booking {
     }
 
     /**
-     * Returns {@link Membership} instance.
-     *
      * @return {@link Membership} instance
      */
     public Membership getMembership() {
@@ -71,9 +96,7 @@ public class Booking {
     }
 
     /**
-     * Returns a number of remaining visits by the gym user of this order.
-     *
-     * @return a number of remaining visits
+     * @return the number of remaining visits
      */
     public int getVisitCountLeft() {
         return visitCountLeft;
@@ -82,15 +105,13 @@ public class Booking {
     /**
      * Sets a number of remaining visits by the gym user of this order.
      *
-     * @param visitCountLeft number of remaining visits
+     * @param visitCountLeft the number of remaining visits
      */
     public void setVisitCountLeft(int visitCountLeft) {
         this.visitCountLeft = visitCountLeft;
     }
 
     /**
-     * Returns {@code true} if visitor need appointment otherwise {@code false}.
-     *
      * @return {@code true} if visitor need appointment otherwise {@code false}
      */
     public boolean isNeedAppointment() {
@@ -107,8 +128,6 @@ public class Booking {
     }
 
     /**
-     * Returns visitor feedback of this order.
-     *
      * @return visitor feedback of this order.
      */
     public String getFeedback() {
@@ -150,8 +169,6 @@ public class Booking {
     }
 
     /**
-     * Returns a hash code value for the object.
-     *
      * @return a hash code value for the object.
      */
     @Override
@@ -160,8 +177,6 @@ public class Booking {
     }
 
     /**
-     * Returns a string representation of the object.
-     *
      * @return a string representation of the object.
      */
     @Override

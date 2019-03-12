@@ -1,7 +1,11 @@
 package service;
-//TODO SHOULD BE SINGLETON?
-public class ParameterValidator {
 
+/**
+ * The class is used for validate all input data of web application.
+ *
+ * @author Andrey Akulich
+ */
+public class ParameterValidator {
 
     private static final String TEXT_REGEX = "([A-z0-9А-яёЁ,.!?]\\s*){20,}";
     private static final String NUMBER_REGEX = "\\d+";
@@ -12,6 +16,9 @@ public class ParameterValidator {
     private static final String MEMBERSHIP_REGEX = "\\bULTRA\\b|\\bSUPER\\b|\\bSTANDARD\\b|\\bEASY\\b|\\bONE\\b";
     private static final String DISCOUNT_REGEX = "\\b0\\b|\\b5\\b|\\b10\\b|\\b15\\b|\\b20\\b|\\b25\\b";
 
+    /**
+     *
+     */
     private static class ValidatorHolder{
         static final ParameterValidator INSTANCE = new ParameterValidator();
     }
@@ -40,9 +47,7 @@ public class ParameterValidator {
 
     public boolean validatePassword(char[] password) {
         String pass = new String(password);
-        boolean result = pass.matches(PASSWORD_REGEX);
-        pass = null;
-        return result;
+        return pass.matches(PASSWORD_REGEX);
     }
 
     public boolean validateRole(String role) {

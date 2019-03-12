@@ -1,7 +1,7 @@
 package service.exception;
 
 /**
- * This exception throws when service layer has exception situation.
+ * The exception throws when service layer has exception situation.
  * @author Andrey Akulich
  */
 public class ServiceException extends Exception {

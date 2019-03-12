@@ -22,6 +22,9 @@ public class UserServiceImpl implements UserService {
     private Encoder encoder = Encoder.getInstance();
     private ParameterValidator validator = ParameterValidator.getInstance();
 
+    /**
+     * This class represents initialization-on-demand holder idiom for {@link UserServiceImpl}
+     */
     private static class UserServiceImplHolder {
         static final UserServiceImpl INSTANCE = new UserServiceImpl();
     }

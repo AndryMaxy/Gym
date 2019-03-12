@@ -1,14 +1,14 @@
 package entity;
 
 /**
- * This class contains project constants.
+ * The class contains project constants.
  *
  * @author Andrey Akulich
  */
 public final class Constants {
 
     /**
-     * This class contains constants for commands.
+     * The class contains constants for commands.
      */
     public static final class Command {
         public static final String COMMAND = "command";
@@ -31,7 +31,7 @@ public final class Constants {
     }
 
     /**
-     * This class contains url constants.
+     * The class contains url constants.
      */
     public static final class URL {
         public static final String ROOT = "";
@@ -45,7 +45,7 @@ public final class Constants {
     }
 
     /**
-     * This class contains parameter constants.
+     * The class contains parameter constants.
      */
     public static final class Parameter {
         public static final String USER_ID = "userId";
@@ -61,7 +61,7 @@ public final class Constants {
     }
 
     /**
-     * This class contains constants servlet response.
+     * The class contains constants servlet response.
      */
     public static final class ResponseStatus {
         public static final int FORWARD = 1;
@@ -71,7 +71,7 @@ public final class Constants {
     }
 
     /**
-     * This class contains constants for database connectivity.
+     * The class contains constants for database connectivity.
      */
     public final class DBKey {
         public static final String DRIVER = "db.driver";

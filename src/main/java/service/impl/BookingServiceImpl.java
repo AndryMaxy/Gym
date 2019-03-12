@@ -16,6 +16,9 @@ import java.util.List;
 
 public class BookingServiceImpl implements BookingService {
 
+    /**
+     * This class represents initialization-on-demand holder idiom for {@link BookingServiceImpl}
+     */
     private static class BookingServiceImplHolder {
         static final BookingServiceImpl INSTANCE = new BookingServiceImpl();
     }

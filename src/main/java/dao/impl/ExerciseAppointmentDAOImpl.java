@@ -15,6 +15,9 @@ public class ExerciseAppointmentDAOImpl extends AppointmentDAO<ExerciseAppointme
             "SELECT e.Name, a.RepCount, a.SetCount, a.Weight FROM Exercise e JOIN ExerciseAppointment a ON e.ExerciseId = a.ExerciseId WHERE a.BookingId = ?";
     private static final String INSERT = "INSERT INTO ExerciseAppointment (BookingId, ExerciseId, SetCount, RepCount, Weight) VALUE (?, ?, ?, ?, ?)";
 
+    /**
+     * This class represents initialization-on-demand holder idiom for {@link ExerciseAppointmentDAOImpl}
+     */
     private static class ExerciseDAOHolder {
         static final ExerciseAppointmentDAOImpl INSTANCE = new ExerciseAppointmentDAOImpl();
     }

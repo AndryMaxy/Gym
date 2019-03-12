@@ -10,14 +10,35 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * This class filters all requests.
+ * The filter checks url and forward if it has not jsp type otherwise do next filter.
+ *
+ * @author Andrey Akulich
+ * @see Filter
+ */
 @WebFilter (filterName = "filter1")
 public class UrlTypeFilter implements Filter {
 
+    /**
+     * Initialize this class.
+     *
+     * @param filterConfig filter configuration
+     */
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
+    /**
+     * Checks url and forward if it has not jsp type otherwise do next filter.
+     *
+     * @param servletRequest current request
+     * @param servletResponse current response
+     * @param filterChain next filter
+     * @throws IOException if input or output error happens
+     * @throws ServletException when servlet has exception situation
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -29,8 +50,10 @@ public class UrlTypeFilter implements Filter {
         }
     }
 
+    /**
+     * Finalize this class.
+     */
     @Override
     public void destroy() {
-
     }
 }

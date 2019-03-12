@@ -24,7 +24,7 @@ public class ChangeLocaleCommand extends Command {
     private static final String REFERER = "referer";
 
     /**
-     * Instantiates ChangeDiscountCommand.
+     * Instantiates a new ChangeDiscountCommand.
      *
      * @param request current http request
      */

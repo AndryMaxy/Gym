@@ -1,5 +1,10 @@
 package entity;
 
+/**
+ * The enum class represents memberships of gym.
+ *
+ * @author Andrey Akulich
+ */
 public enum Membership {
 
     ULTRA(1,30, 1000),
@@ -8,8 +13,19 @@ public enum Membership {
     EASY(4,10, 500),
     ONE(5,1, 100);
 
+    /**
+     * A membership identifier in database.
+     */
     private int id;
+
+    /**
+     * A number of visits according membership
+     */
     private int count;
+
+    /**
+     * A cost according membership
+     */
     private int price;
 
     /**
@@ -24,19 +40,15 @@ public enum Membership {
         this.count = count;
         this.price = price;
     }
-    //todo ARTICLE A!!
+
     /**
-     * Returns an object identifier.
-     *
-     * @return an object identifier
+     * @return a identifier in database
      */
     public int getId() {
         return id;
     }
 
     /**
-     * Returns a number of visits.
-     *
      * @return a number of visits
      */
     public int getCount() {
@@ -44,8 +56,6 @@ public enum Membership {
     }
 
     /**
-     * Returns a cost of this membership.
-     *
      * @return a cost of this membership
      */
     public int getPrice() {
@@ -53,10 +63,10 @@ public enum Membership {
     }
 
     /**
-     * Returns the name of this enum constant, exactly as declared in its
+     * Returns a name of this enum constant, exactly as declared in its
      * enum declaration.
      *
-     * @return the name of this enum constant
+     * @return a name of this enum constant
      */
     @Override
     public String toString() {

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * This class represent appointment to the visitor of gym.
+ * The class represent appointment to the visitor of gym.
  *
  * @author Andrey Akulich
  */
@@ -21,7 +21,12 @@ public class Appointment {
     private List<ProductAppointment> productAppointments;
 
     /**
-     * Return list of appointment exercises to the visitor.
+     * Constructs this class
+     */
+    public Appointment() {
+    }
+
+    /**
      * @return list of appointment exercises to the visitor
      */
     public List<ExerciseAppointment> getExerciseAppointments() {
@@ -30,6 +35,7 @@ public class Appointment {
 
     /**
      * Sets list of appointment exercises to the visitor.
+     *
      * @param exerciseAppointments appointment exercises
      */
     public void setExerciseAppointments(List<ExerciseAppointment> exerciseAppointments) {
@@ -37,7 +43,6 @@ public class Appointment {
     }
 
     /**
-     * Return list of appointment products to the visitor.
      * @return list of appointment products to the visitor
      */
     public List<ProductAppointment> getProductAppointments() {
@@ -46,6 +51,7 @@ public class Appointment {
 
     /**
      * Sets list of appointment products to the visitor.
+     *
      * @param productAppointments appointment products
      */
     public void setProductAppointments(List<ProductAppointment> productAppointments) {
@@ -75,8 +81,6 @@ public class Appointment {
     }
 
     /**
-     * Returns a hash code value for the object.
-     *
      * @return a hash code value for the object.
      */
     @Override
@@ -85,8 +89,6 @@ public class Appointment {
     }
 
     /**
-     * Returns a string representation of the object.
-     *
      * @return a string representation of the object.
      */
     @Override

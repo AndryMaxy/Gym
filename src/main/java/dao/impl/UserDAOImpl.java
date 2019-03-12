@@ -32,6 +32,9 @@ public class UserDAOImpl implements UserDAO {
 
     private Executor executor = Executor.getInstance();
 
+    /**
+     * This class represents initialization-on-demand holder idiom for {@link UserDAOImpl}
+     */
     private static class UserDAOHolder {
         static final UserDAOImpl INSTANCE = new UserDAOImpl();
     }

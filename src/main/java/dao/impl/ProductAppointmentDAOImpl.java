@@ -15,7 +15,9 @@ public class ProductAppointmentDAOImpl extends AppointmentDAO<ProductAppointment
             "SELECT p.Name, a.GramInDay FROM Product p JOIN ProductAppointment a on p.ProductId = a.ProductId WHERE a.BookingId = ?";
     private static final String INSERT = "INSERT INTO ProductAppointment ( BookingId, ProductId, GramInDay ) VALUE ( ?, ?, ? )";
 
-
+    /**
+     * This class represents initialization-on-demand holder idiom for {@link ProductAppointmentDAOImpl}
+     */
     private static class ProductDAOImplHolder{
         static final ProductAppointmentDAOImpl INSTANCE = new ProductAppointmentDAOImpl();
     }

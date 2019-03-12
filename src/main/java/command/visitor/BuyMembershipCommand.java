@@ -32,7 +32,7 @@ public class BuyMembershipCommand extends Command {
     private BookingService bookingService;
 
     /**
-     * Instantiates BuyMembershipCommand.
+     * Instantiates a new BuyMembershipCommand.
      *
      * @param request current http request
      */

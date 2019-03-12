@@ -26,6 +26,9 @@ public class BookingDAOImpl implements BookingDAO {
 
     private final Executor executor = Executor.getInstance();
 
+    /**
+     * This class represents initialization-on-demand holder idiom for {@link BookingDAOImpl}
+     */
     private static class OrderDAOImplHolder {
         private static final BookingDAOImpl INSTANCE = new BookingDAOImpl();
     }

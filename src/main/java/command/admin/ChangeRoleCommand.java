@@ -35,7 +35,7 @@ public class ChangeRoleCommand extends Command {
     }
 
     /**
-     * Instantiates ChangeRoleCommand. This constructor uses for tests.
+     * Instantiates a new ChangeRoleCommand. This constructor uses for tests.
      *
      * @param request current http request
      * @param userService user service instance

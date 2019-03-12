@@ -49,7 +49,7 @@ public class LookOrderCommand extends Command {
     }
 
     /**
-     * Instantiates LookOrderCommand. This constructor uses for tests.
+     * Instantiates a new LookOrderCommand. This constructor uses for tests.
      *
      * @param request current http request
      * @param userService user service instance

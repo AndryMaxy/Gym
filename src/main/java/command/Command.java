@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * This abstract class designed by Command pattern.
+ * The abstract class designed by Command pattern.
  * @author Andrey Akulich
  */
 public abstract class Command {
@@ -25,7 +25,7 @@ public abstract class Command {
     protected HttpSession session;
 
     /**
-     * Instantiates Command
+     * Instantiates a new Command
      * @param request current http servlet request
      */
     public Command(HttpServletRequest request) {

@@ -18,7 +18,7 @@ import java.util.Locale;
 public class LogOutCommand extends Command {
 
     /**
-     * Instantiates LogOutCommand.
+     * Instantiates a new LogOutCommand.
      *
      * @param request current http request
      */
