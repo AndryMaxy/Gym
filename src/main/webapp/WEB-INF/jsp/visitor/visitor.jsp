@@ -9,7 +9,7 @@
     <c:import url="/WEB-INF/jsp/fragment/header.jsp" charEncoding="utf-8"/>
     <fmt:message key="visitor.buySure" var="sure"/>
     <script>
-        function buyMembership(form) {
+        function buyMembership() {
             return confirm('${sure}' + "?");
         }
     </script>

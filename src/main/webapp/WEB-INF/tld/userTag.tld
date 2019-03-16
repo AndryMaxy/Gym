@@ -11,7 +11,7 @@
 
     <tag>
         <name>userTag</name>
-        <tag-class>tag.UserNameTag</tag-class>
+        <tag-class>by.epam.akulich.gym.tag.UserNameTag</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
             <name>name</name>

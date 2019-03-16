@@ -44,7 +44,7 @@
                         <div class="row form-group">
                             <div class="mx-auto">
                                 <fmt:message key="login.password" var="password"/>
-                                <input type="password" pattern="(?=.*\d)(?=.*[A-zА-я]).{6,}" name="password"
+                                <input type="password" pattern="^(?=.*[A-Za-zА-яёЁ])(?=.*\d)[A-Za-zА-яёЁ\d]{6,}$" name="password"
                                        class="form-control"
                                        placeholder="${password}" autocomplete="current-hash" required>
                                 <div class="invalid-feedback">

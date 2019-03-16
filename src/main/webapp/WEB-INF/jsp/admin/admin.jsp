@@ -7,6 +7,12 @@
 <head>
     <title><fmt:message key="common.personal"/></title>
     <c:import url="/WEB-INF/jsp/fragment/header.jsp" charEncoding="utf-8"/>
+    <fmt:message key="admin.deleteSure" var="sure"/>
+    <script>
+        function deleteUser(name, surname) {
+            return confirm('${sure}' + ' ' + name + ' ' + surname + "?");
+        }
+    </script>
 </head>
 <body>
 <c:import url="/WEB-INF/jsp/fragment/locale.jsp" charEncoding="utf-8"/>
@@ -25,7 +31,7 @@
                 <th><fmt:message key="common.surname"/></th>
                 <th><fmt:message key="admin.role"/></th>
                 <th><fmt:message key="admin.orders"/></th>
-                <th></th>
+                <th><fmt:message key="admin.delete"/></th>
             </tr>
             </thead>
             <tbody>
@@ -64,7 +70,8 @@
                     </td>
                     <td>
                         <c:if test="${user.role != 'ADMIN'}">
-                            <form action="controller" method="post" class="my-auto">
+                            <form action="controller" method="post" class="my-auto"
+                                  onsubmit="return deleteUser('${user.name}', '${user.surname}')">
                                 <input type="hidden" name="command" value="delete">
                                 <input type="hidden" name="userId" value="${user.id}">
                                 <button type="submit" class="btn btn-secondary mx-auto">

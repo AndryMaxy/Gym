@@ -5,7 +5,7 @@
 <fmt:setBundle basename="content"/>
 <html>
 <head>
-    <title>Error</title>
+    <title><fmt:message key="error.title"/></title>
     <c:import url="/WEB-INF/jsp/fragment/header.jsp" charEncoding="utf-8"/>
 </head>
 <body bgcolor="bg-light">
