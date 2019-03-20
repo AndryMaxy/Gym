@@ -7,11 +7,11 @@ package by.epam.akulich.gym.service;
  */
 public class ParameterValidator {
 
-    private static final String TEXT_REGEX = "([A-z0-9А-яёЁ,.!?]\\s*){20,}";
+    private static final String TEXT_REGEX = "([A-Za-z0-9А-яёЁ,.!?]\\s*){20,}";
     private static final String NUMBER_REGEX = "\\d+";
-    private static final String LOGIN_REGEX = "[A-z0-9А-я]{6,}";
+    private static final String LOGIN_REGEX = "[A-Za-z0-9А-я]{6,}";
     private static final String PASSWORD_REGEX = "^(?=.*[A-Za-zА-яёЁ])(?=.*\\d)[A-Za-zА-яёЁ\\d]{6,}$";
-    private static final String USER_NAME_REGEX = "[A-zА-я]+";
+    private static final String USER_NAME_REGEX = "[A-Za-zА-я]+";
     private static final String ROLE_TYPE_REGEX = "\\bADMIN\\b|\\bVISITOR\\b|\\bTRAINER\\b";
     private static final String MEMBERSHIP_REGEX = "\\bULTRA\\b|\\bSUPER\\b|\\bSTANDARD\\b|\\bEASY\\b|\\bONE\\b";
     private static final String DISCOUNT_REGEX = "\\b0\\b|\\b5\\b|\\b10\\b|\\b15\\b|\\b20\\b|\\b25\\b";

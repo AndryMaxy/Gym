@@ -7,10 +7,22 @@
 <head>
     <title><fmt:message key="common.personal"/></title>
     <c:import url="/WEB-INF/jsp/fragment/header.jsp" charEncoding="utf-8"/>
-    <fmt:message key="admin.deleteSure" var="sure"/>
+    <fmt:message key="admin.deleteSure" var="deleteSure"/>
+    <fmt:message key="admin.changeRoleSure" var="changeRoleSure"/>
     <script>
         function deleteUser(name, surname) {
-            return confirm('${sure}' + ' ' + name + ' ' + surname + "?");
+            return confirm('${deleteSure}' + ' ' + name + ' ' + surname + "?");
+        }
+    </script>
+    <script>
+        function changeRole(name, surname, form, role) {
+            var bool = confirm('${changeRoleSure}' + ' ' + name + ' ' + surname + "?");
+            if (bool){
+                mySubmit(form);
+            } else {
+                var el = document.getElementById(form);
+                el.value = role;
+            }
         }
     </script>
 </head>
@@ -44,7 +56,8 @@
                               style="text-align: center; margin: 0">
                             <input type="hidden" name="command" value="role"/>
                             <input type="hidden" name="userId" value="${user.id}"/>
-                            <select id="roleForm" name="role" onchange="mySubmit('roleForm${user.id}')"
+                            <select id="roleForm${user.id}" name="role"
+                                    onchange="changeRole('${user.name}','${user.surname}','roleForm${user.id}', '${user.role}')"
                                     style="font-size: 100%">
                                 <option value="ADMIN" ${user.role == 'ADMIN' ? 'selected' : ''}>
                                     <fmt:message key="admin.admin"/>

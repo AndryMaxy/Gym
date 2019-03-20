@@ -26,7 +26,7 @@
                         <div class="row form-group">
                             <div class="mx-auto">
                                 <fmt:message key="login.login" var="login"/>
-                                <input type="text" pattern="[A-z0-9А-я]{6,}" name="login" class="form-control"
+                                <input type="text" pattern="[A-Za-z0-9А-я]{6,}" name="login" class="form-control"
                                        placeholder="${login}"
                                        required>
                                 <div class="invalid-feedback">
@@ -55,7 +55,7 @@
                         <div class="row form-group">
                             <div class="mx-auto">
                                 <fmt:message key="common.name" var="name"/>
-                                <input type="text" name="name" pattern="[A-zА-я]+" class="form-control"
+                                <input type="text" name="name" pattern="[A-Za-zА-я]+" class="form-control"
                                        placeholder="${name}" autocomplete="current-hash" required>
                                 <div class="invalid-feedback">
                                     <fmt:message key="register.incorrectName"/>
@@ -65,7 +65,7 @@
                         <div class="row form-group">
                             <div class="mx-auto">
                                 <fmt:message key="common.surname" var="surname"/>
-                                <input type="text" name="surname" pattern="[A-zА-я]+" class="form-control"
+                                <input type="text" name="surname" pattern="[A-Za-zА-я]+" class="form-control"
                                        placeholder="${surname}" autocomplete="current-hash" required>
                                 <div class="invalid-feedback">
                                     <fmt:message key="register.incorrectSurname"/>
