@@ -1,7 +1,6 @@
 package by.epam.akulich.gym.service.impl;
 
 import by.epam.akulich.gym.dao.BookingDAO;
-import by.epam.akulich.gym.service.ParameterValidator;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
