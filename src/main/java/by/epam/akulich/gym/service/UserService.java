@@ -107,6 +107,17 @@ public interface UserService {
     void changeDiscount(String id, String discount) throws ServiceException, InvalidInputException;
 
     /**
+     * Refill user's {@link User} balance.
+     *
+     * @param id {@link User} identifier
+     * @param addBalance amount to refill balance
+     * @param payment payment method
+     * @throws ServiceException if exception in dao layer occurs
+     * @throws InvalidInputException if user input invalid data
+     */
+    void upBalance(String id, String addBalance, String payment) throws ServiceException, InvalidInputException;
+
+    /**
      * Creates and adds new {@link User} to database.
      *
      * @param login user's login

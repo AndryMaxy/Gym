@@ -1,5 +1,7 @@
 package by.epam.akulich.gym.command;
 
+import by.epam.akulich.gym.command.visitor.RefillPageCommand;
+import by.epam.akulich.gym.command.visitor.UpBalanceCommand;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
@@ -61,7 +63,9 @@ public class CommandFactoryTest {
                 {Constants.Command.FEEDBACK, new FeedbackPageCommand(request), request},
                 {Constants.Command.ADD_FEEDBACK, new AddFeedbackCommand(request), request},
                 {Constants.Command.CHANGE_DISCOUNT, new ChangeDiscountCommand(request), request},
-                {Constants.Command.REFUSE_APPOINTMENT, new RefuseAppointmentsCommand(request), request}
+                {Constants.Command.REFUSE_APPOINTMENT, new RefuseAppointmentsCommand(request), request},
+                {Constants.Command.REFILL, new RefillPageCommand(request), request},
+                {Constants.Command.UP_BALANCE, new UpBalanceCommand(request), request}
         };
     }
 

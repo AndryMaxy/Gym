@@ -146,6 +146,8 @@ public class AccessFilter implements Filter {
     private boolean checkVisitorAccess(String command) {
         return command.equals(Constants.Command.ADD_FEEDBACK)
                 || command.equals(Constants.Command.REFUSE_APPOINTMENT)
-                || command.equals(Constants.Command.BUY_MEMBERSHIP);
+                || command.equals(Constants.Command.BUY_MEMBERSHIP)
+                || command.equals(Constants.Command.REFILL)
+                || command.equals(Constants.Command.UP_BALANCE);
     }
 }

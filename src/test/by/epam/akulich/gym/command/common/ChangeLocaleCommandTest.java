@@ -15,7 +15,10 @@ import org.mockito.MockitoAnnotations;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.Locale;
+
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(DataProviderRunner.class)
@@ -59,6 +62,7 @@ public class ChangeLocaleCommandTest {
         Response actual = command.execute();
 
         //then
+        verify(session).setAttribute(Constants.Parameter.LOCALE, Locale.forLanguageTag(locale));
         assertEquals(expected, actual);
     }
 

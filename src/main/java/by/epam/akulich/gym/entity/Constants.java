@@ -28,6 +28,8 @@ public final class Constants {
         public static final String ADD_FEEDBACK = "addFeedback";
         public static final String CHANGE_DISCOUNT = "discount";
         public static final String REFUSE_APPOINTMENT = "refuse";
+        public static final String REFILL = "refill";
+        public static final String UP_BALANCE = "upBalance";
     }
 
     /**
@@ -35,13 +37,15 @@ public final class Constants {
      */
     public static final class URL {
         public static final String ROOT = "";
-        public static final String MAIN = "/main";
-        public static final String APPOINT = "/app";
-        public static final String ORDER = "/lookOrder";
         public static final String HOME = "/home";
         public static final String REGISTER = "/register";
         public static final String FEEDBACK = "/feedback";
-        public static final String FEEDBACK_JSP = "/feedback.jsp";
+        public static final String REFILL = "/refill";
+        public static final String MAIN = "/WEB-INF/jsp/common/main.jsp";
+        public static final String APPOINT = "/WEB-INF/jsp/trainer/appointment.jsp";
+        public static final String ORDER = "/WEB-INF/jsp/admin/order.jsp";
+        public static final String FEEDBACK_JSP = "/WEB-INF/jsp/common/feedback.jsp";
+        public static final String REFILL_JSP = "/WEB-INF/jsp/visitor/balance.jsp";
     }
 
     /**
@@ -58,6 +62,8 @@ public final class Constants {
         public static final String DISCOUNT = "discount";
         public static final String FEEDBACK_AREA = "feedbackArea";
         public static final String LOCALE = "locale";
+        public static final String PAYMENT = "payment";
+        public static final String BALANCE = "balance";
     }
 
     /**

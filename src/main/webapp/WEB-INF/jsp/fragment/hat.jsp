@@ -15,6 +15,13 @@
         </div>
         <div class="col-md-auto">
             <ul class="nav justify-content-end align-items-center">
+                <c:if test="${sessionScope.role == 'VISITOR'}">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="${pageContext.request.contextPath}/refill">
+                            <fmt:message key="hat.refill"/>
+                        </a>
+                    </li>
+                </c:if>
                 <li class="nav-item">
                     <a class="nav-link active" href="${pageContext.request.contextPath}/feedback">
                         <fmt:message key="hat.feedback"/>

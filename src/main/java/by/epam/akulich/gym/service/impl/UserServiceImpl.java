@@ -257,17 +257,17 @@ public class UserServiceImpl implements UserService {
     /**
      * Sets another {@link UserRole} to {@link User}.
      *
-     * @param id {@link User} identifier
+     * @param userIdStr {@link User} identifier
      * @param roleStr string of {@link UserRole}
      * @throws ServiceException if exception in dao layer occurs
      * @throws InvalidInputException if user input invalid data
      */
     @Override
-    public void changeRole(String id, String roleStr) throws ServiceException, InvalidInputException {
-        if (!validator.validateNumber(id) || !validator.validateRole(roleStr)) {
+    public void changeRole(String userIdStr, String roleStr) throws ServiceException, InvalidInputException {
+        if (!validator.validateNumber(userIdStr) || !validator.validateRole(roleStr)) {
             throw new InvalidInputException();
         }
-        User user = getUser(id);
+        User user = getUser(userIdStr);
         UserRole userRole = UserRole.valueOf(roleStr);
         user.setRole(userRole);
         update(user);
@@ -293,18 +293,50 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Deletes {@link User} from database.
+     * Refill user's balance and changes user's
+     * discount if the refill meets the conditions.
      *
-     * @param idStr {@link User} identifier
+     * @param userIdStr {@link User} identifier
+     * @param addBalanceStr amount to refill balance
+     * @param payment payment method
      * @throws ServiceException if exception in dao layer occurs
      * @throws InvalidInputException if user input invalid data
      */
     @Override
-    public void delete(String idStr) throws ServiceException, InvalidInputException {
-        if (!validator.validateNumber(idStr)) {
+    public void upBalance(String userIdStr, String addBalanceStr, String payment) throws ServiceException, InvalidInputException {
+        if (!validator.validateNumber(userIdStr) || !validator.validateNumber(addBalanceStr)) {
             throw new InvalidInputException();
         }
-        int userId = Integer.parseInt(idStr);
+        int userId = Integer.parseInt(userIdStr);
+        int addBalance = Integer.parseInt(addBalanceStr);
+        try {
+            User user = userDAO.getById(userId);
+            int discount = user.getDiscount();
+            if (payment.equals("card") && user.getDiscount() < 20 && addBalance >= 1000) {
+                discount += 5;
+            }
+            int balance = user.getBalance() + addBalance;
+            user.setBalance(balance);
+            user.setDiscount(discount);
+            userDAO.update(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * Deletes {@link User} from database.
+     *
+     * @param userIdStr {@link User} identifier
+     * @throws ServiceException if exception in dao layer occurs
+     * @throws InvalidInputException if user input invalid data
+     */
+    @Override
+    public void delete(String userIdStr) throws ServiceException, InvalidInputException {
+        if (!validator.validateNumber(userIdStr)) {
+            throw new InvalidInputException();
+        }
+        int userId = Integer.parseInt(userIdStr);
         try {
             userDAO.delete(userId);
         } catch (DAOException e) {

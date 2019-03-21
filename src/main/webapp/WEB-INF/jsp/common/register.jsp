@@ -26,7 +26,7 @@
                         <div class="row form-group">
                             <div class="mx-auto">
                                 <fmt:message key="login.login" var="login"/>
-                                <input type="text" pattern="[A-Za-z0-9А-я]{6,}" name="login" class="form-control"
+                                <input type="text" pattern="[A-Za-z0-9А-я]{6,15}" name="login" class="form-control"
                                        placeholder="${login}"
                                        required>
                                 <div class="invalid-feedback">

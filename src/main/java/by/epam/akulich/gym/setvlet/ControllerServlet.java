@@ -26,7 +26,7 @@ import java.io.IOException;
  * @see HttpServlet
  */
 @WebServlet(name = "controller", urlPatterns = {
-        "/controller", "/home", "/doAppoint", "/order", "/feedback"})
+        "/controller", "/home", "/doAppoint", "/order", "/feedback", "/refill"})
 public class ControllerServlet extends HttpServlet {
 
     /**

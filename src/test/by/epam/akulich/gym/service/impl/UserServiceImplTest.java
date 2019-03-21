@@ -687,4 +687,79 @@ public class UserServiceImplTest {
         //then
         //expected InvalidInputException
     }
+
+    @DataProvider
+    public static Object[][] upBalance_Strings_UppedBalance_Data(){
+        User user1 = new User();
+        user1.setId(22);
+        user1.setBalance(300);
+        user1.setDiscount(20);
+        User user1Expected = new User();
+        user1Expected.setId(22);
+        user1Expected.setBalance(600);
+        user1Expected.setDiscount(20);
+        User user2 = new User();
+        user2.setId(33);
+        user2.setBalance(500);
+        user2.setDiscount(0);
+        User user2Expected = new User();
+        user2Expected.setId(33);
+        user2Expected.setBalance(1800);
+        user2Expected.setDiscount(5);
+        User user3 = new User();
+        user3.setId(43);
+        user3.setBalance(1550);
+        user3.setDiscount(10);
+        User user3Expected = new User();
+        user3Expected.setId(43);
+        user3Expected.setBalance(2350);
+        user3Expected.setDiscount(10);
+        return new Object[][] {
+                { "22", "300", "cash", user1, user1Expected},
+                { "33", "1300", "card", user2, user2Expected},
+                { "43", "800", "card", user3, user3Expected}
+        };
+    }
+
+    @Test
+    @UseDataProvider("upBalance_Strings_UppedBalance_Data")
+    public void upBalance_Strings_UppedBalance(String userIdStr, String addBalanceStr, String payment, User user, User expected) throws DAOException, InvalidInputException, ServiceException {
+        //given
+        when(userDAO.getById(user.getId())).thenReturn(user);
+
+        //when
+        userService.upBalance(userIdStr, addBalanceStr, payment);
+
+        //then
+        verify(userDAO).update(expected);
+    }
+
+    @Test(expected = ServiceException.class)
+    public void upBalance_Strings_ServiceException() throws DAOException, InvalidInputException, ServiceException {
+        //given
+        String userIdStr = "22";
+        String addBalanceStr = "300";
+        String payment = "card";
+        when(userDAO.getById(22)).thenThrow(new DAOException());
+
+        //when
+        userService.upBalance(userIdStr, addBalanceStr, payment);
+
+        //then
+        //expected ServiceException
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void upBalance_Strings_InvalidInputException() throws InvalidInputException, ServiceException {
+        //given
+        String userIdStr = "22..";
+        String addBalanceStr = "300";
+        String payment = "card";
+
+        //when
+        userService.upBalance(userIdStr, addBalanceStr, payment);
+
+        //then
+        //expected InvalidInputException
+    }
 }

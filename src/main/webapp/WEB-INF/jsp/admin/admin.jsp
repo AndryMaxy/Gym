@@ -39,6 +39,7 @@
         <table class="table">
             <thead>
             <tr>
+                <th><fmt:message key="login.login"/></th>
                 <th><fmt:message key="common.name"/></th>
                 <th><fmt:message key="common.surname"/></th>
                 <th><fmt:message key="admin.role"/></th>
@@ -49,6 +50,7 @@
             <tbody>
             <c:forEach items="${requestScope.users}" varStatus="i" var="user">
                 <tr>
+                    <td><c:out value="${user.login}"/></td>
                     <td><c:out value="${user.name}"/></td>
                     <td><c:out value="${user.surname}"/></td>
                     <td>

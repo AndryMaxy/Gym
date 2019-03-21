@@ -33,21 +33,6 @@
                             <th></th>
                         </tr>
                         </thead>
-                        <%--<tbody>--%>
-                        <%--<c:forEach items="${requestScope.appointment.exerciseAppointments}" var="exercise">--%>
-                            <%--<tr bgcolor="#EBEBE4" id="trEx-${exercise.id}">--%>
-                                <%--<td><c:out value="${exercise.name}"/></td>--%>
-                                <%--<td><input type="number" min="5" max="200" name="repCount-${exercise.id}" disabled>--%>
-                                <%--</td>--%>
-                                <%--<td><input type="number" min="1" max="20" name="setCount-${exercise.id}" disabled>--%>
-                                <%--</td>--%>
-                                <%--<td><input type="number" min="0" max="200" name="weight-${exercise.id}" disabled>--%>
-                                <%--</td>--%>
-                                <%--<td><input type="checkbox" name="checkerEx-${exercise.id}"--%>
-                                           <%--onclick="checkExercise('${exercise.id}')" style="transform: scale(1.8)"></td>--%>
-                            <%--</tr>--%>
-                        <%--</c:forEach>--%>
-                        <%--</tbody>--%>
                         <tbody>
                         <c:forEach items="${requestScope.appointment.exerciseAppointments}" var="exercise">
                             <tr bgcolor="#EBEBE4" id="trEx-${exercise.id}">
@@ -74,17 +59,6 @@
                             <th></th>
                         </tr>
                         </thead>
-                        <%--<tbody>--%>
-                        <%--<c:forEach items="${requestScope.appointment.productAppointments}" varStatus="status" var="product">--%>
-                            <%--<tr bgcolor="#EBEBE4" id="trPr-${product.id}">--%>
-                                <%--<td><c:out value="${product.name}"/></td>--%>
-                                <%--<td><input type="number" min="20" max="1000" name="gram-${product.id}" disabled>--%>
-                                <%--</td>--%>
-                                <%--<td><input type="checkbox" name="checkerPr-${product.id}"--%>
-                                           <%--onclick="checkProduct('${product.id}')" style="transform: scale(1.8)"></td>--%>
-                            <%--</tr>--%>
-                        <%--</c:forEach>--%>
-                        <%--</tbody>--%>
                         <tbody>
                         <c:forEach items="${requestScope.appointment.productAppointments}" varStatus="status" var="product">
                             <tr bgcolor="#EBEBE4" id="trPr-${product.id}">

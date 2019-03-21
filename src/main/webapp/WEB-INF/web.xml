@@ -11,44 +11,12 @@
         <jsp-file>/WEB-INF/jsp/common/register.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>main</servlet-name>
-        <jsp-file>/WEB-INF/jsp/common/main.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>appointment</servlet-name>
-        <jsp-file>/WEB-INF/jsp/trainer/appointment.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>order</servlet-name>
-        <jsp-file>/WEB-INF/jsp/admin/order.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>feedback.jsp</servlet-name>
-        <jsp-file>/WEB-INF/jsp/common/feedback.jsp</jsp-file>
-    </servlet>
-    <servlet>
         <servlet-name>about</servlet-name>
         <jsp-file>/WEB-INF/jsp/common/about.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>about</servlet-name>
         <url-pattern>/about</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>feedback.jsp</servlet-name>
-        <url-pattern>/feedback.jsp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>main</servlet-name>
-        <url-pattern>/main</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>appointment</servlet-name>
-        <url-pattern>/app</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>order</servlet-name>
-        <url-pattern>/lookOrder</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
@@ -68,6 +36,7 @@
         <url-pattern>/doAppoint</url-pattern>
         <url-pattern>/order</url-pattern>
         <url-pattern>/feedback</url-pattern>
+        <url-pattern>/refill</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>accessFilter</filter-name>
@@ -75,7 +44,7 @@
         <url-pattern>/home</url-pattern>
         <url-pattern>/doAppoint</url-pattern>
         <url-pattern>/order</url-pattern>
-        <url-pattern>/feedback</url-pattern>
+        <url-pattern>/refill</url-pattern>
     </filter-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

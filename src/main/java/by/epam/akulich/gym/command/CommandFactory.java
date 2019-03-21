@@ -16,7 +16,9 @@ import by.epam.akulich.gym.command.trainer.AppointCommand;
 import by.epam.akulich.gym.command.trainer.DoAppointCommand;
 import by.epam.akulich.gym.command.visitor.AddFeedbackCommand;
 import by.epam.akulich.gym.command.visitor.BuyMembershipCommand;
+import by.epam.akulich.gym.command.visitor.RefillPageCommand;
 import by.epam.akulich.gym.command.visitor.RefuseAppointmentsCommand;
+import by.epam.akulich.gym.command.visitor.UpBalanceCommand;
 import by.epam.akulich.gym.entity.Constants;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,6 +73,10 @@ public enum CommandFactory {
                 return new ChangeDiscountCommand(request);
             case Constants.Command.REFUSE_APPOINTMENT:
                 return new RefuseAppointmentsCommand(request);
+            case Constants.Command.REFILL:
+                return new RefillPageCommand(request);
+            case Constants.Command.UP_BALANCE:
+                return new UpBalanceCommand(request);
             default:
                 throw new NoCommandException();
         }
