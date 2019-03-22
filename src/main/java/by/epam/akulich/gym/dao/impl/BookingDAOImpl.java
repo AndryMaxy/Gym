@@ -1,5 +1,6 @@
 package by.epam.akulich.gym.dao.impl;
 
+import by.epam.akulich.gym.builder.BookingBuilder;
 import by.epam.akulich.gym.dao.BookingDAO;
 import by.epam.akulich.gym.dao.Executor;
 import by.epam.akulich.gym.dao.StatementHandler;
@@ -205,7 +206,6 @@ public class BookingDAOImpl implements BookingDAO {
      * @throws SQLException if a database access error occurs
      */
     private Booking parseBooking(ResultSet resultSet) throws SQLException {
-        Booking booking = new Booking();
         int bookingId = resultSet.getInt("BookingId");
         int visitCountLeft = resultSet.getInt("VisitCountLeft");
         String feedback = resultSet.getString("Feedback");
@@ -217,12 +217,13 @@ public class BookingDAOImpl implements BookingDAO {
         User user = new User();
         user.setId(userId);
         user.setName(userName);
-        booking.setUser(user);
-        booking.setId(bookingId);
-        booking.setMembership(membership);
-        booking.setVisitCountLeft(visitCountLeft);
-        booking.setNeedAppointment(needAppointment);
-        booking.setFeedback(feedback);
-        return booking;
+        BookingBuilder builder = new BookingBuilder();
+        return builder.buildUser(user)
+                .buildId(bookingId)
+                .buildMembership(membership)
+                .buildVisitCountLeft(visitCountLeft)
+                .buildNeedAppointment(needAppointment)
+                .buildFeedback(feedback)
+                .build();
     }
 }

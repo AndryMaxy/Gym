@@ -18,7 +18,8 @@ import java.util.Locale;
 public class SessionListener implements HttpSessionListener {
 
     /**
-     * Sets user role to session.
+     * Sets user role and locale to session.
+     *
      * @param httpSessionEvent event which invoke when http session created
      */
     @Override
@@ -29,9 +30,11 @@ public class SessionListener implements HttpSessionListener {
     }
 
     /**
-     * Finalize session listener
-     * @param httpSessionEvent event which invoke when http session created
+     * Finalize session.
+     *
+     * @param httpSessionEvent event which invoke when http session destroys
      */
     @Override
-    public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {}
+    public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+    }
 }

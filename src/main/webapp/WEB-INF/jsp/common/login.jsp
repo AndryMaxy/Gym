@@ -19,7 +19,7 @@
             </div>
         </div>
         <c:out value="${requestScope.text}"/>
-        <form action="controller" method="post" class="needs-validation" id="loginForm" novalidate onsubmit="tryFunc()">
+        <form action="controller" method="post" class="needs-validation" id="loginForm" novalidate>
             <input type="hidden" name="command" id="command" value="logIn"/>
             <div class="row form-group">
                 <div class="mx-auto">

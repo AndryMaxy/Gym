@@ -4,7 +4,7 @@ import by.epam.akulich.gym.entity.User;
 import by.epam.akulich.gym.entity.UserRole;
 
 /**
- * The class designed by Builder pattern and it uses for build {@link User}
+ * The class designed by Builder pattern and it uses for build {@link User}.
  *
  * @author Andrey Akulich
  */

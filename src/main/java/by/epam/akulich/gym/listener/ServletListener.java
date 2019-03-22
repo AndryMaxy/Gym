@@ -26,6 +26,7 @@ public class ServletListener implements ServletContextListener {
 
     /**
      * Initializes this web application and connection pool.
+     *
      * @param sce servlet context event of this web application
      */
     @Override
@@ -37,13 +38,14 @@ public class ServletListener implements ServletContextListener {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
             LOGGER.fatal("Can't set database driver.", e);
-            throw new DBException();
+            throw new DBException(e);
         }
         ConnectionPool.getInstance().init(poolSize);
     }
 
     /**
      * Finalize this web application and connection pool.
+     *
      * @param sce servlet context event of this web application
      */
     @Override

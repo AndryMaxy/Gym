@@ -113,7 +113,7 @@ public abstract class AppointmentDAO<T> {
                 statement.setInt(1, userId);
             }, resultSet -> {
                 List<T> ts = new ArrayList<>();
-                while (resultSet.next()){
+                while (resultSet.next()) {
                     handleSelectByBookingIdResult(ts, resultSet);
                 }
                 return ts;

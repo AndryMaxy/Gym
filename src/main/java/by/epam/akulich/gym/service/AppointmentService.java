@@ -2,8 +2,6 @@ package by.epam.akulich.gym.service;
 
 import by.epam.akulich.gym.entity.Appointment;
 import by.epam.akulich.gym.entity.Booking;
-import by.epam.akulich.gym.entity.ExerciseAppointment;
-import by.epam.akulich.gym.entity.ProductAppointment;
 import by.epam.akulich.gym.service.exception.InvalidInputException;
 import by.epam.akulich.gym.service.exception.ServiceException;
 

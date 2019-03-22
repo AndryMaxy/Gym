@@ -3,8 +3,6 @@ package by.epam.akulich.gym.command.trainer;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import by.epam.akulich.gym.entity.Appointment;
-import by.epam.akulich.gym.entity.Booking;
 import by.epam.akulich.gym.entity.Constants;
 import by.epam.akulich.gym.entity.Response;
 import by.epam.akulich.gym.entity.User;
@@ -23,7 +21,6 @@ import by.epam.akulich.gym.service.exception.ServiceException;
 import javax.servlet.http.HttpServletRequest;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

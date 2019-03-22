@@ -23,7 +23,6 @@ import by.epam.akulich.gym.command.visitor.AddFeedbackCommand;
 import by.epam.akulich.gym.command.visitor.BuyMembershipCommand;
 import by.epam.akulich.gym.command.visitor.RefuseAppointmentsCommand;
 import by.epam.akulich.gym.entity.Constants;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

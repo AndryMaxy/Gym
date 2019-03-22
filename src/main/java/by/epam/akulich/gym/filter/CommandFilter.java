@@ -1,7 +1,6 @@
 package by.epam.akulich.gym.filter;
 
 import by.epam.akulich.gym.entity.Constants;
-import by.epam.akulich.gym.entity.UserRole;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

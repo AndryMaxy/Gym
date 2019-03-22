@@ -1,6 +1,5 @@
 package by.epam.akulich.gym.command.visitor;
 
-import by.epam.akulich.gym.dao.exception.DAOException;
 import by.epam.akulich.gym.entity.Constants;
 import by.epam.akulich.gym.entity.Response;
 import by.epam.akulich.gym.entity.User;
@@ -11,13 +10,11 @@ import by.epam.akulich.gym.service.exception.ServiceException;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import javax.servlet.http.HttpServletRequest;

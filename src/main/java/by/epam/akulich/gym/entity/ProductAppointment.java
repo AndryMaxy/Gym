@@ -10,7 +10,7 @@ import java.util.Objects;
 public class ProductAppointment {
 
     /**
-     * A product identifier in database
+     * A product identifier in database.
      */
     private int id;
 
@@ -20,14 +20,27 @@ public class ProductAppointment {
     private String name;
 
     /**
-     * A number of grams of product consumed per day
+     * A number of grams of product consumed per day.
      */
     private int gramInDay;
 
     /**
-     * Constructs this class
+     * Constructs this class.
      */
     public ProductAppointment() {
+    }
+
+    /**
+     * Constructs this class.
+     *
+     * @param id a product identifier
+     * @param name a product name
+     * @param gramInDay a number of grams of product consumed per day
+     */
+    public ProductAppointment(int id, String name, int gramInDay) {
+        this.id = id;
+        this.name = name;
+        this.gramInDay = gramInDay;
     }
 
     /**

@@ -2,7 +2,6 @@ package by.epam.akulich.gym.command.admin;
 
 import by.epam.akulich.gym.command.Command;
 import by.epam.akulich.gym.entity.Response;
-import by.epam.akulich.gym.entity.Booking;
 import by.epam.akulich.gym.entity.Constants;
 import by.epam.akulich.gym.service.BookingService;
 import by.epam.akulich.gym.service.exception.InvalidInputException;

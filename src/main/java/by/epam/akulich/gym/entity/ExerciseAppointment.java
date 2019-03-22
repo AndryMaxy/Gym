@@ -20,17 +20,17 @@ public class ExerciseAppointment {
     private String name;
 
     /**
-     * A sets count of exercise.
+     * Sets count of exercise.
      */
     private int setCount;
 
     /**
-     * A repetition count of exercise.
+     * Repetition count of exercise.
      */
     private int repCount;
 
     /**
-     * A weight for exercise.
+     * Weight for exercise.
      */
     private int weight;
 
@@ -38,6 +38,23 @@ public class ExerciseAppointment {
      * Constructs this class.
      */
     public ExerciseAppointment(){}
+
+    /**
+     * Constructs this class.
+     *
+     * @param id a booking identifier in database
+     * @param name a exercise name
+     * @param setCount sets count of exercise.
+     * @param repCount repetition count of exercise
+     * @param weight weight for exercise
+     */
+    public ExerciseAppointment(int id, String name, int setCount, int repCount, int weight) {
+        this.id = id;
+        this.name = name;
+        this.setCount = setCount;
+        this.repCount = repCount;
+        this.weight = weight;
+    }
 
     /**
      * @return a exercise identifier in database
