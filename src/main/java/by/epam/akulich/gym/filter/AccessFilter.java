@@ -65,7 +65,7 @@ public class AccessFilter implements Filter {
         if (access) {
             filterChain.doFilter(request, response);
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 
