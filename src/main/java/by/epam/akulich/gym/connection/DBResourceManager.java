@@ -61,7 +61,7 @@ public class DBResourceManager {
             properties.load(stream);
         } catch (IOException e) {
             LOGGER.fatal("ResourceManager IO trouble.", e);
-            throw new DBException();
+            throw new DBException(e);
         }
     }
 

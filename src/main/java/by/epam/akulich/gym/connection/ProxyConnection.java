@@ -53,7 +53,7 @@ public class ProxyConnection implements AutoCloseable {
             connection.close();
         } catch (SQLException e) {
             LOGGER.fatal("Can't close connection.", e);
-            throw new DBException();
+            throw new DBException(e);
         }
     }
 

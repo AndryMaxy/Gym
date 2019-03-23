@@ -66,7 +66,7 @@ public class ConnectionPool {
             }
         } catch (SQLException e) {
             LOGGER.fatal("Can't init connection pool", e);
-            throw new DBException();
+            throw new DBException(e);
         }
     }
 
