@@ -3,7 +3,7 @@ package by.epam.akulich.gym.service.impl;
 import by.epam.akulich.gym.dao.BookingDAO;
 import by.epam.akulich.gym.dao.exception.DAOException;
 import by.epam.akulich.gym.dao.impl.BookingDAOImpl;
-import by.epam.akulich.gym.entity.Appointment;
+import by.epam.akulich.gym.dto.Appointment;
 import by.epam.akulich.gym.entity.Booking;
 import by.epam.akulich.gym.entity.Membership;
 import by.epam.akulich.gym.entity.User;

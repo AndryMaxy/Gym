@@ -1,7 +1,7 @@
 package by.epam.akulich.gym.command.common;
 
 import by.epam.akulich.gym.command.Command;
-import by.epam.akulich.gym.entity.Response;
+import by.epam.akulich.gym.dto.Response;
 import by.epam.akulich.gym.entity.Booking;
 import by.epam.akulich.gym.entity.Constants;
 import by.epam.akulich.gym.entity.UserRole;

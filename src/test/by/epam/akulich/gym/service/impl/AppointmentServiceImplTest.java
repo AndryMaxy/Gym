@@ -6,7 +6,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import by.epam.akulich.gym.dao.exception.DAOException;
 import by.epam.akulich.gym.dao.impl.ExerciseAppointmentDAOImpl;
 import by.epam.akulich.gym.dao.impl.ProductAppointmentDAOImpl;
-import by.epam.akulich.gym.entity.Appointment;
+import by.epam.akulich.gym.dto.Appointment;
 import by.epam.akulich.gym.entity.ExerciseAppointment;
 import by.epam.akulich.gym.entity.ProductAppointment;
 import org.junit.Assert;

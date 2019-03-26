@@ -3,7 +3,7 @@ package by.epam.akulich.gym.command.common;
 import by.epam.akulich.gym.command.Command;
 import by.epam.akulich.gym.command.exception.CommandException;
 import by.epam.akulich.gym.entity.Constants;
-import by.epam.akulich.gym.entity.Response;
+import by.epam.akulich.gym.dto.Response;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;

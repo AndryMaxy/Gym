@@ -2,7 +2,7 @@ package by.epam.akulich.gym.command;
 
 import by.epam.akulich.gym.command.exception.CommandException;
 import by.epam.akulich.gym.service.exception.InvalidInputException;
-import by.epam.akulich.gym.entity.Response;
+import by.epam.akulich.gym.dto.Response;
 import by.epam.akulich.gym.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;

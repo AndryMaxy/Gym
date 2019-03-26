@@ -1,4 +1,7 @@
-package by.epam.akulich.gym.entity;
+package by.epam.akulich.gym.dto;
+
+import by.epam.akulich.gym.entity.ExerciseAppointment;
+import by.epam.akulich.gym.entity.ProductAppointment;
 
 import java.util.List;
 import java.util.Objects;

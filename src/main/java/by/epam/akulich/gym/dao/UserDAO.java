@@ -1,7 +1,7 @@
 package by.epam.akulich.gym.dao;
 
 import by.epam.akulich.gym.dao.exception.DAOException;
-import by.epam.akulich.gym.entity.Appointment;
+import by.epam.akulich.gym.dto.Appointment;
 import by.epam.akulich.gym.entity.User;
 
 import java.util.List;

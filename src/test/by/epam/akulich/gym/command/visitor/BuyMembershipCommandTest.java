@@ -4,7 +4,7 @@ import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import by.epam.akulich.gym.entity.Constants;
-import by.epam.akulich.gym.entity.Response;
+import by.epam.akulich.gym.dto.Response;
 import by.epam.akulich.gym.entity.User;
 import org.junit.Before;
 import org.junit.Test;

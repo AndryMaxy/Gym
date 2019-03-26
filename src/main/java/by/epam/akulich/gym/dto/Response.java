@@ -1,4 +1,6 @@
-package by.epam.akulich.gym.entity;
+package by.epam.akulich.gym.dto;
+
+import by.epam.akulich.gym.entity.Constants;
 
 import java.util.Objects;
 

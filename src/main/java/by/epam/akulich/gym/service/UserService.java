@@ -1,6 +1,6 @@
 package by.epam.akulich.gym.service;
 
-import by.epam.akulich.gym.entity.Appointment;
+import by.epam.akulich.gym.dto.Appointment;
 import by.epam.akulich.gym.entity.User;
 import by.epam.akulich.gym.entity.UserRole;
 import by.epam.akulich.gym.service.exception.InvalidInputException;

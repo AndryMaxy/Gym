@@ -5,7 +5,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import by.epam.akulich.gym.entity.Booking;
 import by.epam.akulich.gym.entity.Constants;
-import by.epam.akulich.gym.entity.Response;
+import by.epam.akulich.gym.dto.Response;
 import by.epam.akulich.gym.entity.User;
 import by.epam.akulich.gym.entity.UserRole;
 import org.junit.Before;

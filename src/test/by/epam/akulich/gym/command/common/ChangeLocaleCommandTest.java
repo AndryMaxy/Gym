@@ -5,7 +5,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import by.epam.akulich.gym.command.exception.CommandException;
 import by.epam.akulich.gym.entity.Constants;
-import by.epam.akulich.gym.entity.Response;
+import by.epam.akulich.gym.dto.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

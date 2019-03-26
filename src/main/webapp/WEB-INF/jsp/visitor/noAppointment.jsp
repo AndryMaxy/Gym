@@ -1,7 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
-<fmt:setLocale value="${sessionScope.language}"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="content"/>
 <h3 align="center"><fmt:message key="visitor.purchase"/></h3>
 <table class="table">

@@ -4,7 +4,7 @@ import by.epam.akulich.gym.builder.UserBuilder;
 import by.epam.akulich.gym.dao.UserDAO;
 import by.epam.akulich.gym.dao.exception.DAOException;
 import by.epam.akulich.gym.dao.impl.UserDAOImpl;
-import by.epam.akulich.gym.entity.Appointment;
+import by.epam.akulich.gym.dto.Appointment;
 import by.epam.akulich.gym.entity.User;
 import by.epam.akulich.gym.entity.UserRole;
 import by.epam.akulich.gym.service.UserService;

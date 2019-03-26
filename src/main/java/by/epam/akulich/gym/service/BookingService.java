@@ -1,6 +1,6 @@
 package by.epam.akulich.gym.service;
 
-import by.epam.akulich.gym.entity.Appointment;
+import by.epam.akulich.gym.dto.Appointment;
 import by.epam.akulich.gym.entity.Booking;
 import by.epam.akulich.gym.entity.Membership;
 import by.epam.akulich.gym.entity.User;
